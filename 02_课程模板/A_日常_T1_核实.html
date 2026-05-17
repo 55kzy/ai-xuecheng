@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>AI学程 — 日常防骗指南</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;background:#f5f7fa;color:#1d1d1f;padding-bottom:60px}
+  .header{background:linear-gradient(135deg,#1d1d1f 0%,#3a3a3c 100%);color:#fff;padding:32px 20px 28px;text-align:center}
+  .header .badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(255,255,255,.12);margin-bottom:10px;color:rgba(255,255,255,.7)}
+  .header h1{font-size:22px;font-weight:700;margin-bottom:6px;letter-spacing:-.3px}
+  .header .meta{font-size:13px;color:rgba(255,255,255,.55);display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+  .header .tag-free{display:inline-block;padding:4px 12px;border-radius:20px;background:rgba(52,199,89,.2);color:#34c759;font-size:12px;font-weight:600;margin-top:12px}
+  .container{max-width:680px;margin:0 auto;padding:0 16px}
+  .step-nav{display:flex;gap:8px;padding:16px 0;overflow-x:auto;position:sticky;top:0;background:#f5f7fa;z-index:10;border-bottom:1px solid rgba(0,0,0,.06)}
+  .step-nav .sn-item{flex:1;min-width:0;padding:8px 6px;border-radius:10px;border:1.5px solid #e5e5ea;font-size:11px;text-align:center;transition:all .15s;white-space:nowrap;background:rgba(255,255,255,.6);color:#636366;cursor:pointer}
+  .step-nav .sn-item.active{border-color:#007aff;background:#e8f2ff;color:#007aff;font-weight:600}
+  .step-nav .sn-item .sn-icon{display:block;font-size:14px;margin-bottom:2px}
+  .section{margin:16px 0;background:rgba(255,255,255,.85);backdrop-filter:blur(20px);border-radius:20px;padding:20px;border:1px solid rgba(255,255,255,.6);box-shadow:0 2px 12px rgba(0,0,0,.04)}
+  .section-title{font-size:16px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .section-desc{font-size:13px;color:#636366;margin-bottom:10px;line-height:1.6}
+  .content{font-size:14px;line-height:1.8;color:#1d1d1f}
+  .content h3{font-size:15px;margin:16px 0 6px}
+  .content p{margin-bottom:8px}
+  .content ul,.content ol{padding-left:18px;margin-bottom:10px}
+  .content li{margin-bottom:4px}
+  .callout{padding:12px 14px;border-radius:12px;margin:12px 0;font-size:13px;line-height:1.6;border-left:3px solid}
+  .callout-tip{background:rgba(0,122,255,.06);border-color:#007aff;color:#1d1d1f}
+  .callout-warn{background:rgba(255,149,0,.08);border-color:#ff9500;color:#1d1d1f}
+  .callout-danger{background:rgba(255,59,48,.06);border-color:#ff3b30;color:#1d1d1f}
+  .callout-green{background:rgba(52,199,89,.08);border-color:#34c759;color:#1d1d1f}
+  .code-block{background:#f0f2f5;border-radius:10px;padding:12px 14px;font-family:'Courier New',monospace;font-size:13px;line-height:1.6;white-space:pre-wrap;word-break:break-word;margin:8px 0}
+  .cmp-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
+  .cmp-table th,.cmp-table td{padding:8px 10px;border:1px solid #e5e5ea;text-align:left}
+  .cmp-table th{background:rgba(0,0,0,.03);font-weight:600;font-size:12px;color:#636366}
+  .challenge{background:rgba(255,255,255,.4);border:1px solid #e5e5ea;border-radius:12px;padding:12px 14px;margin:8px 0}
+  .challenge .ch-title{font-weight:600;font-size:13px;margin-bottom:4px}
+  .challenge .ch-desc{font-size:12px;color:#636366;line-height:1.5}
+  .step-box{background:rgba(0,122,255,.04);border-radius:12px;padding:14px;margin:10px 0;border:1px solid rgba(0,122,255,.12)}
+  .step-box .step-num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:#007aff;color:#fff;font-size:12px;font-weight:700;margin-right:6px;flex-shrink:0}
+  .step-box .step-title{font-weight:600;font-size:14px;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+  .step-box .step-body{font-size:13px;line-height:1.7;color:#1d1d1f}
+  .goal-list{display:flex;flex-direction:column;gap:6px;margin:10px 0}
+  .goal-item{display:flex;align-items:center;gap:8px;font-size:13px;padding:4px 0}
+  .goal-check{width:18px;height:18px;border-radius:50%;background:#34c759;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+  w{cursor:pointer;border-bottom:1.5px dashed #007aff;color:#007aff;font-weight:500;position:relative;transition:background .15s}
+  w:hover{background:rgba(0,122,255,.06)}
+  w.active{background:rgba(0,122,255,.12)}
+  .tip-box{position:fixed;z-index:9999;display:none;background:#1d1d1f;color:#fff;border-radius:10px;padding:10px 14px;max-width:300px;font-size:13px;line-height:1.6;box-shadow:0 8px 24px rgba(0,0,0,.2);animation:tipIn .2s ease}
+  .tip-box .tip-title{font-weight:600;margin-bottom:3px;color:rgba(255,255,255,.6);font-size:11px}
+  .tip-box .tip-close{position:absolute;top:6px;right:8px;cursor:pointer;font-size:14px;color:rgba(255,255,255,.4);line-height:1;border:none;background:none;padding:2px}
+  .tip-box .tip-close:hover{color:#fff}
+  .tip-box::after{content:'';position:absolute;left:50%;bottom:-6px;margin-left:-6px;border:6px solid transparent;border-top-color:#1d1d1f}
+  @keyframes tipIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+  .case-box{background:#fff;border:1px solid #e5e5ea;border-radius:12px;padding:12px;margin:10px 0}
+  .case-box .case-title{font-weight:600;font-size:13px;margin-bottom:4px;display:flex;align-items:center;gap:6px}
+  .case-box .case-body{font-size:12px;color:#636366;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="header">
+<div class="badge">日常应用 · T1 基础免费</div>
+<h1>🔍 AI说的能信吗？日常信息核实术</h1>
+<p style="font-size:14px;color:rgba(255,255,255,.7);margin-bottom:8px">别让AI把你带沟里去</p>
+<div class="meta">
+<span>⏱ 约25分钟</span>
+<span>📄 图文课</span>
+<span>📱 手机电脑都能看</span>
+</div>
+<div class="tag-free">🆓 免费</div>
+</div>
+<div class="container">
+<div class="step-nav" id="stepNav">
+<div class="sn-item active" data-step="s-explain"><span class="sn-icon">📌</span>为什么</div>
+<div class="sn-item" data-step="s-practice"><span class="sn-icon">🎯</span>实操</div>
+<div class="sn-item" data-step="s-insight"><span class="sn-icon">💡</span>原理</div>
+<div class="sn-item" data-step="s-consolidate"><span class="sn-icon">🔁</span>巩固</div>
+</div>
+
+<!-- 📌 Explain -->
+<div class="section module" data-tag="core:explain" id="s-explain">
+<div class="section-title">📌 你有没有被AI骗过？</div>
+<div class="section-desc">3分钟 · 先想想你是不是"全信派"还是"全不信派"</div>
+<div class="content">
+<p>你用AI查过某个电影的上映时间吗？问过某个城市的常住人口吗？让AI推荐过周末去哪玩吗？</p>
+<p>如果AI回答了——你验证过吗？没验证的话，你凭什么相信它说的是对的？</p>
+<p>大部分人面对有两种极端：</p>
+<ul>
+<li><strong>全信派</strong>："AI知道得比百度多，它说的肯定没错"</li>
+<li><strong>全不信派</strong>："AI有一次骗了我，以后再也不信它了"</li>
+</ul>
+<p>两个都错了。<w d=\"AI编造出来的、听起来合理但实际上是错误的信息\">AI幻觉</w>不是偶发事件，是它的<strong>出厂设定</strong>。不学会怎么核实，你一定会被它骗。</p>
+
+<div class="callout callout-warn">
+<strong>先看一个真实的差距：</strong><br/><br/>
+<strong>❌ 大多数人这样用AI：</strong><br/>
+"帮我查一下2025年日本旅游签最新政策"<br/>
+→ AI给了你一篇听起来头头是道的回答，你直接用了<br/>
+→ 结果到了机场发现政策已经变了三个月<br/><br/>
+<strong>✅ 你应该这样用AI：</strong><br/>
+"帮我查2025年日本旅游签最新政策。但请注意：<br/>
+1. 注明你信息的来源<br/>
+2. 标出你不太确定的细节<br/>
+3. 建议我怎么去官方渠道核实"<br/>
+→ AI给了你回答，还附了来源链接和核实方法<br/>
+→ 你自己去官网确认一遍，双重保险<br/><br/>
+<strong>差别：</strong>前者把AI当"答案机"，后者把AI当"信息助理"。答案机会骗你，信息助理帮你干活也帮你把关。你的任务不是信它，是<strong>验证它</strong>。
+</div>
+
+<h3>这节课学完你能做到</h3>
+<div class="goal-list">
+<div class="goal-item"><span class="goal-check">✓</span> 一眼识别AI在"编答案"还是"说事实"</div>
+<div class="goal-item"><span class="goal-check">✓</span> 三招日常场景核实法，2分钟搞定</div>
+<div class="goal-item"><span class="goal-check">✓</span> 建立"先用AI再用搜索引擎核实"的习惯</div>
+</div>
+</div>
+</div>
+
+<!-- 🎯 Practice -->
+<div class="section module" data-tag="P:practice" id="s-practice">
+<div class="section-title">🎯 动手实操</div>
+<div class="section-desc">15分钟 · 三个日常核实招式</div>
+<div class="content">
+
+<div class="module" data-tag="P:step1">
+<div class="step-box">
+<div class="step-title"><span class="step-num">1</span> 问AI之前，先问自己"这事我需要核实吗"</div>
+<div class="step-body">
+<p>不是所有问题都需要核实。先分类：</p>
+<table class="cmp-table">
+<tr><th>类别</th><th>举例</th><th>需要核实吗</th></tr>
+<tr><td>观点/思路/建议</td><td>"周末去哪玩好"</td><td>不需要 — AI给的是思路，你选就行</td></tr>
+<tr><td>通用知识</td><td>"什么是量子计算"</td><td>大概率可信 — 这种知识网上到处都是</td></tr>
+<tr><td>具体事实/数据</td><td>"杭州2024年常住人口"</td><td><strong>必须核实</strong> — 极容易编造</td></tr>
+<tr><td>政策/法规/流程</td><td>"护照过期怎么换"</td><td><strong>必须自己查官网</strong> — AI大概率出错</td></tr>
+<tr><td>实时信息</td><td>"今天天气怎么样"</td><td>看AI有没有联网 — 没有联网就是瞎编</td></tr>
+</table>
+<p>记住：<w d=\"AI根据网络资料训练出来的智能\">大模型</w>的训练数据是有时间截断的，它不知道今天的事。任何时间敏感的信息都<strong>默认当它是错的</strong>，自己去查。</p>
+</div>
+</div>
+</div>
+
+<div class="module" data-tag="P:step2">
+<div class="step-box">
+<div class="step-title"><span class="step-num">2</span> 三句追问，让AI自己暴露问题</div>
+<div class="step-body">
+<p>把下面三句话存起来，每次AI回答后挑一句追问：</p>
+<div class="code-block">追问1："这个信息的来源是什么？"
+追问2："你有几分把握？哪些部分不太确定？"
+追问3："我用什么官方渠道可以核实？"</div>
+<p>你试试——去问AI一个具体事实性问题（比如"2025年上海迪士尼年卡多少钱"），等它回答了再追问其中一句。你会发现AI常常会支支吾吾，或者自己说"这个数字我不确定"。</p>
+<div class="callout callout-tip">
+<strong>原理：</strong>AI回答时不会主动标注置信度。但当你追问来源时，它要么编个来源（经典翻车），要么老老实实承认"我也没有确切数据"。后者才是你想要的AI。
+</div>
+</div>
+</div>
+</div>
+
+<div class="module" data-tag="P:step3">
+<div class="step-box">
+<div class="step-title"><span class="step-num">3</span> 建立一个"先AI后搜"的核实流程</div>
+<div class="step-body">
+<p>把核实变成<strong>条件反射</strong>，而不是"如果想起来就核实一下"。</p>
+<p>每次从AI拿到一条需要核实的信息后，立刻做：</p>
+<div class="code-block">1. 打开搜索引擎（百度/必应/谷歌）
+2. 搜AI回答中的关键数字/事实
+3. 至少要找到两个独立来源印证
+4. 如果搜不到 → 这条AI回答当作错误</div>
+<p>刚开始你会觉得"多此一举"，但一周后你会发现——<strong>AI编造的比例比你想象的高得多</strong>。这个过程不是为了证明AI错了，而是让你心里有底："我用的是经过验证的信息"。</p>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<!-- 💡 Insight -->
+<div class="section module" data-tag="core:insight" id="s-insight">
+<div class="section-title">💡 理解为什么</div>
+<div class="section-desc">5分钟 · AI说谎不是它坏，是它"不知道什么叫真"</div>
+<div class="content">
+<h3>核心原理：AI的"知识"是统计出来的，不是查出来的</h3>
+<p>人类问"杭州人口多少"，正确的做法是去统计局网站查数据。但AI不是——它的"知识"来自于训练时看到的海量文本。</p>
+<p>这意味着：</p>
+<ul>
+<li>如果网上99%的文章说"杭州人口1200万"，1%说"1500万"，AI会说"大约1200-1500万"——即使真实数据是1300万</li>
+<li>如果网上有假资料被大量转载，AI会学了这个假资料，然后自信地告诉你</li>
+<li>如果网上根本没人讨论过这个精确数字，AI会自己"猜"一个看起来合理的——这最危险</li>
+</ul>
+<div class="callout callout-danger">
+<strong>一个让你警惕的事实：</strong>AI在"编造但又听起来合理"这一点上，比人类还擅长。因为它看过太多"听起来合理"的例子了。所以<strong>具体事实、数字、日期、法规，永远不要只问一个AI就完事</strong>。
+</div>
+
+<h3>这个能力能迁移到哪</h3>
+<ul>
+<li><strong>买东西</strong> — AI推荐了某个产品？别直接下单，先搜真实评价和对比</li>
+<li><strong>健康信息</strong> — AI给了你一个"某某食物致癌"的说法？去搜权威医学来源</li>
+<li><strong>旅行攻略</strong> — AI规划的行程看着很美好？打开地图和订票网站验证一遍</li>
+</ul>
+</div>
+</div>
+
+<!-- 🔁 Consolidate -->
+<div class="section module" data-tag="optional:consolidate" id="s-consolidate">
+<div class="section-title">🔁 巩固练习</div>
+<div class="section-desc">5分钟 · 变成条件反射</div>
+<div class="content">
+<div class="callout callout-tip">
+<strong>今天做一次：</strong>找一个你最近问过AI的事实性问题，把AI的回答重新看一遍。找出里面至少一个未经核实的信息点。然后打开搜索引擎验证它。</div>
+
+<h3>进阶挑战</h3>
+<div class="challenge">
+<div class="ch-title">✅ 挑战1：抓到AI说谎就给朋友看</div>
+<div class="ch-desc">今天内找3个具体事实性问题问AI，每个追问"你的来源是什么"，把AI编造的来源截图保存。你会发现AI编造的来源看起来像模像样，但全是假的。</div>
+</div>
+<div class="challenge">
+<div class="ch-title">✅ 挑战2：同一问题问三个AI</div>
+<div class="ch-desc">同一个事实性问题，分别问DeepSeek、Kimi和Perplexity（或秘塔）。看哪个AI会主动标注来源和不确定性。这是评测AI可信度的好方法。</div>
+</div>
+<div class="challenge">
+<div class="ch-title">✅ 挑战3：训练你的"核实肌肉记忆"</div>
+<div class="ch-desc">接下来一周，每次AI给你具体事实后，强行憋住5秒再做一件事——不是"相信它"，也不是"不相信它"，而是"打开搜索引擎搜一下"。一周后你会养成这个习惯。</div>
+</div>
+
+<h3>这节课只是个开始</h3>
+<p style="font-size:13px;color:#636366;margin-top:4px">核实信息只是<w d=\"辨别信息真伪的能力\">信息素养</w>的一部分。真正用好AI，你还需要：</p>
+<ul>
+<li><strong>精准描述需求</strong> — 让AI第一次就给你接近正确的答案，减少核实工作量</li>
+<li><strong>质疑式提问</strong> — 不只是让AI回答，要让AI展示它的推理过程</li>
+<li><strong>交叉验证方法论</strong> — 不只核实事实，还要验证逻辑、数据和偏见</li>
+</ul>
+<p>这些在<strong>T2进阶课</strong>里会系统讲解——从"被动被AI骗"到"主动用AI帮你把关"。你现在打下的核实习惯，就是最重要的第一步。</p>
+</div>
+</div>
+
+<!-- 一劳永逸 -->
+<div class="section" data-tag="core:summary" style="background:linear-gradient(135deg,#e8f5e9,#c8e6c9);border:none;text-align:center">
+<h3 style="font-size:18px;margin-bottom:8px;color:#2e7d32">⚡ 一劳永逸</h3>
+<p style="font-size:13px;color:#2e7d32;margin-bottom:8px">以后每次AI给了你一个事实：</p>
+<div class="code-block" style="background:#fff;text-align:left;color:#1d1d1f">默认它是错的，直到你验证过。</div>
+<div style="margin-top:10px;font-size:15px;color:#2e7d32;font-weight:600">
+  🎉 不是AI不靠谱，是你每次验证都多了一层保障
+</div>
+</div>
+</div>
+
+<div class="tip-box" id="tipBox">
+<div class="tip-title">📖 术语</div>
+<span class="tip-close" id="tipClose">&times;</span>
+<div id="tipDesc">暂无释义</div>
+</div>
+<script>
+(function(){
+  var tb=document.getElementById("tipBox"),td=document.getElementById("tipDesc"),tc=document.getElementById("tipClose");
+  if(tb&&td){
+    document.querySelectorAll("w").forEach(function(el){
+      el.addEventListener("click",function(e){
+        e.stopPropagation();
+        td.textContent=this.getAttribute("d")||"暂无释义";
+        tb.querySelector(".tip-title").textContent="📖 "+this.textContent.trim();
+        var r=this.getBoundingClientRect(),w=tb.offsetWidth||280,left=Math.max(10,Math.min(r.left+r.width/2-w/2,document.body.clientWidth-w-10)),top=r.top-8-tb.offsetHeight;
+        if(top<10)top=r.bottom+10;
+        tb.style.left=left+"px";tb.style.top=top+"px";tb.style.display="block";
+        document.querySelectorAll("w.active").forEach(function(w){w.classList.remove("active")});
+        this.classList.add("active");
+      });
+    });
+    function ht(){tb.style.display="none";document.querySelectorAll("w.active").forEach(function(w){w.classList.remove("active")})}
+    tc.addEventListener("click",ht);
+    document.addEventListener("click",function(e){if(!e.target.closest("w")&&!e.target.closest(".tip-box"))ht()});
+    document.addEventListener("keydown",function(e){if(e.key==="Escape")ht()});
+  }
+  var nav=document.getElementById("stepNav");
+  if(nav){
+    var S=["s-explain","s-practice","s-insight","s-consolidate"];
+    nav.addEventListener("click",function(e){
+      var it=e.target.closest(".sn-item");if(!it)return;
+      var id=it.getAttribute("data-step"),el=document.getElementById(id);
+      if(el)el.scrollIntoView({behavior:"smooth",block:"start"});
+      var idx=S.indexOf(id);
+      for(var i=0;i<nav.children.length;i++)nav.children[i].classList.toggle("active",i===idx);
+    });
+    var st;
+    function uas(){
+      var bi=0,bd=Infinity;
+      S.forEach(function(id,i){
+        var el=document.getElementById(id);
+        if(el){var t=Math.abs(el.getBoundingClientRect().top);if(t<bd){bd=t;bi=i}}
+      });
+      for(var i=0;i<nav.children.length;i++)nav.children[i].classList.toggle("active",i===bi);
+    }
+    document.addEventListener("scroll",function(){clearTimeout(st);st=setTimeout(uas,100)});
+    uas();
+  }
+})();
+</script>
+</body>
+</html>

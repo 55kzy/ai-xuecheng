@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI学程 — 零门槛上手AI工具</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;background:#f5f7fa;color:#1d1d1f;padding-bottom:60px}
+  .header{background:linear-gradient(135deg,#1d1d1f 0%,#3a3a3c 100%);color:#fff;padding:32px 20px 28px;text-align:center}
+  .header .badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(255,255,255,.12);margin-bottom:10px;color:rgba(255,255,255,.7)}
+  .header h1{font-size:22px;font-weight:700;margin-bottom:6px;letter-spacing:-.3px}
+  .header .meta{font-size:13px;color:rgba(255,255,255,.55);display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+  .header .meta span{display:inline-flex;align-items:center;gap:4px}
+  .header .tag-free{display:inline-block;padding:4px 12px;border-radius:20px;background:rgba(52,199,89,.2);color:#34c759;font-size:12px;font-weight:600;margin-top:12px}
+  .container{max-width:680px;margin:0 auto;padding:0 16px}
+  .step-nav{display:flex;gap:8px;padding:16px 0;overflow-x:auto;position:sticky;top:0;background:#f5f7fa;z-index:10;border-bottom:1px solid rgba(0,0,0,.06)}
+  .step-nav .sn-item{flex:1;min-width:0;padding:8px 6px;border-radius:10px;border:1.5px solid #e5e5ea;font-size:11px;text-align:center;transition:all .15s;white-space:nowrap;background:rgba(255,255,255,.6);color:#636366;cursor:pointer}
+  .step-nav .sn-item.active{border-color:#007aff;background:#e8f2ff;color:#007aff;font-weight:600}
+  .step-nav .sn-item .sn-icon{display:block;font-size:14px;margin-bottom:2px}
+  .section{margin:16px 0;background:rgba(255,255,255,.85);backdrop-filter:blur(20px);border-radius:20px;padding:20px;border:1px solid rgba(255,255,255,.6);box-shadow:0 2px 12px rgba(0,0,0,.04)}
+  .section-title{font-size:16px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .section-desc{font-size:13px;color:#636366;margin-bottom:10px;line-height:1.6}
+  .content{font-size:14px;line-height:1.8;color:#1d1d1f}
+  .content h3{font-size:15px;margin:16px 0 6px}
+  .content p{margin-bottom:8px}
+  .content ul,.content ol{padding-left:18px;margin-bottom:10px}
+  .content li{margin-bottom:4px}
+  .callout{padding:12px 14px;border-radius:12px;margin:12px 0;font-size:13px;line-height:1.6;border-left:3px solid}
+  .callout-tip{background:rgba(0,122,255,.06);border-color:#007aff;color:#1d1d1f}
+  .callout-warn{background:rgba(255,149,0,.08);border-color:#ff9500;color:#1d1d1f}
+  .callout-green{background:rgba(52,199,89,.08);border-color:#34c759;color:#1d1d1f}
+  .code-block{background:#f0f2f5;border-radius:10px;padding:12px 14px;font-family:'Courier New',monospace;font-size:13px;line-height:1.6;white-space:pre-wrap;word-break:break-word;margin:8px 0}
+  .cmp-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
+  .cmp-table th,.cmp-table td{padding:8px 10px;border:1px solid #e5e5ea;text-align:left}
+  .cmp-table th{background:rgba(0,0,0,.03);font-weight:600;font-size:12px;color:#636366}
+  .challenge{background:rgba(255,255,255,.4);border:1px solid #e5e5ea;border-radius:12px;padding:12px 14px;margin:8px 0}
+  .challenge .ch-title{font-weight:600;font-size:13px;margin-bottom:4px}
+  .challenge .ch-desc{font-size:12px;color:#636366;line-height:1.5}
+  .step-box{background:rgba(0,122,255,.04);border-radius:12px;padding:14px;margin:10px 0;border:1px solid rgba(0,122,255,.12)}
+  .step-box .step-num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:#007aff;color:#fff;font-size:12px;font-weight:700;margin-right:6px;flex-shrink:0}
+  .step-box .step-title{font-weight:600;font-size:14px;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+  .step-box .step-body{font-size:13px;line-height:1.7;color:#1d1d1f}
+  .goal-list{display:flex;flex-direction:column;gap:6px;margin:10px 0}
+  .goal-item{display:flex;align-items:center;gap:8px;font-size:13px;padding:4px 0}
+  .goal-check{width:18px;height:18px;border-radius:50%;background:#34c759;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+  .ex-pair{display:flex;flex-direction:column;gap:8px;margin:10px 0}
+  .ex-item{padding:10px 12px;border-radius:10px;font-size:13px;line-height:1.6;border:1px solid}
+  .ex-bad{background:rgba(255,59,48,.04);border-color:rgba(255,59,48,.15)}
+  .ex-bad .ex-label{color:#ff3b30;font-weight:600;margin-bottom:4px}
+  .ex-good{background:rgba(52,199,89,.06);border-color:rgba(52,199,89,.2)}
+  .ex-good .ex-label{color:#34c759;font-weight:600;margin-bottom:4px}
+  w{cursor:pointer;border-bottom:1.5px dashed #007aff;color:#007aff;font-weight:500;position:relative;transition:background .15s}
+  w:hover{background:rgba(0,122,255,.06)}
+  w.active{background:rgba(0,122,255,.12)}
+  .tip-box{position:fixed;z-index:9999;display:none;background:#1d1d1f;color:#fff;border-radius:10px;padding:10px 14px;max-width:300px;font-size:13px;line-height:1.6;box-shadow:0 8px 24px rgba(0,0,0,.2);animation:tipIn .2s ease}
+  .tip-box .tip-title{font-weight:600;margin-bottom:3px;color:rgba(255,255,255,.6);font-size:11px}
+  .tip-box .tip-close{position:absolute;top:6px;right:8px;cursor:pointer;font-size:14px;color:rgba(255,255,255,.4);line-height:1;border:none;background:none;padding:2px}
+  .tip-box .tip-close:hover{color:#fff}
+  .tip-box::after{content:'';position:absolute;left:50%;bottom:-6px;margin-left:-6px;border:6px solid transparent;border-top-color:#1d1d1f}
+  @keyframes tipIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+<div class="header">
+<div class="badge">日常应用 · T1 基础免费</div>
+<h1>零门槛上手AI工具</h1>
+<p style="font-size:14px;color:rgba(255,255,255,.7);margin-bottom:8px">从注册到第一句话，10分钟学会用AI</p>
+<div class="meta">
+<span>⏱ 约25分钟</span>
+<span>📄 图文课</span>
+<span>🛠 需手机或电脑</span>
+</div>
+<div class="tag-free">🆓 免费</div>
+</div>
+<div class="container">
+<div class="step-nav" id="stepNav"><div class="sn-item active" data-step="s-explain"><span class="sn-icon">📌</span>为什么</div><div class="sn-item" data-step="s-practice"><span class="sn-icon">🎯</span>实操</div><div class="sn-item" data-step="s-insight"><span class="sn-icon">💡</span>原理</div><div class="sn-item" data-step="s-consolidate"><span class="sn-icon">🔁</span>巩固</div></div>
+<div class="module section" data-tag="core:explain" id="s-explain">
+<div class="section-title">📌 你离用上AI只差三步</div>
+<div class="section-desc">3分钟 · 觉得AI门槛高？其实比注册个外卖账号还简单</div>
+<div class="content">
+<p>"AI还得注册账号吧？""是不是要翻墙？""要收费吗？"</p>
+<p>这些担心我替你回答了：<strong>国内完全能用，大部分免费，手机电脑都行</strong>。</p>
+<p>关键是——你不知道哪个工具适合你、第一步怎么做。</p>
+<p>这节课手把手带你注册并使用第一个AI工具，不挑平台、不挑设备。</p>
+<h3>这节课学完你能做到</h3>
+<div class="goal-list">
+<div class="goal-item"><span class="goal-check">✓</span> 完成一个AI工具的注册和首次对话</div>
+<div class="goal-item"><span class="goal-check">✓</span> 知道国内主流的AI工具哪个适合你</div>
+<div class="goal-item"><span class="goal-check">✓</span> 能独立注册和使用新AI工具</div>
+</div>
+</div>
+</div>
+<div class="module section" data-tag="P:practice" id="s-practice">
+<div class="section-title">🎯 动手实操</div>
+<div class="section-desc">15分钟 · 三选一，挑一个现在就能用</div>
+<div class="content">
+<div class="module" data-tag="P:step1"><div class="step-box">
+<div class="step-title"><span class="step-num">1</span> 选工具：国内主流AI怎么挑</div>
+<div class="step-body">
+<p>给不同的人推荐：</p>
+<table class="cmp-table">
+<tr><th>工具</th><th>适合谁</th><th>注册方式</th><th>收费</th><th>亮点</th></tr>
+<tr><td><strong>豆包</strong>（字节）</td><td>普通用户首选</td><td>手机号注册</td><td>免费</td><td>有App，速度快，中文好</td></tr>
+<tr><td><strong>Kimi</strong>（月之暗面）</td><td>需要读长文章的</td><td>手机号/微信</td><td>免费</td><td>一次读20万字</td></tr>
+<tr><td><strong>通义千问</strong>（阿里）</td><td>阿里生态用户</td><td>手机号/淘宝</td><td>免费</td><td>能读文档、识图</td></tr>
+<tr><td><strong>文心一言</strong>（百度）</td><td>习惯百度的用户</td><td>手机号/百度</td><td>免费</td><td>中文搜索引擎加持</td></tr>
+<tr><td><strong>ChatGPT</strong>（OpenAI）</td><td>有一定网络条件</td><td>邮箱</td><td>部分免费</td><td>综合最强，需特殊网络</td></tr>
+</table>
+<div class="callout callout-tip"><strong>第一步：</strong>手机应用商店搜"豆包"或"Kimi"，下载App → 手机号注册 → 搞定。全程2分钟。</div>
+</div>
+</div></div>
+<div class="module" data-tag="P:step2"><div class="step-box">
+<div class="step-title"><span class="step-num">2</span> 第一次对话：别怕说错</div>
+<div class="step-body">
+<p>注册完打开AI，你会看到一个输入框。别紧张——把你脑子里冒出来的第一件事打进去。</p>
+<p>如果不知道问什么，先试试这几句：</p>
+<div class="code-block">"用100字给我解释一下什么是AI，用小孩能听懂的话"
+"帮我写一个周末北京两日游的行程"
+"我最近感到工作压力大，给我几个减压建议"
+"帮我用大白话解释一下为什么天空是蓝色的"</div>
+<p>你会发现AI会立刻回复你。不管问得多离谱，它都会认真回答。</p>
+<div class="callout callout-warn"><strong>注意：</strong>第一次回复可能不够好。别在意，直接追加"再换一种说法"或"说人话"，它会调整。</div>
+</div>
+</div></div>
+<div class="module" data-tag="P:step3"><div class="step-box">
+<div class="step-title"><span class="step-num">3</span> 进阶：试出AI的本事</div>
+<div class="step-body">
+<p>聊顺了之后，试试AI的真正能力：</p>
+<h3 style="margin:10px 0 4px">试试这些玩法：</h3>
+<ul>
+<li><strong>拍照识别</strong> — 拍一张冰箱里的食材，问"这些能做什么菜"</li>
+<li><strong>读图分析</strong> — 截一张数据图，问"这张图表说明了什么"</li>
+<li><strong>文档总结</strong> — 把一篇长文章/合同扔进去，让它总结要点</li>
+<li><strong>语音输入</strong> — 大部分App支持语音，懒得打字就说</li>
+</ul>
+<p>每试一项，你就更清楚AI能帮你什么。</p>
+<div class="callout callout-green"><strong>特别提醒：</strong>这个"能聊天、能认图、能写稿"的初步操作，对应的就是A·K课"琐事"里教你"能帮我干啥"——K是认知，T是实操，两节课互相补充。</div>
+</div>
+</div></div>
+</div>
+</div>
+<div class="module section" data-tag="core:insight" id="s-insight">
+<div class="section-title">💡 理解为什么</div>
+<div class="section-desc">5分钟 · AI工具本质上就是个"什么都懂一点的实习生"</div>
+<div class="content">
+<h3>AI工具的核心逻辑都一样</h3>
+<p>不管是豆包Kimi还是ChatGPT，它们的工作原理是一样的：</p>
+<ul>
+<li>你输入一段话（<w d="你给AI的指令，决定了它如何回应你">prompt</w>）</li>
+<li>AI基于它的训练数据（读过的海量信息）生成回复</li>
+<li>你追加反馈，它调整——<strong>对话越长，它越懂你想要什么</strong></li>
+</ul>
+<p>所以会用一个就等于会用了全部。区别只是各家的特长不同：</p>
+<table class="cmp-table">
+<tr><th>工具</th><th>特长</th><th>短板</th></tr>
+<tr><td>豆包</td><td>中文对话、速度快</td><td>复杂推理弱一点</td></tr>
+<tr><td>Kimi</td><td>读长文档、全网页</td><td>创意写作一般</td></tr>
+<tr><td>通义千问</td><td>多模态（读图读文档）</td><td>对话体验中规中矩</td></tr>
+<tr><td>ChatGPT</td><td>综合最强、推理好</td><td>需要特殊网络</td></tr>
+</table>
+<div class="callout callout-warn"><strong>建议：</strong>下载2-3个免费工具，同一个问题挨个问一遍，看谁的回答最对味。把最好用的那个留在手机上。</div>
+</div>
+</div>
+<div class="module section" data-tag="optional:consolidate" id="s-consolidate">
+<div class="section-title">🔁 巩固练习</div>
+<div class="section-desc">5分钟 · 明天再玩5分钟，你就正式入门了</div>
+<div class="content">
+<div class="callout callout-tip"><strong>明天做一次：</strong>打开已下载的AI工具，问一个你今天实际遇到的问题——比如"帮我写一段请假微信"或"这个菜怎么做"。用完觉得好就留在手机桌面上。</div>
+<h3>进阶挑战</h3>
+<div class="challenge"><div class="ch-title">✅ 挑战1：让AI帮你做一张待办清单</div><div class="ch-desc">说"我明天有A/B/C三件事要做，帮我按优先级排一个时间表"</div></div>
+<div class="challenge"><div class="ch-title">✅ 挑战2：试试语音输入</div><div class="ch-desc">用语音说一段话，看AI能不能准确识别并回复。豆包和Kimi都支持语音。</div></div>
+<div class="challenge"><div class="ch-title">✅ 挑战3：交叉对比</div><div class="ch-desc">同一个问题同时问豆包和Kimi，对比结果。你会开始理解"不同AI各有擅长"。这也是"信息核实"的入门体验。</div></div>
+</div>
+</div>
+<div class="module section" data-tag="core:summary" style="background:linear-gradient(135deg,#e8f5e9,#c8e6c9);border:none;text-align:center">
+<h3 style="font-size:18px;margin-bottom:8px;color:#2e7d32">⚡ 记住一句话</h3>
+<p style="font-size:13px;color:#2e7d32;margin-bottom:8px">**下个App → 注册 → 问第一句话 = 你已经超过了80%的人**</p>
+<div class="code-block" style="background:#fff;text-align:left">1. 豆包/Kimi/通义三选一
+2. 手机号注册（2分钟）
+3. 问一句你最想知道的（随便什么）
+4. 追加反馈让它变好
+5. 明天再问一次</div>
+<div style="margin-top:10px;font-size:15px;color:#2e7d32;font-weight:600">🎉 AI没那么神秘——你已经用上了</div>
+</div>
+</div>
+<div class="tip-box" id="tipBox"><div class="tip-title">📖 术语</div><button class="tip-close" id="tipClose">&times;</button><div id="tipDesc"></div></div>
+<script>
+(function(){
+  var tb=document.getElementById("tipBox"),td=document.getElementById("tipDesc"),tc=document.getElementById("tipClose");
+  if(tb&&td){
+    document.querySelectorAll("w").forEach(function(el){
+      el.addEventListener("click",function(e){
+        e.stopPropagation();
+        td.textContent=this.getAttribute("d")||"暂无释义";
+        tb.querySelector(".tip-title").textContent="📖 "+this.textContent.trim();
+        var r=this.getBoundingClientRect(),w=tb.offsetWidth||280,left=Math.max(10,Math.min(r.left+r.width/2-w/2,document.body.clientWidth-w-10)),top=r.top-8-tb.offsetHeight;
+        if(top<10)top=r.bottom+10;tb.style.left=left+"px";tb.style.top=top+"px";tb.style.display="block";
+        document.querySelectorAll("w.active").forEach(function(w){w.classList.remove("active")});this.classList.add("active");
+      });
+    });
+    function ht(){tb.style.display="none";document.querySelectorAll("w.active").forEach(function(w){w.classList.remove("active")})}
+    tc.addEventListener("click",ht);document.addEventListener("click",function(e){if(!e.target.closest("w")&&!e.target.closest(".tip-box"))ht()});document.addEventListener("keydown",function(e){if(e.key==="Escape")ht()});
+  }
+  var nav=document.getElementById("stepNav");
+  if(nav){
+    var S=["s-explain","s-practice","s-insight","s-consolidate"];
+    nav.addEventListener("click",function(e){var it=e.target.closest(".sn-item");if(!it)return;var id=it.getAttribute("data-step"),el=document.getElementById(id);if(el)el.scrollIntoView({behavior:"smooth",block:"start"});var idx=S.indexOf(id);for(var i=0;i<nav.children.length;i++)nav.children[i].classList.toggle("active",i===idx);});
+    var st;function uas(){var bi=0,bd=Infinity;S.forEach(function(id,i){var el=document.getElementById(id);if(el){var t=Math.abs(el.getBoundingClientRect().top);if(t<bd){bd=t;bi=i}}});for(var i=0;i<nav.children.length;i++)nav.children[i].classList.toggle("active",i===bi);}
+    document.addEventListener("scroll",function(){clearTimeout(st);st=setTimeout(uas,100)});uas();
+  }
+})();
+</script>
+<script>
+(function(){
+  var p=new URLSearchParams(location.search),c=p.get("cut");
+  if(c){var INFO={"P:step1":{l:"第一步·选工具",d:"国内主流AI工具推荐，选一个注册"},"P:step2":{l:"第二步·第一次对话",d:"别怕说错，随便问一句就是开始"},"P:step3":{l:"第三步·进阶玩法",d:"拍照/读文档/语音，试出AI的真实能力"}};var MSGS=["看起来你已经有基础了，帮你跳过基础操作","看来你对这部分比较熟悉了，跳过基础内容","你已经有不错的基础了，直接看后面的总结就好"];var E=[];tags=c.split(",");tags.forEach(function(t){t=t.trim();var n=INFO[t];if(n){var el=document.querySelector('[data-tag="'+t+'"]');if(el)E.push({el:el,info:n});}});if(E.length>0){E.forEach(function(x){var el=x.el,info=x.info,bar=document.createElement("div");bar.style.cssText="padding:10px 14px;margin:10px 0;border-radius:12px;background:rgba(255,149,0,.06);border:1.5px dashed rgba(255,149,0,.25);font-size:13px;cursor:pointer;transition:all .2s;user-select:none";bar.innerHTML='<div style="display:flex;align-items:center;justify-content:space-between"><span style="font-weight:600;color:#e65100">⏭ '+info.l+'<span style="font-size:11px;color:rgba(230,81,0,.5);margin-left:8px">已跳过</span></span><span style="font-size:11px;color:rgba(230,81,0,.4)">▼ 展开</span></div>'+(info.d?'<div style="font-size:11px;color:rgba(0,0,0,.3);margin-top:3px;padding-left:24px">'+info.d+'</div>':'');var p=el.parentNode;if(p){p.insertBefore(bar,el);el.style.display="none";bar.onclick=function(){var h=el.style.display==="none";el.style.display=h?"":"none";bar.style.borderStyle=h?"solid":"dashed";bar.style.background=h?"rgba(255,149,0,.15)":"rgba(255,149,0,.06)";bar.querySelector("span:last-child").innerHTML=h?"▲ 收起":"▼ 展开";};}});var midx=Math.min(E.length-1,MSGS.length-1),msg=MSGS[midx];var ov=document.createElement("div");ov.id="skip-overlay";ov.style.cssText="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.25);z-index:10000;display:flex;align-items:center;justify-content:center;animation:fadeIn .3s ease";ov.innerHTML='<div style="background:#fff;border-radius:20px;padding:28px 24px;max-width:340px;width:90%;box-shadow:0 8px 40px rgba(0,0,0,.12);text-align:center"><div style="font-size:36px;margin-bottom:10px">👏</div><div style="font-size:16px;font-weight:600;margin-bottom:8px;color:#1d1d1f">已帮你跳过基础步骤</div><div style="font-size:13px;color:#636366;line-height:1.7">'+msg+'</div><button onclick="document.body.removeChild(document.getElementById(\'skip-overlay\'))" style="margin-top:14px;padding:9px 28px;border:none;border-radius:12px;background:#007aff;color:#fff;font-size:14px;font-weight:600;cursor:pointer;box-shadow:0 4px 12px rgba(0,122,255,.25)">好的，开始学习</button><span onclick="document.body.removeChild(document.getElementById(\'skip-overlay\'))" style="position:absolute;top:10px;right:14px;cursor:pointer;font-size:18px;color:rgba(0,0,0,.2)">&times;</span></div>';ov.onclick=function(e){if(e.target===ov)document.body.removeChild(ov);};document.body.appendChild(ov);var st=document.createElement("style");st.textContent="@keyframes fadeIn{from{opacity:0}to{opacity:1}}";document.head.appendChild(st);}
+  }
+})();
+</script>
+</body>
+</html>

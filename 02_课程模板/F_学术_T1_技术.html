@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI学程 — 学术AI技术实操</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;background:#f5f7fa;color:#1d1d1f;padding-bottom:60px}
+  .header{background:linear-gradient(135deg,#1d1d1f 0%,#3a3a3c 100%);color:#fff;padding:32px 20px 28px;text-align:center}
+  .header .badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(255,255,255,.12);margin-bottom:10px;color:rgba(255,255,255,.7)}
+  .header h1{font-size:22px;font-weight:700;margin-bottom:6px;letter-spacing:-.3px}
+  .header .meta{font-size:13px;color:rgba(255,255,255,.55);display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+  .header .meta span{display:inline-flex;align-items:center;gap:4px}
+  .header .tag-free{display:inline-block;padding:4px 12px;border-radius:20px;background:rgba(52,199,89,.2);color:#34c759;font-size:12px;font-weight:600;margin-top:12px}
+  .container{max-width:680px;margin:0 auto;padding:0 16px}
+  .step-nav{display:flex;gap:8px;padding:16px 0;overflow-x:auto;position:sticky;top:0;background:#f5f7fa;z-index:10;border-bottom:1px solid rgba(0,0,0,.06)}
+  .step-nav .sn-item{flex:1;min-width:0;padding:8px 6px;border-radius:10px;border:1.5px solid #e5e5ea;font-size:11px;text-align:center;transition:all .15s;white-space:nowrap;background:rgba(255,255,255,.6);color:#636366;cursor:pointer}
+  .step-nav .sn-item.active{border-color:#007aff;background:#e8f2ff;color:#007aff;font-weight:600}
+  .step-nav .sn-item .sn-icon{display:block;font-size:14px;margin-bottom:2px}
+  .section{margin:16px 0;background:rgba(255,255,255,.85);backdrop-filter:blur(20px);border-radius:20px;padding:20px;border:1px solid rgba(255,255,255,.6);box-shadow:0 2px 12px rgba(0,0,0,.04)}
+  .section-title{font-size:16px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .section-desc{font-size:13px;color:#636366;margin-bottom:10px;line-height:1.6}
+  .content{font-size:14px;line-height:1.8;color:#1d1d1f}
+  .content h3{font-size:15px;margin:16px 0 6px}
+  .content p{margin-bottom:8px}
+  .content ul,.content ol{padding-left:18px;margin-bottom:10px}
+  .content li{margin-bottom:4px}
+  .callout{padding:12px 14px;border-radius:12px;margin:12px 0;font-size:13px;line-height:1.6;border-left:3px solid}
+  .callout-tip{background:rgba(0,122,255,.06);border-color:#007aff;color:#1d1d1f}
+  .callout-warn{background:rgba(255,149,0,.08);border-color:#ff9500;color:#1d1d1f}
+  .callout-green{background:rgba(52,199,89,.08);border-color:#34c759;color:#1d1d1f}
+  .code-block{background:#f0f2f5;border-radius:10px;padding:12px 14px;font-family:'Courier New',monospace;font-size:13px;line-height:1.6;white-space:pre-wrap;word-break:break-word;margin:8px 0}
+  .cmp-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
+  .cmp-table th,.cmp-table td{padding:8px 10px;border:1px solid #e5e5ea;text-align:left}
+  .cmp-table th{background:rgba(0,0,0,.03);font-weight:600;font-size:12px;color:#636366}
+  .challenge{background:rgba(255,255,255,.4);border:1px solid #e5e5ea;border-radius:12px;padding:12px 14px;margin:8px 0}
+  .challenge .ch-title{font-weight:600;font-size:13px;margin-bottom:4px}
+  .challenge .ch-desc{font-size:12px;color:#636366;line-height:1.5}
+  .step-box{background:rgba(0,122,255,.04);border-radius:12px;padding:14px;margin:10px 0;border:1px solid rgba(0,122,255,.12)}
+  .step-box .step-num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:#007aff;color:#fff;font-size:12px;font-weight:700;margin-right:6px;flex-shrink:0}
+  .step-box .step-title{font-weight:600;font-size:14px;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+  .step-box .step-body{font-size:13px;line-height:1.7;color:#1d1d1f}
+  .goal-list{display:flex;flex-direction:column;gap:6px;margin:10px 0}
+  .goal-item{display:flex;align-items:center;gap:8px;font-size:13px;padding:4px 0}
+  .goal-check{width:18px;height:18px;border-radius:50%;background:#34c759;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+  w{cursor:pointer;border-bottom:1.5px dashed #007aff;color:#007aff;font-weight:500;position:relative;transition:background .15s}
+  w:hover{background:rgba(0,122,255,.06)}
+  w.active{background:rgba(0,122,255,.12)}
+  .tip-box{position:fixed;z-index:9999;display:none;background:#1d1d1f;color:#fff;border-radius:10px;padding:10px 14px;max-width:300px;font-size:13px;line-height:1.6;box-shadow:0 8px 24px rgba(0,0,0,.2);animation:tipIn .2s ease}
+  .tip-box .tip-title{font-weight:600;margin-bottom:3px;color:rgba(255,255,255,.6);font-size:11px}
+  .tip-box .tip-close{position:absolute;top:6px;right:8px;cursor:pointer;font-size:14px;color:rgba(255,255,255,.4);line-height:1;border:none;background:none;padding:2px}
+  .tip-box .tip-close:hover{color:#fff}
+  .tip-box::after{content:'';position:absolute;left:50%;bottom:-6px;margin-left:-6px;border:6px solid transparent;border-top-color:#1d1d1f}
+  @keyframes tipIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+<div class="header">
+<div class="badge">学术应用 · T1 基础免费</div>
+<h1>学术AI技术实操：数据分析与图表</h1>
+<p style="font-size:14px;color:rgba(255,255,255,.7);margin-bottom:8px">不只是"让AI写论文"，更是让AI帮你做数据、出图表</p>
+<div class="meta">
+<span>⏱ 约25分钟</span>
+<span>📄 图文课</span>
+<span>🛠 需AI工具+基础数据</span>
+</div>
+<div class="tag-free">🆓 免费</div>
+</div>
+<div class="container">
+<div class="step-nav" id="stepNav"><div class="sn-item active" data-step="s-explain"><span class="sn-icon">📌</span>为什么</div><div class="sn-item" data-step="s-practice"><span class="sn-icon">🎯</span>实操</div><div class="sn-item" data-step="s-insight"><span class="sn-icon">💡</span>原理</div><div class="sn-item" data-step="s-consolidate"><span class="sn-icon">🔁</span>巩固</div></div>
+<div class="module section" data-tag="core:explain" id="s-explain">
+<div class="section-title">📌 学术研究最耗时的往往是"数据分析"</div>
+<div class="section-desc">3分钟 · AI不只是帮你写文献综述，更能做数据分析和可视化</div>
+<div class="content">
+<p>大部分研究生用AI做学术只做了三件事：查文献、写综述、润色。</p>
+<p>但其实AI在学术研究里最省时间的用法之一是——<strong>数据处理和图表生成</strong>。</p>
+<ul>
+<li>有数据不会分析？让AI给你建议方法</li>
+<li>想做图表不会编程？让AI帮你写代码</li>
+<li>分析完不知道结果说明了什么？让AI帮你解读</li>
+<li>论文里的描述性统计？让AI直接算好给你</li>
+</ul>
+<p>这节课教你如何用AI加速学术研究中的数据处理环节。</p>
+<h3>这节课学完你能做到</h3>
+<div class="goal-list"><div class="goal-item"><span class="goal-check">✓</span> 用AI分析原始数据并生成统计结果</div><div class="goal-item"><span class="goal-check">✓</span> 让AI出学术图表（柱状图/散点图/热力图）</div><div class="goal-item"><span class="goal-check">✓</span> 让AI帮你解读分析结果并写进论文</div></div>
+</div>
+</div>
+<div class="module section" data-tag="P:practice" id="s-practice">
+<div class="section-title">🎯 动手实操</div>
+<div class="section-desc">15分钟 · 三步：分析→图表→解读</div>
+<div class="content">
+<div class="module" data-tag="P:step1"><div class="step-box">
+<div class="step-title"><span class="step-num">1</span> 让AI分析你的数据</div>
+<div class="step-body">
+<p>把数据贴给AI，让它帮你分析：</p>
+<h3 style="margin:10px 0 4px">描述性统计</h3>
+<div class="code-block">以下是我收集的研究数据（CSV格式）：
+[粘贴你的数据]
+
+请帮我做：
+1. 描述性统计（均值、中位数、标准差、最大最小值）
+2. 各变量的分布特点
+3. 是否有异常值或缺失值</div>
+<h3 style="margin:10px 0 4px">相关性/组间差异分析</h3>
+<div class="code-block">我想分析X变量和Y变量的关系。
+数据如下：
+[粘贴数据]
+请帮我：
+1. 计算Pearson相关系数
+2. 做简单的回归分析
+3. 告诉我结果是否显著
+4. 用大白话解释这个结果意味着什么</div>
+<div class="callout callout-tip"><strong>支持多种格式：</strong>Kimi和通义千问支持直接上传Excel/CSV文件，不用手动粘贴数据。</div>
+</div>
+</div></div>
+<div class="module" data-tag="P:step2"><div class="step-box">
+<div class="step-title"><span class="step-num">2</span> 让AI出学术图表</div>
+<div class="step-body">
+<p>AI不能直接生成图表，但它可以帮你写生成图表的代码：</p>
+<div class="code-block">我有一组数据，想做一篇论文中的柱状图。
+数据如下：
+组A: 均值85, 标准差12
+组B: 均值72, 标准差15
+组C: 均值91, 标准差8
+
+请帮我用Python（matplotlib）写一段代码：
+1. 生成柱状图 + 误差线
+2. 纵轴标为"得分"，横轴标为"组别"
+3. 学术风格配色（不要花哨）
+4. 添加显著性标注（用星号标注显著差异）
+5. 保存为高清PNG（300dpi）</div>
+<p>把AI生成的代码复制到你的Python环境（或Google Colab）运行，图表就出来了。</p>
+<h3 style="margin:10px 0 4px">其他常见图表类型：</h3>
+<table class="cmp-table">
+<tr><th>需要</th><th>让AI写</th></tr>
+<tr><td>相关性散点图</td><td>"用seaborn画散点图+回归线"</td></tr>
+<tr><td>热力图</td><td>"把相关系数矩阵画成热力图"</td></tr>
+<tr><td>箱线图</td><td>"画箱线图展示各组分布差异"</td></tr>
+<tr><td>折线图</td><td>"画时间序列折线图，X轴为时间"</td></tr>
+</table>
+<div class="callout callout-tip"><strong>不会Python？</strong>用通义千问或Kimi的"生成代码"功能，把你需要的图表描述清楚，它生成代码后你复制到在线平台（如Google Colab，免费）运行即可。</div>
+</div>
+</div></div>
+<div class="module" data-tag="P:step3"><div class="step-box">
+<div class="step-title"><span class="step-num">3</span> 让AI帮你写"结果与分析"</div>
+<div class="step-body">
+<p>分析和图表都有了，该写论文的"结果与讨论"部分了：</p>
+<div class="code-block">以下是我的数据分析结果：
+[粘贴AI分析的结果]
+
+请帮我写一段论文的"结果"部分（300-500字）：
+1. 按照学术论文的写作规范
+2. 客观描述数据发现，不要主观评价
+3. 包含关键统计指标
+4. 格式参考："研究发现……（M=XX, SD=XX）"
+5. 不要编造数据，只基于我给你的结果写</div>
+<div class="callout callout-warn"><strong>注意：</strong>AI写的"结果与分析"部分需要你亲自核对数字是否准确、表述是否恰当。AI可能美化数据或者用词不专业。</div>
+<h3 style="margin:10px 0 4px">F系列完整路线图</h3>
+<table class="cmp-table">
+<tr><th>课</th><th>学什么</th><th>什么时候学</th></tr>
+<tr><td><strong>F·K工具</strong></td><td>学术全流程AI工具搭配</td><td>刚开始用AI做研究</td></tr>
+<tr><td><strong>F·P文献</strong></td><td>prompt技巧筛选文献</td><td>文献太多不知道怎么筛</td></tr>
+<tr><td><strong>F·L核实</strong></td><td>验证AI给出的学术信息</td><td>怕AI胡说八道</td></tr>
+<tr><td><strong>F·T技术实操</strong></td><td>数据分析/图表/结果写作</td><td>有数据了不知道怎么分析</td></tr>
+</table>
+<div class="callout callout-green"><strong>完整学术AI闭环：</strong>选工具(F·K)→筛文献(F·P)→核实信息(F·L)→数据实操(F·T)</div>
+</div>
+</div></div>
+</div>
+</div>
+<div class="module section" data-tag="core:insight" id="s-insight">
+<div class="section-title">💡 理解为什么</div>
+<div class="section-desc">5分钟 · AI在数据分析中的强项和弱项</div>
+<div class="content">
+<h3>AI数据分析的边界</h3>
+<table class="cmp-table">
+<tr><th>AI能做</th><th>AI不能做</th></tr>
+<tr><td>基础统计分析（均值/相关性/回归）</td><td>选择最适合的分析方法（可能会推荐错的）</td></tr>
+<tr><td>生成图表代码</td><td>判断哪种图表形式最适合你的数据</td></tr>
+<tr><td>解读统计结果</td><td>判断你的研究设计是否有问题</td></tr>
+<tr><td>写描述性结果文本</td><td>做因果推断（没有实验设计的AI做不到）</td></tr>
+</table>
+<h3>学术AI的正确用法</h3>
+<ol>
+<li><strong>AI负责"怎么做"</strong> — 分析方法、代码、图表、统计</li>
+<li><strong>你负责"为什么"</strong> — 研究设计、方法选择、结果解释</li>
+<li><strong>AI出初稿，你改</strong> — 所有AI产出的结果你都要核实</li>
+</ol>
+<div class="callout callout-warn"><strong>底线：</strong>论文中的每一个数字、每一张图表都必须经你核实。AI算错了你要负责任。别把AI当"神圣的计算器"。</div>
+</div>
+</div>
+<div class="module section" data-tag="optional:consolidate" id="s-consolidate">
+<div class="section-title">🔁 巩固练习</div>
+<div class="section-desc">5分钟 · 跑一次AI数据分析全流程</div>
+<div class="content">
+<div class="callout callout-tip"><strong>明天做一次：</strong>找一份你手头的研究数据（或者随便编一组假数据），用今天的三个步骤完整走一遍：分析→图表→结果写作。</div>
+<h3>进阶挑战</h3>
+<div class="challenge"><div class="ch-title">✅ 挑战1：多方法对比</div><div class="ch-desc">同一组数据让AI分别用三种分析方法分析（比如t检验/ANOVA/线性回归），对比结果。你会理解"不同的分析方法告诉你的东西不一样"。</div></div>
+<div class="challenge"><div class="ch-title">✅ 挑战2：让AI教你统计学</div><div class="ch-desc">如果你不确定该用什么统计方法，把数据和研究设计发给AI："我想分析A对B的影响，样本量100人，分实验组和对照组。请推荐合适的统计方法并解释为什么。"</div></div>
+<div class="challenge"><div class="ch-title">✅ 挑战3：图表美化</div><div class="ch-desc">让AI生成的图表代码加上学术期刊风格的主题配色和字体。告诉AI"按Nature期刊的图表风格调整"。你会发现原来图表可以这么好看。</div></div>
+</div>
+</div>
+<div class="module section" data-tag="core:summary" style="background:linear-gradient(135deg,#e8f5e9,#c8e6c9);border:none;text-align:center">
+<h3 style="font-size:18px;margin-bottom:8px;color:#2e7d32">⚡ 记住一句话</h3>
+<p style="font-size:13px;color:#2e7d32;margin-bottom:8px">**AI做分析、出图表、写结果。你做核对、做判断、负全责。**</p>
+<div class="code-block" style="background:#fff;text-align:left">学术数据分析三步：
+1. 数据分析（描述性/相关性/差异检验）
+2. 可视化图表（Python代码生成）
+3. 结果写作（AI起草你核实）</div>
+<div style="margin-top:10px;font-size:15px;color:#2e7d32;font-weight:600">🎉 以后数据分析不再是最耗时的那一环</div>
+</div>
+</div>
+<div class="tip-box" id="tipBox"><div class="tip-title">📖 术语</div><button class="tip-close" id="tipClose">&times;</button><div id="tipDesc"></div></div>
+<script>
+(function(){
+  var tb=document.getElementById("tipBox"),td=document.getElementById("tipDesc"),tc=document.getElementById("tipClose");
+  if(tb&&td){
+    document.querySelectorAll("w").forEach(function(el){
+      el.addEventListener("click",function(e){
+        e.stopPropagation();td.textContent=this.getAttribute("d")||"暂无释义";tb.querySelector(".tip-title").textContent="📖 "+this.textContent.trim();
+        var r=this.getBoundingClientRect(),w=tb.offsetWidth||280,left=Math.max(10,Math.min(r.left+r.width/2-w/2,document.body.clientWidth-w-10)),top=r.top-8-tb.offsetHeight;
+        if(top<10)top=r.bottom+10;tb.style.left=left+"px";tb.style.top=top+"px";tb.style.display="block";
+        document.querySelectorAll("w.active").forEach(function(w){w.classList.remove("active")});this.classList.add("active");
+      });
+    });
+    function ht(){tb.style.display="none";document.querySelectorAll("w.active").forEach(function(w){w.classList.remove("active")})}
+    tc.addEventListener("click",ht);document.addEventListener("click",function(e){if(!e.target.closest("w")&&!e.target.closest(".tip-box"))ht()});document.addEventListener("keydown",function(e){if(e.key==="Escape")ht()});
+  }
+  var nav=document.getElementById("stepNav");
+  if(nav){
+    var S=["s-explain","s-practice","s-insight","s-consolidate"];
+    nav.addEventListener("click",function(e){var it=e.target.closest(".sn-item");if(!it)return;var id=it.getAttribute("data-step"),el=document.getElementById(id);if(el)el.scrollIntoView({behavior:"smooth",block:"start"});var idx=S.indexOf(id);for(var i=0;i<nav.children.length;i++)nav.children[i].classList.toggle("active",i===idx);});
+    var st;function uas(){var bi=0,bd=Infinity;S.forEach(function(id,i){var el=document.getElementById(id);if(el){var t=Math.abs(el.getBoundingClientRect().top);if(t<bd){bd=t;bi=i}}});for(var i=0;i<nav.children.length;i++)nav.children[i].classList.toggle("active",i===bi);}
+    document.addEventListener("scroll",function(){clearTimeout(st);st=setTimeout(uas,100)});uas();
+  }
+})();
+</script>
+<script>
+(function(){
+  var p=new URLSearchParams(location.search),c=p.get("cut");
+  if(c){var INFO={"P:step1":{l:"数据分析",d:"让AI做描述性统计、相关性分析和差异检验"},"P:step2":{l:"生成图表",d:"用AI写代码生成学术图表（柱状图/散点图等）"},"P:step3":{l:"结果写作",d:"AI帮你起草论文的"结果与讨论"部分"}};var MSGS=["看起来你已经有一定基础了，帮你跳过基础","看来你对这部分比较熟悉了，跳过基础内容","你已经有不错的基础了，直接看后面的总结就好"];var E=[];tags=c.split(",");tags.forEach(function(t){t=t.trim();var n=INFO[t];if(n){var el=document.querySelector('[data-tag="'+t+'"]');if(el)E.push({el:el,info:n});}});if(E.length>0){E.forEach(function(x){var el=x.el,info=x.info,bar=document.createElement("div");bar.style.cssText="padding:10px 14px;margin:10px 0;border-radius:12px;background:rgba(255,149,0,.06);border:1.5px dashed rgba(255,149,0,.25);font-size:13px;cursor:pointer;transition:all .2s;user-select:none";bar.innerHTML='<div style="display:flex;align-items:center;justify-content:space-between"><span style="font-weight:600;color:#e65100">⏭ '+info.l+'<span style="font-size:11px;color:rgba(230,81,0,.5);margin-left:8px">已跳过</span></span><span style="font-size:11px;color:rgba(230,81,0,.4)">▼ 展开</span></div>'+(info.d?'<div style="font-size:11px;color:rgba(0,0,0,.3);margin-top:3px;padding-left:24px">'+info.d+'</div>':'');var p=el.parentNode;if(p){p.insertBefore(bar,el);el.style.display="none";bar.onclick=function(){var h=el.style.display==="none";el.style.display=h?"":"none";bar.style.borderStyle=h?"solid":"dashed";bar.style.background=h?"rgba(255,149,0,.15)":"rgba(255,149,0,.06)";bar.querySelector("span:last-child").innerHTML=h?"▲ 收起":"▼ 展开";};}});var midx=Math.min(E.length-1,MSGS.length-1),msg=MSGS[midx];var ov=document.createElement("div");ov.id="skip-overlay";ov.style.cssText="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.25);z-index:10000;display:flex;align-items:center;justify-content:center;animation:fadeIn .3s ease";ov.innerHTML='<div style="background:#fff;border-radius:20px;padding:28px 24px;max-width:340px;width:90%;box-shadow:0 8px 40px rgba(0,0,0,.12);text-align:center"><div style="font-size:36px;margin-bottom:10px">👏</div><div style="font-size:16px;font-weight:600;margin-bottom:8px;color:#1d1d1f">已帮你跳过基础步骤</div><div style="font-size:13px;color:#636366;line-height:1.7">'+msg+'</div><button onclick="document.body.removeChild(document.getElementById(\'skip-overlay\'))" style="margin-top:14px;padding:9px 28px;border:none;border-radius:12px;background:#007aff;color:#fff;font-size:14px;font-weight:600;cursor:pointer;box-shadow:0 4px 12px rgba(0,122,255,.25)">好的，开始学习</button><span onclick="document.body.removeChild(document.getElementById(\'skip-overlay\'))" style="position:absolute;top:10px;right:14px;cursor:pointer;font-size:18px;color:rgba(0,0,0,.2)">&times;</span></div>';ov.onclick=function(e){if(e.target===ov)document.body.removeChild(ov);};document.body.appendChild(ov);var st=document.createElement("style");st.textContent="@keyframes fadeIn{from{opacity:0}to{opacity:1}}";document.head.appendChild(st);}
+  }
+})();
+</script>
+</body>
+</html>

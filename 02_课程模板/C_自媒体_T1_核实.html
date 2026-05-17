@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI学程 — 自媒体避坑：AI内容审核</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;background:#f5f7fa;color:#1d1d1f;padding-bottom:60px}
+  .header{background:linear-gradient(135deg,#1d1d1f 0%,#3a3a3c 100%);color:#fff;padding:32px 20px 28px;text-align:center}
+  .header .badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(255,255,255,.12);margin-bottom:10px;color:rgba(255,255,255,.7)}
+  .header h1{font-size:22px;font-weight:700;margin-bottom:6px;letter-spacing:-.3px}
+  .header .meta{font-size:13px;color:rgba(255,255,255,.55);display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+  .header .meta span{display:inline-flex;align-items:center;gap:4px}
+  .header .tag-free{display:inline-block;padding:4px 12px;border-radius:20px;background:rgba(52,199,89,.2);color:#34c759;font-size:12px;font-weight:600;margin-top:12px}
+  .container{max-width:680px;margin:0 auto;padding:0 16px}
+  .step-nav{display:flex;gap:8px;padding:16px 0;overflow-x:auto;position:sticky;top:0;background:#f5f7fa;z-index:10;border-bottom:1px solid rgba(0,0,0,.06)}
+  .step-nav .sn-item{flex:1;min-width:0;padding:8px 6px;border-radius:10px;border:1.5px solid #e5e5ea;font-size:11px;text-align:center;transition:all .15s;white-space:nowrap;background:rgba(255,255,255,.6);color:#636366;cursor:pointer}
+  .step-nav .sn-item.active{border-color:#007aff;background:#e8f2ff;color:#007aff;font-weight:600}
+  .step-nav .sn-item .sn-icon{display:block;font-size:14px;margin-bottom:2px}
+  .section{margin:16px 0;background:rgba(255,255,255,.85);backdrop-filter:blur(20px);border-radius:20px;padding:20px;border:1px solid rgba(255,255,255,.6);box-shadow:0 2px 12px rgba(0,0,0,.04)}
+  .section-title{font-size:16px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .section-desc{font-size:13px;color:#636366;margin-bottom:10px;line-height:1.6}
+  .content{font-size:14px;line-height:1.8;color:#1d1d1f}
+  .content h3{font-size:15px;margin:16px 0 6px}
+  .content p{margin-bottom:8px}
+  .content ul,.content ol{padding-left:18px;margin-bottom:10px}
+  .content li{margin-bottom:4px}
+  .callout{padding:12px 14px;border-radius:12px;margin:12px 0;font-size:13px;line-height:1.6;border-left:3px solid}
+  .callout-tip{background:rgba(0,122,255,.06);border-color:#007aff;color:#1d1d1f}
+  .callout-warn{background:rgba(255,149,0,.08);border-color:#ff9500;color:#1d1d1f}
+  .callout-danger{background:rgba(255,59,48,.06);border-color:#ff3b30;color:#1d1d1f}
+  .callout-green{background:rgba(52,199,89,.08);border-color:#34c759;color:#1d1d1f}
+  .code-block{background:#f0f2f5;border-radius:10px;padding:12px 14px;font-family:'Courier New',monospace;font-size:13px;line-height:1.6;white-space:pre-wrap;word-break:break-word;margin:8px 0}
+  .cmp-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
+  .cmp-table th,.cmp-table td{padding:8px 10px;border:1px solid #e5e5ea;text-align:left}
+  .cmp-table th{background:rgba(0,0,0,.03);font-weight:600;font-size:12px;color:#636366}
+  .challenge{background:rgba(255,255,255,.4);border:1px solid #e5e5ea;border-radius:12px;padding:12px 14px;margin:8px 0}
+  .challenge .ch-title{font-weight:600;font-size:13px;margin-bottom:4px}
+  .challenge .ch-desc{font-size:12px;color:#636366;line-height:1.5}
+  .step-box{background:rgba(0,122,255,.04);border-radius:12px;padding:14px;margin:10px 0;border:1px solid rgba(0,122,255,.12)}
+  .step-box .step-num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:#007aff;color:#fff;font-size:12px;font-weight:700;margin-right:6px;flex-shrink:0}
+  .step-box .step-title{font-weight:600;font-size:14px;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+  .step-box .step-body{font-size:13px;line-height:1.7;color:#1d1d1f}
+  .goal-list{display:flex;flex-direction:column;gap:6px;margin:10px 0}
+  .goal-item{display:flex;align-items:center;gap:8px;font-size:13px;padding:4px 0}
+  .goal-check{width:18px;height:18px;border-radius:50%;background:#34c759;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+  .ex-pair{display:flex;flex-direction:column;gap:8px;margin:10px 0}
+  .ex-item{padding:10px 12px;border-radius:10px;font-size:13px;line-height:1.6;border:1px solid}
+  .ex-bad{background:rgba(255,59,48,.04);border-color:rgba(255,59,48,.15)}
+  .ex-bad .ex-label{color:#ff3b30;font-weight:600;margin-bottom:4px}
+  .ex-good{background:rgba(52,199,89,.06);border-color:rgba(52,199,89,.2)}
+  .ex-good .ex-label{color:#34c759;font-weight:600;margin-bottom:4px}
+  w{cursor:pointer;border-bottom:1.5px dashed #007aff;color:#007aff;font-weight:500;position:relative;transition:background .15s}
+  w:hover{background:rgba(0,122,255,.06)}
+  w.active{background:rgba(0,122,255,.12)}
+  .tip-box{position:fixed;z-index:9999;display:none;background:#1d1d1f;color:#fff;border-radius:10px;padding:10px 14px;max-width:300px;font-size:13px;line-height:1.6;box-shadow:0 8px 24px rgba(0,0,0,.2);animation:tipIn .2s ease}
+  .tip-box .tip-title{font-weight:600;margin-bottom:3px;color:rgba(255,255,255,.6);font-size:11px}
+  .tip-box .tip-close{position:absolute;top:6px;right:8px;cursor:pointer;font-size:14px;color:rgba(255,255,255,.4);line-height:1;border:none;background:none;padding:2px}
+  .tip-box .tip-close:hover{color:#fff}
+  .tip-box::after{content:'';position:absolute;left:50%;bottom:-6px;margin-left:-6px;border:6px solid transparent;border-top-color:#1d1d1f}
+  @keyframes tipIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+<div class="header">
+<div class="badge">自媒体应用 · T1 基础免费</div>
+<h1>自媒体避坑：AI内容审核与事实核查</h1>
+<p style="font-size:14px;color:rgba(255,255,255,.7);margin-bottom:8px">AI写的东西直接发？先过这三关</p>
+<div class="meta">
+<span>⏱ 约25分钟</span>
+<span>📄 图文课</span>
+<span>🛠 需AI聊天工具</span>
+</div>
+<div class="tag-free">🆓 免费</div>
+</div>
+<div class="container">
+<div class="step-nav" id="stepNav"><div class="sn-item active" data-step="s-explain"><span class="sn-icon">📌</span>为什么</div><div class="sn-item" data-step="s-practice"><span class="sn-icon">🎯</span>实操</div><div class="sn-item" data-step="s-insight"><span class="sn-icon">💡</span>原理</div><div class="sn-item" data-step="s-consolidate"><span class="sn-icon">🔁</span>巩固</div></div>
+<div class="module section" data-tag="core:explain" id="s-explain">
+<div class="section-title">📌 AI内容发的越快，翻车越快</div>
+<div class="section-desc">3分钟 · 为什么AI写的内容不能直接发</div>
+<div class="content">
+<p>用AI做内容的自媒体人越来越多，翻车的也越来越多：</p>
+<ul>
+<li>AI编造了一个"专家观点"直接发出，被扒出来是AI胡说的</li>
+<li>AI引用的数据查无来源，被同行打脸</li>
+<li>AI写的内容涉嫌洗稿，被平台判定违规</li>
+<li>AI生成的图片带了<w d="知识产权，未经授权使用会侵权">版权</w>风险</li>
+</ul>
+<p>AI是一个优秀的"初稿生成器"，但它不会主动告诉你"这条信息是我编的"。发出去的账号是你的，出事了是你负责。</p>
+<p>这节课教你发AI内容之前，必须做哪几步核查。</p>
+<h3>这节课学完你能做到</h3>
+<div class="goal-list"><div class="goal-item"><span class="goal-check">✓</span> 发AI内容前做事实核查，避免翻车</div><div class="goal-item"><span class="goal-check">✓</span> 识别AI常见的编造套路和风险点</div><div class="goal-item"><span class="goal-check">✓</span> 建立自己的"发稿前核查清单"</div></div>
+</div>
+</div>
+<div class="module section" data-tag="P:practice" id="s-practice">
+<div class="section-title">🎯 动手实操</div>
+<div class="section-desc">15分钟 · 三关核查法：事实·原创·合规</div>
+<div class="content">
+<div class="module" data-tag="P:step1"><div class="step-box">
+<div class="step-title"><span class="step-num">1</span> 事实关：AI有没有胡说</div>
+<div class="step-body">
+<p>AI最爱编造的有三类：</p>
+<table class="cmp-table">
+<tr><th>编造类型</th><th>例子</th><th>怎么排查</th></tr>
+<tr><td><strong>凭空捏造的引用</strong></td><td>"某专家在2023年发表研究指出..."</td><td>搜这个专家+关键词，看有没有这篇论文</td></tr>
+<tr><td><strong>错误的数据</strong></td><td>"据统计90%的用户..."</td><td>找到原始数据来源对比</td></tr>
+<tr><td><strong>张冠李戴的事实</strong></td><td>"乔布斯说过..."</td><td>搜原话出处，几乎肯定是AI编的鸡汤</td></tr>
+</table>
+<div class="code-block">每次AI写的内容发之前，挑出文中所有"事实性陈述"——
+人名、数字、日期、引用、统计数据。
+打开搜索引擎，一个一个查。
+如果找不到确切来源 → 删掉或注明"据AI生成，请核实"。</div>
+<div class="callout callout-danger"><strong>真实案例：</strong>某头部科技号用AI写了一篇"解读苹果新品"，AI编了一个"内部人士透露"的细节，文章被苹果官方辟谣，号被封7天。</div>
+</div>
+</div></div>
+<div class="module" data-tag="P:step2"><div class="step-box">
+<div class="step-title"><span class="step-num">2</span> 原创关：有没有撞车或洗稿</div>
+<div class="step-body">
+<p>AI的训练数据来自互联网上已有的内容。当它"写"一篇文章时，可能：</p>
+<ul>
+<li>直接套用了一个知名博主的结构和论点</li>
+<li>多处语句和某篇已有文章相似</li>
+<li>核心观点是别人已经发过的</li>
+</ul>
+<h3 style="margin:10px 0 4px">快速自查方法：</h3>
+<div class="code-block">把AI写的文章的核心段落（200字左右），复制到搜索引擎搜。
+如果出现大量高度相似的内容 → 重新改写。</div>
+<div class="callout callout-tip"><strong>改写技巧：</strong>让AI"用你的个人经历重新组织内容"或"换一个完全不同的切入角度"。加上你真实的体验和观点，才是真正的原创。</div>
+</div>
+</div></div>
+<div class="module" data-tag="P:step3"><div class="step-box">
+<div class="step-title"><span class="step-num">3</span> 合规关：平台规则和版权</div>
+<div class="step-body">
+<p>各大平台对AI内容的要求越来越严格：</p>
+<table class="cmp-table">
+<tr><th>平台</th><th>AI内容政策</th><th>违规后果</th></tr>
+<tr><td>公众号</td><td>需标注AI辅助生成</td><td>限流、删文</td></tr>
+<tr><td>小红书</td><td>AI内容需人工审核后发布</td><td>被标记"AI生成"后流量下降</td></tr>
+<tr><td>抖音</td><td>AI生成内容需显著标识</td><td>下架、封号</td></tr>
+<tr><td>头条号</td><td>鼓励AI辅助但需原创性</td><td>降权</td></tr>
+</table>
+<h3 style="margin:10px 0 4px">版权风险特别提醒：</h3>
+<ul>
+<li>AI生成的图片风格模仿知名插画师，可能侵权</li>
+<li>AI"参考"了受版权保护的资料，你发出来就是你侵权</li>
+<li>用真人照片生成AI风格化内容，涉及肖像权</li>
+</ul>
+<div class="callout callout-warn"><strong>安全做法：</strong>AI内容当"初稿"用，加上你自己的采访/体验/数据，既提升原创性又降低风险。</div>
+</div>
+</div></div>
+</div>
+</div>
+<div class="module section" data-tag="core:insight" id="s-insight">
+<div class="section-title">💡 理解为什么</div>
+<div class="section-desc">5分钟 · 自媒体AI内容风险的根源</div>
+<div class="content">
+<h3>AI不是"作者"，是"内容生成器"</h3>
+<p>很多人把AI当成了一个"写手"，但AI不具备这些能力：</p>
+<ul>
+<li><strong>不知道真假</strong> — 它只是根据概率选择最可能的下一句话，不是根据事实</li>
+<li><strong>没有原创意识</strong> — 它分不清"已经有人写过"和"没人写过"</li>
+<li><strong>不懂平台规则</strong> — 它不知道你所在的平台对AI内容的具体要求</li>
+<li><strong>不记得参考来源</strong> — 它的训练数据来自哪里它自己也不知道</li>
+</ul>
+<h3>跟其他L课的区别</h3>
+<ul>
+<li><strong>A·L日常核实</strong> — 核实日常信息（菜谱、百科、天气预报）</li>
+<li><strong>B·L职场核实</strong> — 核实工作中的信息（报告、邮件、数据）</li>
+<li><strong>D·L搞钱核实</strong> — 识别虚假项目和骗局</li>
+<li><strong>F·L学术核实</strong> — 核实论文引用和学术数据</li>
+<li><strong>这节C·L自媒体核实</strong> — 聚焦"发出去的内容"的事前审查，重点是事实核查+原创性+平台合规</li>
+</ul>
+<div class="callout callout-warn"><strong>记住：</strong>AI是你的"初稿助手"，你是内容的"最终责任人"。有这句话垫底，你发什么都安心。</div>
+</div>
+</div>
+<div class="module section" data-tag="optional:consolidate" id="s-consolidate">
+<div class="section-title">🔁 巩固练习</div>
+<div class="section-desc">5分钟 · 建立你的发稿核查清单</div>
+<div class="content">
+<div class="callout callout-tip"><strong>明天做一次：</strong>用AI写一篇文章，然后对照三关核查法检查一遍。记录检查出多少问题。</div>
+<h3>进阶挑战</h3>
+<div class="challenge"><div class="ch-title">✅ 挑战1：揪出AI编造的引用</div><div class="ch-desc">让AI写一篇"行业分析文章"，然后找出文中所有人名、数据、引用来核实。你大概率能找到1-2个AI编的。</div></div>
+<div class="challenge"><div class="ch-title">✅ 挑战2：同题原创对比</div><div class="ch-desc">让AI写一个选题的文章，同时自己写一篇。对比AI的内容和你自己的原创，看看AI在哪些地方"偷懒"了。</div></div>
+<div class="challenge"><div class="ch-title">✅ 挑战3：建立核查清单</div><div class="ch-desc">把三关核查法做成一个清单（事实/原创/合规），打印或存备忘录。以后每次发AI内容前，花3分钟过一遍。</div></div>
+</div>
+</div>
+<div class="module section" data-tag="core:summary" style="background:linear-gradient(135deg,#e8f5e9,#c8e6c9);border:none;text-align:center">
+<h3 style="font-size:18px;margin-bottom:8px;color:#2e7d32">⚡ 记住一句话</h3>
+<p style="font-size:13px;color:#2e7d32;margin-bottom:8px">**AI写初稿，你做审核。发出去的是你的名字，不是AI的。**</p>
+<div class="code-block" style="background:#fff;text-align:left">AI内容三关核查法：
+1. 事实关：人名/数据/引用 → 逐个搜
+2. 原创关：核心段落 → 搜雷同内容
+3. 合规关：平台规则 + 版权风险</div>
+<div style="margin-top:10px;font-size:15px;color:#2e7d32;font-weight:600">🎉 以后发AI内容，心里有底了</div>
+</div>
+</div>
+<div class="tip-box" id="tipBox"><div class="tip-title">📖 术语</div><button class="tip-close" id="tipClose">&times;</button><div id="tipDesc"></div></div>
+<script>
+(function(){
+  var tb=document.getElementById("tipBox"),td=document.getElementById("tipDesc"),tc=document.getElementById("tipClose");
+  if(tb&&td){
+    document.querySelectorAll("w").forEach(function(el){
+      el.addEventListener("click",function(e){
+        e.stopPropagation();td.textContent=this.getAttribute("d")||"暂无释义";tb.querySelector(".tip-title").textContent="📖 "+this.textContent.trim();
+        var r=this.getBoundingClientRect(),w=tb.offsetWidth||280,left=Math.max(10,Math.min(r.left+r.width/2-w/2,document.body.clientWidth-w-10)),top=r.top-8-tb.offsetHeight;
+        if(top<10)top=r.bottom+10;tb.style.left=left+"px";tb.style.top=top+"px";tb.style.display="block";
+        document.querySelectorAll("w.active").forEach(function(w){w.classList.remove("active")});this.classList.add("active");
+      });
+    });
+    function ht(){tb.style.display="none";document.querySelectorAll("w.active").forEach(function(w){w.classList.remove("active")})}
+    tc.addEventListener("click",ht);document.addEventListener("click",function(e){if(!e.target.closest("w")&&!e.target.closest(".tip-box"))ht()});document.addEventListener("keydown",function(e){if(e.key==="Escape")ht()});
+  }
+  var nav=document.getElementById("stepNav");
+  if(nav){
+    var S=["s-explain","s-practice","s-insight","s-consolidate"];
+    nav.addEventListener("click",function(e){var it=e.target.closest(".sn-item");if(!it)return;var id=it.getAttribute("data-step"),el=document.getElementById(id);if(el)el.scrollIntoView({behavior:"smooth",block:"start"});var idx=S.indexOf(id);for(var i=0;i<nav.children.length;i++)nav.children[i].classList.toggle("active",i===idx);});
+    var st;function uas(){var bi=0,bd=Infinity;S.forEach(function(id,i){var el=document.getElementById(id);if(el){var t=Math.abs(el.getBoundingClientRect().top);if(t<bd){bd=t;bi=i}}});for(var i=0;i<nav.children.length;i++)nav.children[i].classList.toggle("active",i===bi);}
+    document.addEventListener("scroll",function(){clearTimeout(st);st=setTimeout(uas,100)});uas();
+  }
+})();
+</script>
+<script>
+(function(){
+  var p=new URLSearchParams(location.search),c=p.get("cut");
+  if(c){var INFO={"P:step1":{l:"第一关·事实核查",d:"挑出所有事实性陈述，逐个搜索验证"},"P:step2":{l:"第二关·原创性检查",d:"核心段落搜雷同，避免洗稿风险"},"P:step3":{l:"第三关·合规检查",d:"平台规则+版权风险，避免违规罚分"}};var MSGS=["看起来你已经有一定基础了，帮你跳过基础","看来你对这部分比较熟悉了，跳过基础内容","你已经有不错的基础了，直接看后面的总结就好"];var E=[];tags=c.split(",");tags.forEach(function(t){t=t.trim();var n=INFO[t];if(n){var el=document.querySelector('[data-tag="'+t+'"]');if(el)E.push({el:el,info:n});}});if(E.length>0){E.forEach(function(x){var el=x.el,info=x.info,bar=document.createElement("div");bar.style.cssText="padding:10px 14px;margin:10px 0;border-radius:12px;background:rgba(255,149,0,.06);border:1.5px dashed rgba(255,149,0,.25);font-size:13px;cursor:pointer;transition:all .2s;user-select:none";bar.innerHTML='<div style="display:flex;align-items:center;justify-content:space-between"><span style="font-weight:600;color:#e65100">⏭ '+info.l+'<span style="font-size:11px;color:rgba(230,81,0,.5);margin-left:8px">已跳过</span></span><span style="font-size:11px;color:rgba(230,81,0,.4)">▼ 展开</span></div>'+(info.d?'<div style="font-size:11px;color:rgba(0,0,0,.3);margin-top:3px;padding-left:24px">'+info.d+'</div>':'');var p=el.parentNode;if(p){p.insertBefore(bar,el);el.style.display="none";bar.onclick=function(){var h=el.style.display==="none";el.style.display=h?"":"none";bar.style.borderStyle=h?"solid":"dashed";bar.style.background=h?"rgba(255,149,0,.15)":"rgba(255,149,0,.06)";bar.querySelector("span:last-child").innerHTML=h?"▲ 收起":"▼ 展开";};}});var midx=Math.min(E.length-1,MSGS.length-1),msg=MSGS[midx];var ov=document.createElement("div");ov.id="skip-overlay";ov.style.cssText="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.25);z-index:10000;display:flex;align-items:center;justify-content:center;animation:fadeIn .3s ease";ov.innerHTML='<div style="background:#fff;border-radius:20px;padding:28px 24px;max-width:340px;width:90%;box-shadow:0 8px 40px rgba(0,0,0,.12);text-align:center"><div style="font-size:36px;margin-bottom:10px">👏</div><div style="font-size:16px;font-weight:600;margin-bottom:8px;color:#1d1d1f">已帮你跳过基础步骤</div><div style="font-size:13px;color:#636366;line-height:1.7">'+msg+'</div><button onclick="document.body.removeChild(document.getElementById(\'skip-overlay\'))" style="margin-top:14px;padding:9px 28px;border:none;border-radius:12px;background:#007aff;color:#fff;font-size:14px;font-weight:600;cursor:pointer;box-shadow:0 4px 12px rgba(0,122,255,.25)">好的，开始学习</button><span onclick="document.body.removeChild(document.getElementById(\'skip-overlay\'))" style="position:absolute;top:10px;right:14px;cursor:pointer;font-size:18px;color:rgba(0,0,0,.2)">&times;</span></div>';ov.onclick=function(e){if(e.target===ov)document.body.removeChild(ov);};document.body.appendChild(ov);var st=document.createElement("style");st.textContent="@keyframes fadeIn{from{opacity:0}to{opacity:1}}";document.head.appendChild(st);}
+  }
+})();
+</script>
+</body>
+</html>

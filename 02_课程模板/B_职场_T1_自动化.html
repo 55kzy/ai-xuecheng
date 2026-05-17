@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI学程 — 职场人零代码自动化</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;background:#f5f7fa;color:#1d1d1f;padding-bottom:60px}
+  .header{background:linear-gradient(135deg,#1d1d1f 0%,#3a3a3c 100%);color:#fff;padding:32px 20px 28px;text-align:center}
+  .header .badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(255,255,255,.12);margin-bottom:10px;color:rgba(255,255,255,.7)}
+  .header h1{font-size:22px;font-weight:700;margin-bottom:6px;letter-spacing:-.3px}
+  .header .meta{font-size:13px;color:rgba(255,255,255,.55);display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+  .header .meta span{display:inline-flex;align-items:center;gap:4px}
+  .header .tag-free{display:inline-block;padding:4px 12px;border-radius:20px;background:rgba(52,199,89,.2);color:#34c759;font-size:12px;font-weight:600;margin-top:12px}
+  .container{max-width:680px;margin:0 auto;padding:0 16px}
+  .step-nav{display:flex;gap:8px;padding:16px 0;overflow-x:auto;position:sticky;top:0;background:#f5f7fa;z-index:10;border-bottom:1px solid rgba(0,0,0,.06)}
+  .step-nav .sn-item{flex:1;min-width:0;padding:8px 6px;border-radius:10px;border:1.5px solid #e5e5ea;font-size:11px;text-align:center;transition:all .15s;white-space:nowrap;background:rgba(255,255,255,.6);color:#636366;cursor:pointer}
+  .step-nav .sn-item.active{border-color:#007aff;background:#e8f2ff;color:#007aff;font-weight:600}
+  .step-nav .sn-item .sn-icon{display:block;font-size:14px;margin-bottom:2px}
+  .section{margin:16px 0;background:rgba(255,255,255,.85);backdrop-filter:blur(20px);border-radius:20px;padding:20px;border:1px solid rgba(255,255,255,.6);box-shadow:0 2px 12px rgba(0,0,0,.04)}
+  .section-title{font-size:16px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .section-desc{font-size:13px;color:#636366;margin-bottom:10px;line-height:1.6}
+  .content{font-size:14px;line-height:1.8;color:#1d1d1f}
+  .content h3{font-size:15px;margin:16px 0 6px}
+  .content p{margin-bottom:8px}
+  .content ul,.content ol{padding-left:18px;margin-bottom:10px}
+  .content li{margin-bottom:4px}
+  .callout{padding:12px 14px;border-radius:12px;margin:12px 0;font-size:13px;line-height:1.6;border-left:3px solid}
+  .callout-tip{background:rgba(0,122,255,.06);border-color:#007aff;color:#1d1d1f}
+  .callout-warn{background:rgba(255,149,0,.08);border-color:#ff9500;color:#1d1d1f}
+  .callout-green{background:rgba(52,199,89,.08);border-color:#34c759;color:#1d1d1f}
+  .code-block{background:#f0f2f5;border-radius:10px;padding:12px 14px;font-family:'Courier New',monospace;font-size:13px;line-height:1.6;white-space:pre-wrap;word-break:break-word;margin:8px 0}
+  .cmp-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
+  .cmp-table th,.cmp-table td{padding:8px 10px;border:1px solid #e5e5ea;text-align:left}
+  .cmp-table th{background:rgba(0,0,0,.03);font-weight:600;font-size:12px;color:#636366}
+  .challenge{background:rgba(255,255,255,.4);border:1px solid #e5e5ea;border-radius:12px;padding:12px 14px;margin:8px 0}
+  .challenge .ch-title{font-weight:600;font-size:13px;margin-bottom:4px}
+  .challenge .ch-desc{font-size:12px;color:#636366;line-height:1.5}
+  .step-box{background:rgba(0,122,255,.04);border-radius:12px;padding:14px;margin:10px 0;border:1px solid rgba(0,122,255,.12)}
+  .step-box .step-num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:#007aff;color:#fff;font-size:12px;font-weight:700;margin-right:6px;flex-shrink:0}
+  .step-box .step-title{font-weight:600;font-size:14px;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+  .step-box .step-body{font-size:13px;line-height:1.7;color:#1d1d1f}
+  .goal-list{display:flex;flex-direction:column;gap:6px;margin:10px 0}
+  .goal-item{display:flex;align-items:center;gap:8px;font-size:13px;padding:4px 0}
+  .goal-check{width:18px;height:18px;border-radius:50%;background:#34c759;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+  w{cursor:pointer;border-bottom:1.5px dashed #007aff;color:#007aff;font-weight:500;position:relative;transition:background .15s}
+  w:hover{background:rgba(0,122,255,.06)}
+  w.active{background:rgba(0,122,255,.12)}
+  .tip-box{position:fixed;z-index:9999;display:none;background:#1d1d1f;color:#fff;border-radius:10px;padding:10px 14px;max-width:300px;font-size:13px;line-height:1.6;box-shadow:0 8px 24px rgba(0,0,0,.2);animation:tipIn .2s ease}
+  .tip-box .tip-title{font-weight:600;margin-bottom:3px;color:rgba(255,255,255,.6);font-size:11px}
+  .tip-box .tip-close{position:absolute;top:6px;right:8px;cursor:pointer;font-size:14px;color:rgba(255,255,255,.4);line-height:1;border:none;background:none;padding:2px}
+  .tip-box .tip-close:hover{color:#fff}
+  .tip-box::after{content:'';position:absolute;left:50%;bottom:-6px;margin-left:-6px;border:6px solid transparent;border-top-color:#1d1d1f}
+  @keyframes tipIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+<div class="header">
+<div class="badge">职场应用 · T1 基础免费</div>
+<h1>职场人零代码自动化</h1>
+<p style="font-size:14px;color:rgba(255,255,255,.7);margin-bottom:8px">不写代码，用AI搭出解放双手的"提效流水线"</p>
+<div class="meta">
+<span>⏱ 约25分钟</span>
+<span>📄 图文课</span>
+<span>🛠 需AI聊天工具+浏览器</span>
+</div>
+<div class="tag-free">🆓 免费</div>
+</div>
+<div class="container">
+<div class="step-nav" id="stepNav"><div class="sn-item active" data-step="s-explain"><span class="sn-icon">📌</span>为什么</div><div class="sn-item" data-step="s-practice"><span class="sn-icon">🎯</span>实操</div><div class="sn-item" data-step="s-insight"><span class="sn-icon">💡</span>原理</div><div class="sn-item" data-step="s-consolidate"><span class="sn-icon">🔁</span>巩固</div></div>
+<div class="module section" data-tag="core:explain" id="s-explain">
+<div class="section-title">📌 重复的事不该你来做</div>
+<div class="section-desc">3分钟 · 职场80%的重复工作，AI+简单工具就能自动化</div>
+<div class="content">
+<p>职场人每天在重复做的事：</p>
+<ul>
+<li>把A表格的数据复制到B表格</li>
+<li>每天手动发一样的消息、回一样的问题</li>
+<li>整理零散信息做成固定格式的文档</li>
+<li>把邮件/消息中的信息提取出来填入系统</li>
+</ul>
+<p>这些事做一次花5分钟，但每周做10次就是50分钟。<strong>AI不是帮你"做更快"，是帮你"不用做"。</strong></p>
+<p>这节课教你用AI搭配浏览器插件和简单工具，搭出你的"自动化工位"——不需要写一行代码。</p>
+<h3>这节课学完你能做到</h3>
+<div class="goal-list"><div class="goal-item"><span class="goal-check">✓</span> 搭一个"周报自动生成"的简易工作流</div><div class="goal-item"><span class="goal-check">✓</span> 学会用AI批量处理文档/表格</div><div class="goal-item"><span class="goal-check">✓</span> 知道哪些重复工作可以用AI自动化</div></div>
+</div>
+</div>
+<div class="module section" data-tag="P:practice" id="s-practice">
+<div class="section-title">🎯 动手实操</div>
+<div class="section-desc">15分钟 · 搭三个实用的自动化小工具</div>
+<div class="content">
+<div class="module" data-tag="P:step1"><div class="step-box">
+<div class="step-title"><span class="step-num">1</span> 批量处理：让AI一次处理100条数据</div>
+<div class="step-body">
+<p>不用学Python，用AI的对话窗口就能做批量处理。</p>
+<h3 style="margin:10px 0 4px">实战：把一堆零散信息整理成表格</h3>
+<div class="code-block">我有以下客户反馈，请帮我整理成表格，列：客户ID/问题描述/优先级/建议方案
+
+反馈1：李总说网站加载太慢了，影响销售
+反馈2：王姐说找不到退货入口
+反馈3：张经理反映后台导出数据会乱码
+反馈4：小刘说登录页面在手机上显示不全</div>
+<p>AI会直接给你一个整洁的表格。更厉害的是——如果你有100条反馈，直接全贴进去，AI也能一次处理。</p>
+<div class="callout callout-tip"><strong>试试看：</strong>把你工作中需要整理的数据，按"原始信息 → 请帮我整理成XX格式"的模板发给AI。你会惊讶于它处理批量文字的能力。</div>
+</div>
+</div></div>
+<div class="module" data-tag="P:step2"><div class="step-box">
+<div class="step-title"><span class="step-num">2</span> 模板化：把周报/日报做成一键生成</div>
+<div class="step-body">
+<p>利用AI的<w d="AI能记住当前对话的上下文，你之前说过的信息它会参考">上下文记忆</w>，你可以搭一个"专属AI助理"。</p>
+<h3 style="margin:10px 0 4px">实战：建一个周报生成器</h3>
+<div class="code-block">从现在开始，每次我说"填周报"，你就按以下流程做：
+1. 问我"这周做了哪三件大事？"
+2. 我问你答，你追问细节（数据？进展？）
+3. 收集完信息后，按格式输出周报：
+【本周完成】【问题与风险】【下周计划】
+4. 语气正式，每条不超过2行
+
+我们先来演练一遍。填周报。</div>
+<p>保存这段对话，以后每周打开这个对话说"填周报"，它会像一个被你训练过的助理一样工作。</p>
+<div class="callout callout-warn"><strong>跟周报课的区别：</strong>B·P周报课教你怎么写好prompt让AI产出高质量周报。这节课教你怎么让AI替你"走流程"——你只提供信息，它自动走完整理和输出的全过程。</div>
+</div>
+</div></div>
+<div class="module" data-tag="P:step3"><div class="step-box">
+<div class="step-title"><span class="step-num">3</span> 联动：AI + 浏览器插件打通流程</div>
+<div class="step-body">
+<p>如果你会用浏览器插件，自动化程度可以再上一个台阶：</p>
+<h3 style="margin:10px 0 4px">推荐插件组合：</h3>
+<table class="cmp-table">
+<tr><th>工具</th><th>做什么</th><th>怎么用</th></tr>
+<tr><td><strong>沉浸式翻译</strong></td><td>一键翻译网页</td><td>看英文文档/邮件时自动翻译</td></tr>
+<tr><td><strong>AI总结器</strong></td><td>一键总结网页内容</td><td>看长文章/报告时让AI总结要点</td></tr>
+<tr><td><strong>ChatGPT for Google</strong></td><td>搜索结果旁显示AI回答</td><td>搜东西时不用一个个点开看了</td></tr>
+</table>
+<p>安装方式：打开Edge/Chrome扩展商店 → 搜以上名称 → 添加扩展。</p>
+<div class="callout callout-green"><strong>好习惯：</strong>每周选一个重复任务，问AI"这个能自动化吗？" 坚持一个月，你至少省出5小时。</div>
+</div>
+</div></div>
+</div>
+</div>
+<div class="module section" data-tag="core:insight" id="s-insight">
+<div class="section-title">💡 理解为什么</div>
+<div class="section-desc">5分钟 · 自动化的本质是把"你做"变成"你指挥"</div>
+<div class="content">
+<h3>AI自动化三原则</h3>
+<ol>
+<li><strong>重复的事 → AI做</strong> — 格式统一、信息变化不大的任务最适合</li>
+<li><strong>决策的事 → 你做</strong> — AI提供建议，最终决定权在你</li>
+<li><strong>流程固定 → 模板化</strong> — 做一次，保存为模板，以后直接用</li>
+</ol>
+<h3>跟已有课的区别</h3>
+<ul>
+<li><strong>B·K工具箱课</strong> — 教你选什么AI工具（认知层面）</li>
+<li><strong>B·P周报课</strong> — 教你怎么写好prompt（输入技巧）</li>
+<li><strong>B·L核实课</strong> — 教你验证AI输出（质量把控）</li>
+<li><strong>这节B·T自动化课</strong> — 教你搭工作流让AI自动跑流程（技术操作）</li>
+</ul>
+<p>四节课构成完整闭环：<strong>选工具 → 输入 → 输出验证 → 流程自动化</strong>。</p>
+<div class="callout callout-warn"><strong>提醒：</strong>自动化的前提是你已经跑通过一次手动流程。先手动做一遍，做熟了再考虑让AI替你跑。</div>
+</div>
+</div>
+<div class="module section" data-tag="optional:consolidate" id="s-consolidate">
+<div class="section-title">🔁 巩固练习</div>
+<div class="section-desc">5分钟 · 明天找一个重复任务试试</div>
+<div class="content">
+<div class="callout callout-tip"><strong>明天做一次：</strong>找一件你每周都做的重复工作，用本节课的方法试着让AI帮你做一版。对比你自己做的时间 vs AI做的时间。</div>
+<h3>进阶挑战</h3>
+<div class="challenge"><div class="ch-title">✅ 挑战1：批量处理真实数据</div><div class="ch-desc">找一份你电脑里的真实数据（Excel复制出来的文本或一段聊天记录），让AI分析并整理成结构化信息。</div></div>
+<div class="challenge"><div class="ch-title">✅ 挑战2：建一个日报模板对话</div><div class="ch-desc">模仿周报生成器的方法，建一个"今日站会汇报"的模板对话。每天说一句"填站会"，AI引导你填完并输出。</div></div>
+<div class="challenge"><div class="ch-title">✅ 挑战3：发现自动化机会</div><div class="ch-desc">记录你本周做过的所有重复性工作。周末回看，标记出至少3件可以用AI做的，下周尝试自动化。</div></div>
+</div>
+</div>
+<div class="module section" data-tag="core:summary" style="background:linear-gradient(135deg,#e8f5e9,#c8e6c9);border:none;text-align:center">
+<h3 style="font-size:18px;margin-bottom:8px;color:#2e7d32">⚡ 记住一句话</h3>
+<p style="font-size:13px;color:#2e7d32;margin-bottom:8px">**重复的事让AI做，你去做只有你能做的事**</p>
+<div class="code-block" style="background:#fff;text-align:left">自动化三步：
+1. 识别重复任务（每周做了3次以上的事）
+2. 手动跑通一次流程
+3. 用AI模板化/批量处理</div>
+<div style="margin-top:10px;font-size:15px;color:#2e7d32;font-weight:600">🎉 今天少做一个重复任务，多做一个创造性任务</div>
+</div>
+</div>
+<div class="tip-box" id="tipBox"><div class="tip-title">📖 术语</div><button class="tip-close" id="tipClose">&times;</button><div id="tipDesc"></div></div>
+<script>
+(function(){
+  var tb=document.getElementById("tipBox"),td=document.getElementById("tipDesc"),tc=document.getElementById("tipClose");
+  if(tb&&td){
+    document.querySelectorAll("w").forEach(function(el){
+      el.addEventListener("click",function(e){
+        e.stopPropagation();td.textContent=this.getAttribute("d")||"暂无释义";tb.querySelector(".tip-title").textContent="📖 "+this.textContent.trim();
+        var r=this.getBoundingClientRect(),w=tb.offsetWidth||280,left=Math.max(10,Math.min(r.left+r.width/2-w/2,document.body.clientWidth-w-10)),top=r.top-8-tb.offsetHeight;
+        if(top<10)top=r.bottom+10;tb.style.left=left+"px";tb.style.top=top+"px";tb.style.display="block";
+        document.querySelectorAll("w.active").forEach(function(w){w.classList.remove("active")});this.classList.add("active");
+      });
+    });
+    function ht(){tb.style.display="none";document.querySelectorAll("w.active").forEach(function(w){w.classList.remove("active")})}
+    tc.addEventListener("click",ht);document.addEventListener("click",function(e){if(!e.target.closest("w")&&!e.target.closest(".tip-box"))ht()});document.addEventListener("keydown",function(e){if(e.key==="Escape")ht()});
+  }
+  var nav=document.getElementById("stepNav");
+  if(nav){
+    var S=["s-explain","s-practice","s-insight","s-consolidate"];
+    nav.addEventListener("click",function(e){var it=e.target.closest(".sn-item");if(!it)return;var id=it.getAttribute("data-step"),el=document.getElementById(id);if(el)el.scrollIntoView({behavior:"smooth",block:"start"});var idx=S.indexOf(id);for(var i=0;i<nav.children.length;i++)nav.children[i].classList.toggle("active",i===idx);});
+    var st;function uas(){var bi=0,bd=Infinity;S.forEach(function(id,i){var el=document.getElementById(id);if(el){var t=Math.abs(el.getBoundingClientRect().top);if(t<bd){bd=t;bi=i}}});for(var i=0;i<nav.children.length;i++)nav.children[i].classList.toggle("active",i===bi);}
+    document.addEventListener("scroll",function(){clearTimeout(st);st=setTimeout(uas,100)});uas();
+  }
+})();
+</script>
+<script>
+(function(){
+  var p=new URLSearchParams(location.search),c=p.get("cut");
+  if(c){var INFO={"P:step1":{l:"第一步·批量处理",d:"让AI一次处理大量数据，做成表格"},"P:step2":{l:"第二步·模板化流程",d:"让AI记住你的工作流，一键生成"},"P:step3":{l:"第三步·插件联动",d:"AI+浏览器插件打通自动化流程"}};var MSGS=["看起来你已经有基础了，帮你跳过基础操作","看来你对这部分比较熟悉了，跳过基础内容","你已经有不错的基础了，直接看后面的总结就好"];var E=[];tags=c.split(",");tags.forEach(function(t){t=t.trim();var n=INFO[t];if(n){var el=document.querySelector('[data-tag="'+t+'"]');if(el)E.push({el:el,info:n});}});if(E.length>0){E.forEach(function(x){var el=x.el,info=x.info,bar=document.createElement("div");bar.style.cssText="padding:10px 14px;margin:10px 0;border-radius:12px;background:rgba(255,149,0,.06);border:1.5px dashed rgba(255,149,0,.25);font-size:13px;cursor:pointer;transition:all .2s;user-select:none";bar.innerHTML='<div style="display:flex;align-items:center;justify-content:space-between"><span style="font-weight:600;color:#e65100">⏭ '+info.l+'<span style="font-size:11px;color:rgba(230,81,0,.5);margin-left:8px">已跳过</span></span><span style="font-size:11px;color:rgba(230,81,0,.4)">▼ 展开</span></div>'+(info.d?'<div style="font-size:11px;color:rgba(0,0,0,.3);margin-top:3px;padding-left:24px">'+info.d+'</div>':'');var p=el.parentNode;if(p){p.insertBefore(bar,el);el.style.display="none";bar.onclick=function(){var h=el.style.display==="none";el.style.display=h?"":"none";bar.style.borderStyle=h?"solid":"dashed";bar.style.background=h?"rgba(255,149,0,.15)":"rgba(255,149,0,.06)";bar.querySelector("span:last-child").innerHTML=h?"▲ 收起":"▼ 展开";};}});var midx=Math.min(E.length-1,MSGS.length-1),msg=MSGS[midx];var ov=document.createElement("div");ov.id="skip-overlay";ov.style.cssText="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.25);z-index:10000;display:flex;align-items:center;justify-content:center;animation:fadeIn .3s ease";ov.innerHTML='<div style="background:#fff;border-radius:20px;padding:28px 24px;max-width:340px;width:90%;box-shadow:0 8px 40px rgba(0,0,0,.12);text-align:center"><div style="font-size:36px;margin-bottom:10px">👏</div><div style="font-size:16px;font-weight:600;margin-bottom:8px;color:#1d1d1f">已帮你跳过基础步骤</div><div style="font-size:13px;color:#636366;line-height:1.7">'+msg+'</div><button onclick="document.body.removeChild(document.getElementById(\'skip-overlay\'))" style="margin-top:14px;padding:9px 28px;border:none;border-radius:12px;background:#007aff;color:#fff;font-size:14px;font-weight:600;cursor:pointer;box-shadow:0 4px 12px rgba(0,122,255,.25)">好的，开始学习</button><span onclick="document.body.removeChild(document.getElementById(\'skip-overlay\'))" style="position:absolute;top:10px;right:14px;cursor:pointer;font-size:18px;color:rgba(0,0,0,.2)">&times;</span></div>';ov.onclick=function(e){if(e.target===ov)document.body.removeChild(ov);};document.body.appendChild(ov);var st=document.createElement("style");st.textContent="@keyframes fadeIn{from{opacity:0}to{opacity:1}}";document.head.appendChild(st);}
+  }
+})();
+</script>
+</body>
+</html>

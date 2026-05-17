@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI学程 — 让AI写出你的风格</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;
+    background:#f5f7fa;color:#1d1d1f;padding-bottom:60px
+  }
+  .header{
+    background:linear-gradient(135deg,#1d1d1f 0%,#3a3a3c 100%);
+    color:#fff;padding:32px 20px 28px;text-align:center
+  }
+  .header .badge{
+    display:inline-block;padding:3px 10px;border-radius:20px;
+    font-size:11px;font-weight:600;background:rgba(255,255,255,.12);
+    margin-bottom:10px;color:rgba(255,255,255,.7)
+  }
+  .header h1{font-size:22px;font-weight:700;margin-bottom:6px;letter-spacing:-.3px}
+  .header .meta{font-size:13px;color:rgba(255,255,255,.55);display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+  .header .meta span{display:inline-flex;align-items:center;gap:4px}
+  .header .tag-free{
+    display:inline-block;padding:4px 12px;border-radius:20px;
+    background:rgba(52,199,89,.2);color:#34c759;font-size:12px;font-weight:600;margin-top:12px
+  }
+  .container{max-width:680px;margin:0 auto;padding:0 16px}
+  .step-nav{display:flex;gap:8px;padding:16px 0;overflow-x:auto;position:sticky;top:0;background:#f5f7fa;z-index:10;border-bottom:1px solid rgba(0,0,0,.06)}
+  .step-nav .sn-item{
+    flex:1;min-width:0;padding:8px 6px;border-radius:10px;border:1.5px solid #e5e5ea;
+    font-size:11px;text-align:center;transition:all .15s;white-space:nowrap;
+    background:rgba(255,255,255,.6);color:#636366
+  }
+  .step-nav .sn-item{cursor:pointer}
+  .step-nav .sn-item.active{border-color:#007aff;background:#e8f2ff;color:#007aff;font-weight:600}
+  .step-nav .sn-item .sn-icon{display:block;font-size:14px;margin-bottom:2px}
+  .section{margin:16px 0;background:rgba(255,255,255,.85);backdrop-filter:blur(20px);border-radius:20px;padding:20px;border:1px solid rgba(255,255,255,.6);box-shadow:0 2px 12px rgba(0,0,0,.04)}
+  .section-title{font-size:16px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .section-desc{font-size:13px;color:#636366;margin-bottom:10px;line-height:1.6}
+  .content{font-size:14px;line-height:1.8;color:#1d1d1f}
+  .content h3{font-size:15px;margin:16px 0 6px}
+  .content p{margin-bottom:8px}
+  .content ul,.content ol{padding-left:18px;margin-bottom:10px}
+  .content li{margin-bottom:4px}
+  w{
+    cursor:pointer;border-bottom:1.5px dashed #007aff;
+    color:#007aff;font-weight:500;position:relative;transition:background .15s
+  }
+  w:hover{background:rgba(0,122,255,.06)}
+  w.active{background:rgba(0,122,255,.12)}
+  .tip-box{
+    position:fixed;z-index:9999;display:none;
+    background:#1d1d1f;color:#fff;border-radius:10px;
+    padding:10px 14px;max-width:300px;
+    font-size:13px;line-height:1.6;
+    box-shadow:0 8px 24px rgba(0,0,0,.2);
+    animation:tipIn .2s ease
+  }
+  .tip-box .tip-title{font-weight:600;margin-bottom:3px;color:rgba(255,255,255,.6);font-size:11px}
+  .tip-box .tip-close{
+    position:absolute;top:6px;right:8px;
+    cursor:pointer;font-size:14px;color:rgba(255,255,255,.4);
+    line-height:1;border:none;background:none;padding:2px
+  }
+  .tip-box .tip-close:hover{color:#fff}
+  .tip-box::after{
+    content:'';position:absolute;left:50%;bottom:-6px;
+    margin-left:-6px;
+    border:6px solid transparent;border-top-color:#1d1d1f
+  }
+  @keyframes tipIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+  .callout{
+    padding:12px 14px;border-radius:12px;margin:12px 0;
+    font-size:13px;line-height:1.6;
+    border-left:3px solid
+  }
+  .callout-tip{background:rgba(0,122,255,.06);border-color:#007aff;color:#1d1d1f}
+  .callout-warn{background:rgba(255,149,0,.08);border-color:#ff9500;color:#1d1d1f}
+  .callout-danger{background:rgba(255,59,48,.06);border-color:#ff3b30;color:#1d1d1f}
+  .callout-green{background:rgba(52,199,89,.08);border-color:#34c759;color:#1d1d1f}
+  .code-block{
+    background:#f0f2f5;border-radius:10px;padding:12px 14px;
+    font-family:'Courier New',monospace;font-size:13px;line-height:1.6;
+    white-space:pre-wrap;word-break:break-word;margin:8px 0
+  }
+  .cmp-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
+  .cmp-table th,.cmp-table td{padding:8px 10px;border:1px solid #e5e5ea;text-align:left}
+  .cmp-table th{background:rgba(0,0,0,.03);font-weight:600;font-size:12px;color:#636366}
+  .challenge{
+    background:rgba(255,255,255,.4);border:1px solid #e5e5ea;border-radius:12px;
+    padding:12px 14px;margin:8px 0
+  }
+  .challenge .ch-title{font-weight:600;font-size:13px;margin-bottom:4px}
+  .challenge .ch-desc{font-size:12px;color:#636366;line-height:1.5}
+  .step-box{
+    background:rgba(0,122,255,.04);border-radius:12px;padding:14px;margin:10px 0;border:1px solid rgba(0,122,255,.12)
+  }
+  .step-box .step-num{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:22px;height:22px;border-radius:50%;background:#007aff;color:#fff;
+    font-size:12px;font-weight:700;margin-right:6px;flex-shrink:0
+  }
+  .step-box .step-title{font-weight:600;font-size:14px;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+  .step-box .step-body{font-size:13px;line-height:1.7;color:#1d1d1f}
+  .goal-list{display:flex;flex-direction:column;gap:6px;margin:10px 0}
+  .goal-item{display:flex;align-items:center;gap:8px;font-size:13px;padding:4px 0}
+  .goal-check{width:18px;height:18px;border-radius:50%;background:#34c759;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+  .ex-pair{display:flex;flex-direction:column;gap:8px;margin:10px 0}
+  .ex-item{padding:10px 12px;border-radius:10px;font-size:13px;line-height:1.6;border:1px solid}
+  .ex-bad{background:rgba(255,59,48,.04);border-color:rgba(255,59,48,.15)}
+  .ex-bad .ex-label{color:#ff3b30;font-weight:600;margin-bottom:4px}
+  .ex-good{background:rgba(52,199,89,.06);border-color:rgba(52,199,89,.2)}
+  .ex-good .ex-label{color:#34c759;font-weight:600;margin-bottom:4px}
+</style>
+</head>
+<body>
+<div class="header">
+<div class="badge">自媒体创作 · T1 基础免费</div>
+<h1>让AI写出你的风格，而不是AI的风格</h1>
+<p style="font-size:14px;color:rgba(255,255,255,.7);margin-bottom:8px">自媒体人怎么用prompt，让文案有你的个人味道</p>
+<div class="meta">
+<span>⏱ 约25分钟</span>
+<span>📄 图文课</span>
+<span>🛠 需AI聊天工具</span>
+</div>
+<div class="tag-free">🆓 免费</div>
+</div>
+<div class="container">
+<div class="step-nav" id="stepNav">
+<div class="sn-item active" data-step="s-explain"><span class="sn-icon">📌</span>问题</div>
+<div class="sn-item" data-step="s-practice"><span class="sn-icon">🎯</span>实战</div>
+<div class="sn-item" data-step="s-insight"><span class="sn-icon">💡</span>原理</div>
+<div class="sn-item" data-step="s-consolidate"><span class="sn-icon">🔁</span>巩固</div>
+</div>
+<!-- 📌 Explain -->
+<div class="module section module" data-tag="core:explain" id="s-explain">
+<div class="section-title">📌 为什么AI写出来的东西一看就是AI写的？</div>
+<div class="section-desc">3分钟 · 先搞清楚问题出在哪</div>
+<div class="content">
+<p>你让AI帮你写一篇文章：</p>
+<div class="ex-pair">
+<div class="ex-item ex-bad">
+<div class="ex-label">❌ 你：</div>
+        "帮我写一篇关于减肥的公众号文章"
+      </div>
+<div class="ex-item ex-good">
+<div class="ex-label">AI给的：</div>
+        "在当今快节奏的生活中，越来越多的人开始关注自己的身材管理。本文将为您介绍几种有效的减肥方法……"
+      </div>
+</div>
+<p>读起来像教科书、像百度百科、像AI。就是不像你。</p>
+<p>问题就出在你给AI的 <w d="你给AI的指令，决定了它怎么回应你">prompt</w> 太笼统了。</p>
+<p><w d="AI被训练出来就是要给出「最通用最小众反对」的回答">AI的天性是做一个"平均人"</w>。你不告诉它你是谁、什么风格、什么口吻，它就默认用最安全的方式回你。于是千人一面，全是一个味。</p>
+<div class="callout callout-tip">
+<strong>关键：</strong>AI没办法自己创造风格。风格要你给它。你给的越具体，它产出的越像你。
+    </div>
+<h3>这节课学完你能做到</h3>
+<div class="goal-list">
+<div class="goal-item"><span class="goal-check">✓</span> 让AI模仿你的个人风格写文案</div>
+<div class="goal-item"><span class="goal-check">✓</span> 给AI一篇范文让它学会你的口吻</div>
+<div class="goal-item"><span class="goal-check">✓</span> 不满意时能快速调教到对味</div>
+</div>
+</div>
+</div>
+<!-- 🎯 Practice -->
+<div class="module section module" data-tag="P:practice" id="s-practice">
+<div class="section-title">🎯 实战：三步让AI写出你的味道</div>
+<div class="section-desc">15分钟 · 跟着步骤做，今天就能用上</div>
+<div class="content">
+
+<div class="module" data-tag="P:step1">
+<div class="step-box">
+<div class="step-title"><span class="step-num">1</span> 先给AI你的"人设"</div>
+<div class="step-body">
+<p>不要只说主题，先告诉AI你是谁。</p>
+<div class="ex-pair" style="margin:6px 0">
+<div class="ex-item ex-bad">
+<div class="ex-label">❌ 不够</div>
+"帮我写一篇小红书文案"
+</div>
+<div class="ex-item ex-good">
+<div class="ex-label">✅ 这样</div>
+</div>
+</div>
+<div class="code-block">你是一名小红书美妆博主，你的粉丝主要是20-25岁的学生党。
+你的风格特点是：
+- 语气像闺蜜聊天，亲切自然
+- 经常用表情符号和感叹词
+- 喜欢分享真实体验，不吹不黑
+- 每篇开头先抛痛点引起共鸣
+
+请以你的风格写一篇关于"平价遮瑕推荐"的笔记，300字左右。</div>
+
+<p>看到了吗？AI现在知道：</p>
+<ul>
+<li>你是谁（美妆博主）</li>
+<li>你的读者是谁（学生党）</li>
+<li>你的风格是什么（闺蜜聊天、表情符号、真实体验）</li>
+<li>你要写什么（平价遮瑕推荐）</li>
+</ul>
+<p>结果就不会是百度百科式了，而是"姐妹们！我终于找到了一款遮瑕力max但不卡粉的神器！！" </p>
+<div class="callout callout-green">
+<strong>技巧：</strong>你越了解自己的风格，越能说清楚。反过来，让AI先分析你过去的文章，帮你总结风格特征。后面挑战里会教。
+</div>
+</div>
+</div>
+</div>
+<div class="module" data-tag="P:step2">
+<div class="step-box">
+<div class="step-title"><span class="step-num">2</span> 给AI一篇你的范文</div>
+<div class="step-body">
+<p>这是最狠的一招——直接把你过去写得最好的一篇文章丢给AI，让它照猫画虎。</p>
+<div class="code-block">以下是我之前写的一篇文章。请分析它的写作风格：
+- 语言特点（口语化程度、用词偏好、句式长短）
+- 结构特点（开头方式、段落长度、结尾习惯）
+- 语气特点（幽默/严肃/犀利/温柔）
+
+然后按同样的风格，帮我写一篇关于「XXX」的新文章。
+
+【我的范文】
+（粘贴你的一篇文章在这里）</div>
+<div class="callout callout-tip">
+<strong>为什么这招好用：</strong>AI的 <w d="通过分析文字样本，自动学习其风格特征">模仿能力</w> 非常强。你给一篇范文，它就能捕捉到你自己都没意识到的写作习惯——比如你特别爱用短句、喜欢在第三段甩金句、喜欢用反问来结尾。这些细节汇总起来就是"你的风格"，AI能复刻八成。
+</div>
+</div>
+</div>
+</div>
+<div class="module" data-tag="P:step3">
+<div class="step-box">
+<div class="step-title"><span class="step-num">3</span> 不满意就调教，不是重来</div>
+<div class="step-body">
+<p>AI第一次写的可能还是没内味。别关掉重来，直接在同一个对话里调教：</p>
+<div class="code-block">再口语化一点，像在跟朋友聊天
+多加点个人体验，不要只说产品
+开头改成一个提问
+缩短到200字，去掉形容词堆砌
+这个语气太正式了，我要的是怼人风格</div>
+
+<p>你每次纠正，AI都会记住。第三次基本就是你想要的。</p>
+<p>等你满意了，顺便说一句"以后就按这个风格来"——以后它帮你写东西，你就省了第一步。</p>
+<div class="callout callout-warn">
+<strong>注意：</strong>调教的时候要具体。说"不够好"AI不知道怎么办，说"缩短到200字、去掉形容词堆砌"它就懂了。这就是写 <w d="给AI的具体、可执行的指令">好prompt</w> 的核心技巧。
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div><!-- 💡 Insight -->
+<div class="module section module" data-tag="core:insight" id="s-insight">
+<div class="section-title">💡 为什么这招管用</div>
+<div class="section-desc">5分钟 · 不是学写一篇文案，是学怎么"教AI认识你"</div>
+<div class="content">
+<h3>AI不是没有风格，是没有你的风格</h3>
+<p>AI在训练中学到了上万亿字，上亿篇文章。所以它的"默认风格"是所有文本的平均值——不可能打动任何人。</p>
+<p>但它的 <w d="AI学习和预测语言模式的底层能力">语言模型</w> 核心能力是<strong>模仿</strong>。你给它一篇样本，它就能生成"看起来像是同一个人写的"新内容。</p>
+<table class="cmp-table">
+<tr><th></th><th>差的prompt</th><th>好的prompt</th></tr>
+<tr><td>给了什么</td><td>只给主题</td><td>人设+范文+具体要求</td></tr>
+<tr><td>AI产出</td><td>AI平均风格，千篇一律</td><td>有你的味道，需要微调</td></tr>
+<tr><td>复用性</td><td>每次都要重新写</td><td>调教好后一句话就能重复</td></tr>
+</table>
+<h3>这个套路能迁移到哪</h3>
+<ul>
+<li><strong>公众号/头条号</strong> — 保持统一的发文风格，读者不跳戏</li>
+<li><strong>抖音脚本</strong> — 让AI学你的说话节奏和口头禅</li>
+<li><strong>小红书笔记</strong> — 每篇都有你独特的"人设"味道</li>
+<li><strong>朋友圈/Push文案</strong> — 简短有力，一眼认出是你写的</li>
+</ul>
+<div class="callout callout-warn">
+<strong>一句实话：</strong>AI模仿得再好，也替代不了你。你的真实经历、你的独特观察、你踩过的坑，这些是AI永远给不出来的。所以正确的用法是：<strong>AI帮你搭框架和初稿，你往里塞自己的血肉。</strong>
+</div>
+</div>
+</div>
+<!-- 🔁 Consolidate -->
+<div class="module section module" data-tag="optional:consolidate" id="s-consolidate">
+<div class="section-title">🔁 巩固练习</div>
+<div class="section-desc" data-tag="core:summary">5分钟 · 养成习惯</div>
+<div class="content">
+<div class="callout callout-tip">
+<strong>今天做一次：</strong>找一篇你自己写过最满意的文章，用第2步的方法让AI分析风格，然后写一篇同风格的新内容。
+    </div>
+<h3>进阶挑战</h3>
+<div class="challenge">
+<div class="ch-title">✅ 挑战1：让AI总结你的风格档案</div>
+<div class="ch-desc">挑3篇你不同时期的文章丢给AI，问它"请总结我的写作风格，形成一份风格说明书"。以后换工具了，直接把这份说明书丢进新工具，风格就过去了。</div>
+</div>
+<div class="challenge">
+<div class="ch-title">✅ 挑战2：风格转换器</div>
+<div class="ch-desc">让AI先按官方口吻写一篇，然后说"把我的风格说明书加进去，重写一遍"。对比前后差别，你就能直观感受到"风格"起了多大作用。</div>
+</div>
+<div class="challenge">
+<div class="ch-title">✅ 挑战3：模仿他人风格</div>
+<div class="ch-desc">找一个你喜欢的博主/网红的一篇帖子，让AI分析它的风格特征。然后让AI用这个风格写一个内容。不是为了抄袭，是为了理解"风格是怎么构成的"。</div>
+</div>
+<h3>延伸场景</h3>
+<p style="font-size:13px;color:#636366;margin-top:4px">"人设+范文+调教"这个 <w d="你给AI的完整指令，包含背景、格式、要求等">prompt框架</w> 还能用在：</p>
+<ul>
+<li><strong>品牌文案</strong> — 先给AI品牌调性文档，再让它写</li>
+<li><strong>客服回复</strong> — 让AI模仿你客服的语气，一致性好</li>
+<li><strong>个人简介/签名</strong> — 让AI根据你的社交内容总结风格，写出你的自我介绍</li>
+</ul>
+</div>
+</div>
+<!-- 快速上手 -->
+
+<div class="module section" data-tag="core:summary" style="background:linear-gradient(135deg,#e8f5e9,#c8e6c9);border:none;text-align:center">
+<h3 style="font-size:18px;margin-bottom:8px;color:#2e7d32">⚡ 每次写东西前，花30秒做这事</h3>
+<div class="code-block" style="background:#fff;text-align:left">你的prompt里加上这三样中的至少两样：
+1. 你的人设（你是谁、读者是谁）
+2. 一篇你的范文（让它学）
+3. 一个具体的方向（减到200字/像朋友聊天/加表情）</div>
+<div style="margin-top:10px;font-size:14px;color:#2e7d32;font-weight:600">
+    🎉 以后AI写出来的，才更像你写的
+  </div>
+</div>
+
+<script>
+(function(){
+  var tb=document.getElementById("tipBox"),td=document.getElementById("tipDesc"),tc=document.getElementById("tipClose");
+  if(tb&&td){
+    document.querySelectorAll("w").forEach(function(el){
+      el.addEventListener("click",function(e){
+        e.stopPropagation();
+        td.textContent=this.getAttribute("d")||"暂无释义";
+        tb.querySelector(".tip-title").textContent="📖 "+this.textContent.trim();
+        var r=this.getBoundingClientRect(),w=tb.offsetWidth||280,left=Math.max(10,Math.min(r.left+r.width/2-w/2,document.body.clientWidth-w-10)),top=r.top-8-tb.offsetHeight;
+        if(top<10)top=r.bottom+10;
+        tb.style.left=left+"px";tb.style.top=top+"px";tb.style.display="block";
+        document.querySelectorAll("w.active").forEach(function(w){w.classList.remove("active")});
+        this.classList.add("active");
+      });
+    });
+    function ht(){tb.style.display="none";document.querySelectorAll("w.active").forEach(function(w){w.classList.remove("active")})}
+    tc.addEventListener("click",ht);
+    document.addEventListener("click",function(e){if(!e.target.closest("w")&&!e.target.closest(".tip-box"))ht()});
+    document.addEventListener("keydown",function(e){if(e.key==="Escape")ht()});
+  }
+  var nav=document.getElementById("stepNav");
+  if(nav){
+    var S=["s-explain","s-practice","s-insight","s-consolidate"];
+    nav.addEventListener("click",function(e){
+      var it=e.target.closest(".sn-item");if(!it)return;
+      var id=it.getAttribute("data-step"),el=document.getElementById(id);
+      if(el)el.scrollIntoView({behavior:"smooth",block:"start"});
+      var idx=S.indexOf(id);
+      for(var i=0;i<nav.children.length;i++)nav.children[i].classList.toggle("active",i===idx);
+    });
+    var st;
+    function uas(){
+      var bi=0,bd=Infinity;
+      S.forEach(function(id,i){
+        var el=document.getElementById(id);
+        if(el){var t=Math.abs(el.getBoundingClientRect().top);if(t<bd){bd=t;bi=i}}
+      });
+      for(var i=0;i<nav.children.length;i++)nav.children[i].classList.toggle("active",i===bi);
+    }
+    document.addEventListener("scroll",function(){clearTimeout(st);st=setTimeout(uas,100)});
+    uas();
+  }
+})();
+</script>
+<script>
+(function(){
+  var p=new URLSearchParams(location.search),c=p.get("cut");
+  if(c){
+    var INFO={
+      "P:step1":{l:"第一步·基础操作",d:"学会给AI角色、上下文和格式，告别笼统指令"},
+      "P:step2":{l:"第二步·进阶调教",d:"不满意不关掉，追加指令就行"}, 
+      "P:step3":{l:"第三步·核心技巧",d:"把好用的prompt存成模板，下次直接填空用"},
+      "L:step1":{l:"第一招·问来源",d:"让AI给出具体出处和数据来源"},
+      "L:step2":{l:"第二招·让AI唱反调",d:"从反面验证AI的观点"},
+      "L:step3":{l:"第三招·自己验证",d:"让AI教你如何核实它自己的回答"}
+    };
+    var MSGS=[
+      "看起来你对这部分已经有点基础了，帮你跳过基础的，直接看重点就好〜",
+      "看来你对这部分比较熟悉了，跳过基础内容，奔直核心！",
+      "你已经有不错的基础了，直接看后面的总结就好。点掩色区域可以展开查看完整内容"
+    ];
+    var E=[];
+    tags=c.split(",");
+    tags.forEach(function(t){t=t.trim();var n=INFO[t];if(n){var el=document.querySelector('[data-tag="'+t+'"]');if(el)E.push({el:el,info:n});}});
+    if(E.length>0){
+      E.forEach(function(x){
+        var el=x.el,info=x.info,bar=document.createElement("div");
+        bar.style.cssText="padding:10px 14px;margin:10px 0;border-radius:12px;background:rgba(255,149,0,.06);border:1.5px dashed rgba(255,149,0,.25);font-size:13px;cursor:pointer;transition:all .2s;user-select:none";
+        bar.innerHTML='<div style="display:flex;align-items:center;justify-content:space-between"><span style="font-weight:600;color:#e65100">⏭ '+info.l+'<span style="font-size:11px;color:rgba(230,81,0,.5);margin-left:8px">已跳过</span></span><span style="font-size:11px;color:rgba(230,81,0,.4)">▼ 展开</span></div>'+(info.d?'<div style="font-size:11px;color:rgba(0,0,0,.3);margin-top:3px;padding-left:24px">'+info.d+'</div>':'');
+        var p=el.parentNode;
+        if(p){p.insertBefore(bar,el);el.style.display="none";bar.onclick=function(){var h=el.style.display==="none";el.style.display=h?"":"none";bar.style.borderStyle=h?"solid":"dashed";bar.style.background=h?"rgba(255,149,0,.15)":"rgba(255,149,0,.06)";bar.querySelector("span:last-child").innerHTML=h?"▲ 收起":"▼ 展开";};}
+      });
+      var midx=Math.min(E.length-1,MSGS.length-1),msg=MSGS[midx];
+      var ov=document.createElement("div");
+      ov.id="skip-overlay";
+      ov.style.cssText="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.25);z-index:10000;display:flex;align-items:center;justify-content:center;animation:fadeIn .3s ease";
+      ov.innerHTML='<div style="background:#fff;border-radius:20px;padding:28px 24px;max-width:340px;width:90%;box-shadow:0 8px 40px rgba(0,0,0,.12);text-align:center"><div style="font-size:36px;margin-bottom:10px">👏</div><div style="font-size:16px;font-weight:600;margin-bottom:8px;color:#1d1d1f">已帮你跳过基础步骤</div><div style="font-size:13px;color:#636366;line-height:1.7">'+msg+'</div><button onclick="document.body.removeChild(document.getElementById('skip-overlay'))" style="margin-top:14px;padding:9px 28px;border:none;border-radius:12px;background:#007aff;color:#fff;font-size:14px;font-weight:600;cursor:pointer;box-shadow:0 4px 12px rgba(0,122,255,.25)">好的，开始学习</button><span onclick="document.body.removeChild(document.getElementById('skip-overlay'))" style="position:absolute;top:10px;right:14px;cursor:pointer;font-size:18px;color:rgba(0,0,0,.2)">&times;</span></div>';
+      ov.onclick=function(e){if(e.target===ov)document.body.removeChild(ov);};
+      document.body.appendChild(ov);
+      var st=document.createElement("style");st.textContent="@keyframes fadeIn{from{opacity:0}to{opacity:1}}";document.head.appendChild(st);
+    }
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI学程 — 10分钟搞定周报</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;
+    background:#f5f7fa;color:#1d1d1f;padding-bottom:60px
+  }
+
+  .header{
+    background:linear-gradient(135deg,#1d1d1f 0%,#3a3a3c 100%);
+    color:#fff;padding:32px 20px 28px;text-align:center
+  }
+  .header .badge{
+    display:inline-block;padding:3px 10px;border-radius:20px;
+    font-size:11px;font-weight:600;background:rgba(255,255,255,.12);
+    margin-bottom:10px;color:rgba(255,255,255,.7)
+  }
+  .header h1{font-size:22px;font-weight:700;margin-bottom:6px;letter-spacing:-.3px}
+  .header .meta{font-size:13px;color:rgba(255,255,255,.55);display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+  .header .meta span{display:inline-flex;align-items:center;gap:4px}
+  .header .tag-free{
+    display:inline-block;padding:4px 12px;border-radius:20px;
+    background:rgba(52,199,89,.2);color:#34c759;font-size:12px;font-weight:600;margin-top:12px
+  }
+
+  .container{max-width:680px;margin:0 auto;padding:0 16px}
+
+  .step-nav{display:flex;gap:8px;padding:16px 0;overflow-x:auto;position:sticky;top:0;background:#f5f7fa;z-index:10;border-bottom:1px solid rgba(0,0,0,.06)}
+  .step-nav .sn-item{
+    flex:1;min-width:0;padding:8px 6px;border-radius:10px;border:1.5px solid #e5e5ea;
+    font-size:11px;text-align:center;transition:all .15s;white-space:nowrap;
+    background:rgba(255,255,255,.6);color:#636366
+  }
+  .step-nav .sn-item{cursor:pointer}
+  .step-nav .sn-item.active{border-color:#007aff;background:#e8f2ff;color:#007aff;font-weight:600}
+  .step-nav .sn-item .sn-icon{display:block;font-size:14px;margin-bottom:2px}
+
+  .section{margin:16px 0;background:rgba(255,255,255,.85);backdrop-filter:blur(20px);border-radius:20px;padding:20px;border:1px solid rgba(255,255,255,.6);box-shadow:0 2px 12px rgba(0,0,0,.04)}
+  .section-title{font-size:16px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .section-desc{font-size:13px;color:#636366;margin-bottom:10px;line-height:1.6}
+
+  .content{font-size:14px;line-height:1.8;color:#1d1d1f}
+  .content h3{font-size:15px;margin:16px 0 6px}
+  .content p{margin-bottom:8px}
+  .content ul,.content ol{padding-left:18px;margin-bottom:10px}
+  .content li{margin-bottom:4px}
+
+  .callout{
+    padding:12px 14px;border-radius:12px;margin:12px 0;
+    font-size:13px;line-height:1.6;
+    border-left:3px solid
+  }
+  .callout-tip{background:rgba(0,122,255,.06);border-color:#007aff;color:#1d1d1f}
+  .callout-warn{background:rgba(255,149,0,.08);border-color:#ff9500;color:#1d1d1f}
+  .callout-danger{background:rgba(255,59,48,.06);border-color:#ff3b30;color:#1d1d1f}
+  .callout-green{background:rgba(52,199,89,.08);border-color:#34c759;color:#1d1d1f}
+
+  .code-block{
+    background:#f0f2f5;border-radius:10px;padding:12px 14px;
+    font-family:'Courier New',monospace;font-size:13px;line-height:1.6;
+    white-space:pre-wrap;word-break:break-word;margin:8px 0
+  }
+
+  .cmp-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
+  .cmp-table th,.cmp-table td{padding:8px 10px;border:1px solid #e5e5ea;text-align:left}
+  .cmp-table th{background:rgba(0,0,0,.03);font-weight:600;font-size:12px;color:#636366}
+
+  .challenge{
+    background:rgba(255,255,255,.4);border:1px solid #e5e5ea;border-radius:12px;
+    padding:12px 14px;margin:8px 0
+  }
+  .challenge .ch-title{font-weight:600;font-size:13px;margin-bottom:4px}
+  .challenge .ch-desc{font-size:12px;color:#636366;line-height:1.5}
+
+  .step-box{
+    background:rgba(0,122,255,.04);border-radius:12px;padding:14px;margin:10px 0;border:1px solid rgba(0,122,255,.12)
+  }
+  .step-box .step-num{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:22px;height:22px;border-radius:50%;background:#007aff;color:#fff;
+    font-size:12px;font-weight:700;margin-right:6px;flex-shrink:0
+  }
+  .step-box .step-title{font-weight:600;font-size:14px;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+  .step-box .step-body{font-size:13px;line-height:1.7;color:#1d1d1f}
+
+  .goal-list{display:flex;flex-direction:column;gap:6px;margin:10px 0}
+  .goal-item{display:flex;align-items:center;gap:8px;font-size:13px;padding:4px 0}
+  .goal-check{width:18px;height:18px;border-radius:50%;background:#34c759;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+
+  .ex-pair{display:flex;flex-direction:column;gap:8px;margin:10px 0}
+  .ex-item{padding:10px 12px;border-radius:10px;font-size:13px;line-height:1.6;border:1px solid}
+  .ex-bad{background:rgba(255,59,48,.04);border-color:rgba(255,59,48,.15)}
+  .ex-bad .ex-label{color:#ff3b30;font-weight:600;margin-bottom:4px}
+  .ex-good{background:rgba(52,199,89,.06);border-color:rgba(52,199,89,.2)}
+  .ex-good .ex-label{color:#34c759;font-weight:600;margin-bottom:4px}
+
+  /* ===== 术语释义 ===== */
+  w{
+    cursor:pointer;border-bottom:1.5px dashed #007aff;
+    color:#007aff;font-weight:500;position:relative;
+    transition:background .15s
+  }
+  w:hover{background:rgba(0,122,255,.06)}
+  w.active{background:rgba(0,122,255,.12)}
+
+  .tip-box{
+    position:fixed;z-index:9999;display:none;
+    background:#1d1d1f;color:#fff;border-radius:10px;
+    padding:10px 14px;max-width:300px;
+    font-size:13px;line-height:1.6;
+    box-shadow:0 8px 24px rgba(0,0,0,.2);
+    animation:tipIn .2s ease
+  }
+  .tip-box .tip-title{font-weight:600;margin-bottom:3px;color:rgba(255,255,255,.6);font-size:11px}
+  .tip-box .tip-close{
+    position:absolute;top:6px;right:8px;
+    cursor:pointer;font-size:14px;color:rgba(255,255,255,.4);
+    line-height:1;border:none;background:none;padding:2px
+  }
+  .tip-box .tip-close:hover{color:#fff}
+  .tip-box::after{
+    content:'';position:absolute;left:50%;bottom:-6px;
+    margin-left:-6px;
+    border:6px solid transparent;border-top-color:#1d1d1f
+  }
+  @keyframes tipIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+<div class="header">
+<div class="badge">职场应用 · T1 基础免费</div>
+<h1>写周报像在凑字数？教你让AI写出能用的</h1>
+<p style="font-size:14px;color:rgba(255,255,255,.7);margin-bottom:8px">用对方法，3分钟生成一份领导想看的周报</p>
+<div class="meta">
+<span>⏱ 约25分钟</span>
+<span>📄 图文课</span>
+<span>🛠 需AI聊天工具</span>
+</div>
+<div class="tag-free">🆓 免费</div>
+</div>
+<div class="container">
+<div class="step-nav" id="stepNav">
+<div class="sn-item active" data-step="s-explain"><span class="sn-icon">📌</span>为什么</div>
+<div class="sn-item" data-step="s-practice"><span class="sn-icon">🎯</span>实操</div>
+<div class="sn-item" data-step="s-insight"><span class="sn-icon">💡</span>原理</div>
+<div class="sn-item" data-step="s-consolidate"><span class="sn-icon">🔁</span>巩固</div>
+</div>
+<!-- 📌 Explain -->
+<div class="module section module" data-tag="core:explain" id="s-explain">
+<div class="section-title">📌 为什么你的周报总是写不好</div>
+<div class="section-desc">3分钟 · 先搞清楚问题在哪</div>
+<div class="content">
+<p>你可能已经用过 <w d="Artificial Intelligence，人工智能">AI</w> 写东西了，但效果一般——写出来的太水、太啰嗦、用不上。</p>
+<p>问题不在AI，在你的<strong>输入方式</strong>。</p>
+<div class="ex-pair">
+<div class="ex-item ex-bad">
+<div class="ex-label">❌ 大多数人这样跟AI说</div>
+        "帮我写一份周报"
+      </div>
+<div class="ex-item ex-good">
+<div class="ex-label">✅ 换种说法效果完全不同</div>
+        "我是一名运营，这周主要做了活动策划和数据分析。帮我写份周报，分本周完成、问题风险、下周计划三块。用正式的职场语气，每条控制在两行以内。"
+      </div>
+</div>
+<p>差的 <w d="提示词——你给AI的指令，决定了AI如何回应你">prompt</w> → 差的输出 → 你觉得AI不靠谱。<br/>
+    好的prompt → 好的输出 → 你能直接拿来用，改改数字就完事。</p>
+<p>决定输出质量的，不是哪个AI更强，而是<strong>你给了什么输入</strong>。</p>
+<h3>这节课学完你能做到</h3>
+<div class="goal-list">
+<div class="goal-item"><span class="goal-check">✓</span> 写出让AI产出可用报告的prompt</div>
+<div class="goal-item"><span class="goal-check">✓</span> 灵活调整语气、格式、篇幅</div>
+<div class="goal-item"><span class="goal-check">✓</span> 把你的周报模板做成可复用的 <w d="事先写好的prompt格式，把内容填进去就能用">prompt模板</w></div>
+</div>
+</div>
+</div>
+<!-- 🎯 Practice -->
+<div class="module section module" data-tag="P:practice" id="s-practice">
+<div class="section-title">🎯 动手实操</div>
+<div class="section-desc">15分钟 · 三步让你的周报从"不能看"变"能用"</div>
+<div class="content">
+<div class="module" data-tag="P:step1"><div class="step-box">
+<div class="step-title"><span class="step-num">1</span> 用角色+上下文替换"帮我写周报"</div>
+<div class="step-body">
+<p>很多人上来直接"帮我写周报"，AI不知道你是谁，不知道你在什么公司，不知道你做了什么。所以它只能用最通用的 <w d="标准的回答格式，适用于所有人但也对谁都不够贴切">模板</w> 给你回。</p>
+<p style="font-weight:600;margin:8px 0 4px">给AI说清楚三件事：</p>
+<ol>
+<li><strong>你是谁</strong>（岗位、行业）——这叫 <w d="让AI扮演某个身份，回答会更贴合该身份的风格">角色设定</w></li>
+<li><strong>你做了什么</strong>（列事实、不用润色）——这叫 <w d="对话中已有的信息，AI会基于上下文理解后续指令">上下文</w></li>
+<li><strong>你要什么格式</strong>（分几块、什么语气）——这叫 <w d="把要求写得有组织有格式，AI更容易准确执行">结构化</w> 指令</li>
+</ol>
+<div class="code-block">我是一名互联网运营，这周主要干了：
+1. 周三周四跟市场部开了两次会，定了Q3活动方案
+2. 整理了一版客户反馈，大概50条
+3. 测试了新版登录功能，提了3个bug
+4. 写了一份竞品分析，对比了A公司和B公司
+5. 中间处理了一些杂事：回邮件、走审批、帮同事看问题
+
+请按以下格式写周报：
+【本周完成】
+【问题与风险】（如果没有重大风险就不写）
+【下周计划】
+
+要求：语气正式但别太僵硬，每条不超过2行。</div>
+</div>
+</div></div>
+<div class="module" data-tag="P:step2">
+<div class="step-box">
+<div class="step-title"><span class="step-num">2</span> 不满意？别重写，直接给它改的方向</div>
+<div class="step-body">
+<p>很多人看到AI第一次输出不满意，就关掉重新聊。不需要。</p>
+<p>直接在聊天里追加一句就行：</p>
+<div class="ex-pair" style="margin:6px 0">
+<div class="ex-item ex-bad">
+<div class="ex-label">❌ 别关掉重开</div>
+"算了" → 关掉 → 重新输入 → 又生成差不多的
+</div>
+<div class="ex-item ex-good">
+<div class="ex-label">✅ 在同一个对话里直接说</div>
+"精简一点，保留重点就行"
+"写得更正式一些，给领导看的"
+"每条加一个数据指标"
+</div>
+</div>
+
+<p><w d="AI在处理你的请求时，会参考刚才聊过的内容">上下文记忆</w> 会让AI记住你的要求，顺着你的反馈调整。一次不满意、两次不满意，三次基本就是你要的样子了。</p>
+<div class="callout callout-green">
+<strong>小技巧：</strong>如果你喜欢某种风格，顺便说"以后都按这个风格来"，后面它就会记住。
+</div>
+</div>
+</div>
+</div>
+
+<div class="module" data-tag="P:step3">
+<div class="step-box">
+<div class="step-title"><span class="step-num">3</span> 做成可复用的 <w d="把常用的prompt保存下来，下次直接改内容就能用">prompt模板</w></div>
+<div class="step-body">
+
+<p>这步很关键——做完一次后，把prompt存下来，以后每周填空就行。</p>
+
+<p style="font-weight:600;margin:8px 0 4px">存这个到备忘录：</p>
+<div class="code-block">你是一名周报助理。我告诉你我做的内容，你帮我按下面的格式整理成周报。
+
+【本周完成】
+- 每条展示关键结果和具体数字
+- 每条控制在1-2行
+
+【问题与风险】
+- 优先级高的问题列前面
+- 说清楚影响和需要的支持
+
+【下周计划】
+- 按优先级排列
+- 标明预计完成时间
+
+以下是我这周做的事：
+（每周末在这里填你的工作内容）</div>
+<p style="margin-top:6px;font-size:12px;color:#636366">存到备忘录/飞书文档/微信收藏里，每周五下班前打开，填内容 → 复制粘贴 → 提交，3分钟搞定。</p>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+<!-- 💡 Insight -->
+<div class="module section module" data-tag="core:insight" id="s-insight">
+<div class="section-title">💡 理解为什么</div>
+<div class="section-desc">5分钟 · 你不是在学"写周报"，是在学"怎么让AI帮你干活"</div>
+<div class="content">
+<h3>这节课的核心原理就三个字：给上下文</h3>
+<p><w d="AI不像搜索引擎，不会主动查你的信息。你给它什么信息，它就基于这些信息回答">AI的局限</w>。你给的信息越完整，它产出的东西越贴近你的需求。</p>
+<table class="cmp-table">
+<tr><th></th><th>差的输入</th><th>好的输入</th></tr>
+<tr><td>写法</td><td>"帮我写周报"</td><td>"我是运营，这周做了X/Y/Z，按3块格式写"</td></tr>
+<tr><td>结果</td><td>通用 <w d="标准格式版本，适合所有人但也对谁都不够贴切">模板</w>，用不了</td><td>贴近实际，改改就能提交</td></tr>
+<tr><td>耗时</td><td>花5分钟改到不想改</td><td>花1分钟微调数字</td></tr>
+</table>
+<h3>这个套路能迁移到哪</h3>
+<p>听懂了吗？你不是在学"用AI写周报"，你是在学一个<strong>通用的同AI协作模式</strong>：</p>
+<ul>
+<li><strong>写月报/述职</strong> — 同样结构，换更大的框架</li>
+<li><strong>写邮件</strong> — 说清楚收件人是谁、什么目的、什么语气</li>
+<li><strong>写方案</strong> — 说明背景、目标、约束条件、想要的结构</li>
+<li><strong>分析数据</strong> — 先给数据，再说要什么角度的分析</li>
+</ul>
+<div class="callout callout-warn">
+<strong>一个提醒：</strong>AI输出的数字和具体事件可能是编的。周报发给领导之前，把数字改对、把事实核实一遍。AI帮你的是结构和措辞，内容真实性你自己负责。
+    </div>
+</div>
+</div>
+<!-- 🔁 Consolidate -->
+<div class="module section module" data-tag="optional:consolidate" id="s-consolidate">
+<div class="section-title">🔁 巩固练习</div>
+<div class="section-desc">5分钟 · 明天再做一次，变成肌肉记忆</div>
+<div class="content">
+<div class="callout callout-tip">
+<strong>明天上班前做一次：</strong>打开AI工具，用这节课的"角色+上下文+格式"三步法生成一份日报/周报。不要看教程，卡住再翻回来。
+    </div>
+<h3>进阶挑战</h3>
+<div class="challenge">
+<div class="ch-title">✅ 挑战1：两个版本</div>
+<div class="ch-desc">让AI同时生成「给领导的详细版」和「抄送全组的精简版」。追加一句"再写个精简版，每条一行"就行。</div>
+</div>
+<div class="challenge">
+<div class="ch-title">✅ 挑战2：从聊天记录生成</div>
+<div class="ch-desc">复制本周工作群的消息发给AI："请从这些对话里提取我的工作内容，按周报格式整理" — 检验AI的提取能力。</div>
+</div>
+<div class="challenge">
+<div class="ch-title">✅ 挑战3：数据+表格</div>
+<div class="ch-desc">如果你的工作涉及数据，让AI把关键指标做成表格："把以上数据整理成表格，含周环比变化"</div>
+</div>
+<h3>同类型迁移</h3>
+<p style="font-size:13px;color:#636366;margin-top:4px">三步法（角色+上下文+格式）还能用在：</p>
+<ul>
+<li><strong>写会议纪要</strong> → 给会议录音转的文字 → "请整理成会议纪要：结论、待办、责任人"</li>
+<li><strong>写招聘JD</strong> → 给岗位信息 → "写一份JD，参考字节跳动的风格"</li>
+<li><strong>做PPT大纲</strong> → 给主题和页数 → "列PPT每页大纲，每页3-5个要点"</li>
+</ul>
+</div>
+</div>
+<!-- 一劳永逸 -->
+
+<div class="module section" data-tag="core:summary" style="background:linear-gradient(135deg,#e8f5e9,#c8e6c9);border:none;text-align:center">
+<h3 style="font-size:18px;margin-bottom:8px;color:#2e7d32">⚡ 一劳永逸</h3>
+<p style="font-size:13px;color:#2e7d32;margin-bottom:8px">存好上面的 <w d="事先写好的prompt格式，把内容填进去就能用">prompt模板</w>，以后每次发周报流程：</p>
+<div class="code-block" style="background:#fff;text-align:left">1. 打开备忘录 → 粘贴本周工作内容到模板
+2. 把整个prompt发给AI → 3秒出周报
+3. 检查数字和事实 → 提交</div>
+<div style="margin-top:10px;font-size:15px;color:#2e7d32;font-weight:600">
+    🎉 以后你的周报，再也不需要超过5分钟
+  </div>
+</div>
+</div>
+
+<script>
+(function(){
+  var tb=document.getElementById("tipBox"),td=document.getElementById("tipDesc"),tc=document.getElementById("tipClose");
+  if(tb&&td){
+    document.querySelectorAll("w").forEach(function(el){
+      el.addEventListener("click",function(e){
+        e.stopPropagation();
+        td.textContent=this.getAttribute("d")||"暂无释义";
+        tb.querySelector(".tip-title").textContent="📖 "+this.textContent.trim();
+        var r=this.getBoundingClientRect(),w=tb.offsetWidth||280,left=Math.max(10,Math.min(r.left+r.width/2-w/2,document.body.clientWidth-w-10)),top=r.top-8-tb.offsetHeight;
+        if(top<10)top=r.bottom+10;
+        tb.style.left=left+"px";tb.style.top=top+"px";tb.style.display="block";
+        document.querySelectorAll("w.active").forEach(function(w){w.classList.remove("active")});
+        this.classList.add("active");
+      });
+    });
+    function ht(){tb.style.display="none";document.querySelectorAll("w.active").forEach(function(w){w.classList.remove("active")})}
+    tc.addEventListener("click",ht);
+    document.addEventListener("click",function(e){if(!e.target.closest("w")&&!e.target.closest(".tip-box"))ht()});
+    document.addEventListener("keydown",function(e){if(e.key==="Escape")ht()});
+  }
+  var nav=document.getElementById("stepNav");
+  if(nav){
+    var S=["s-explain","s-practice","s-insight","s-consolidate"];
+    nav.addEventListener("click",function(e){
+      var it=e.target.closest(".sn-item");if(!it)return;
+      var id=it.getAttribute("data-step"),el=document.getElementById(id);
+      if(el)el.scrollIntoView({behavior:"smooth",block:"start"});
+      var idx=S.indexOf(id);
+      for(var i=0;i<nav.children.length;i++)nav.children[i].classList.toggle("active",i===idx);
+    });
+    var st;
+    function uas(){
+      var bi=0,bd=Infinity;
+      S.forEach(function(id,i){
+        var el=document.getElementById(id);
+        if(el){var t=Math.abs(el.getBoundingClientRect().top);if(t<bd){bd=t;bi=i}}
+      });
+      for(var i=0;i<nav.children.length;i++)nav.children[i].classList.toggle("active",i===bi);
+    }
+    document.addEventListener("scroll",function(){clearTimeout(st);st=setTimeout(uas,100)});
+    uas();
+  }
+})();
+</script>
+<script>
+(function(){
+  var p=new URLSearchParams(location.search),c=p.get("cut");
+  if(c){
+    var INFO={
+      "P:step1":{l:"第一步·基础操作",d:"学会给AI角色、上下文和格式，告别笼统指令"},
+      "P:step2":{l:"第二步·进阶调教",d:"不满意不关掉，追加指令就行"}, 
+      "P:step3":{l:"第三步·核心技巧",d:"把好用的prompt存成模板，下次直接填空用"},
+      "L:step1":{l:"第一招·问来源",d:"让AI给出具体出处和数据来源"},
+      "L:step2":{l:"第二招·让AI唱反调",d:"从反面验证AI的观点"},
+      "L:step3":{l:"第三招·自己验证",d:"让AI教你如何核实它自己的回答"}
+    };
+    var MSGS=[
+      "看起来你对这部分已经有点基础了，帮你跳过基础的，直接看重点就好〜",
+      "看来你对这部分比较熟悉了，跳过基础内容，奔直核心！",
+      "你已经有不错的基础了，直接看后面的总结就好。点掩色区域可以展开查看完整内容"
+    ];
+    var E=[];
+    tags=c.split(",");
+    tags.forEach(function(t){t=t.trim();var n=INFO[t];if(n){var el=document.querySelector('[data-tag="'+t+'"]');if(el)E.push({el:el,info:n});}});
+    if(E.length>0){
+      E.forEach(function(x){
+        var el=x.el,info=x.info,bar=document.createElement("div");
+        bar.style.cssText="padding:10px 14px;margin:10px 0;border-radius:12px;background:rgba(255,149,0,.06);border:1.5px dashed rgba(255,149,0,.25);font-size:13px;cursor:pointer;transition:all .2s;user-select:none";
+        bar.innerHTML='<div style="display:flex;align-items:center;justify-content:space-between"><span style="font-weight:600;color:#e65100">⏭ '+info.l+'<span style="font-size:11px;color:rgba(230,81,0,.5);margin-left:8px">已跳过</span></span><span style="font-size:11px;color:rgba(230,81,0,.4)">▼ 展开</span></div>'+(info.d?'<div style="font-size:11px;color:rgba(0,0,0,.3);margin-top:3px;padding-left:24px">'+info.d+'</div>':'');
+        var p=el.parentNode;
+        if(p){p.insertBefore(bar,el);el.style.display="none";bar.onclick=function(){var h=el.style.display==="none";el.style.display=h?"":"none";bar.style.borderStyle=h?"solid":"dashed";bar.style.background=h?"rgba(255,149,0,.15)":"rgba(255,149,0,.06)";bar.querySelector("span:last-child").innerHTML=h?"▲ 收起":"▼ 展开";};}
+      });
+      var midx=Math.min(E.length-1,MSGS.length-1),msg=MSGS[midx];
+      var ov=document.createElement("div");
+      ov.id="skip-overlay";
+      ov.style.cssText="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.25);z-index:10000;display:flex;align-items:center;justify-content:center;animation:fadeIn .3s ease";
+      ov.innerHTML='<div style="background:#fff;border-radius:20px;padding:28px 24px;max-width:340px;width:90%;box-shadow:0 8px 40px rgba(0,0,0,.12);text-align:center"><div style="font-size:36px;margin-bottom:10px">👏</div><div style="font-size:16px;font-weight:600;margin-bottom:8px;color:#1d1d1f">已帮你跳过基础步骤</div><div style="font-size:13px;color:#636366;line-height:1.7">'+msg+'</div><button onclick="document.body.removeChild(document.getElementById('skip-overlay'))" style="margin-top:14px;padding:9px 28px;border:none;border-radius:12px;background:#007aff;color:#fff;font-size:14px;font-weight:600;cursor:pointer;box-shadow:0 4px 12px rgba(0,122,255,.25)">好的，开始学习</button><span onclick="document.body.removeChild(document.getElementById('skip-overlay'))" style="position:absolute;top:10px;right:14px;cursor:pointer;font-size:18px;color:rgba(0,0,0,.2)">&times;</span></div>';
+      ov.onclick=function(e){if(e.target===ov)document.body.removeChild(ov);};
+      document.body.appendChild(ov);
+      var st=document.createElement("style");st.textContent="@keyframes fadeIn{from{opacity:0}to{opacity:1}}";document.head.appendChild(st);
+    }
+  }
+})();
+</script>
+</body>
+</html>

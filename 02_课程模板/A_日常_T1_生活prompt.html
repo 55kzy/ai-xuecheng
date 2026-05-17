@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI学程 — 日常场景让AI秒懂你</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;
+    background:#f5f7fa;color:#1d1d1f;padding-bottom:60px
+  }
+  .header{
+    background:linear-gradient(135deg,#1d1d1f 0%,#3a3a3c 100%);
+    color:#fff;padding:32px 20px 28px;text-align:center
+  }
+  .header .badge{
+    display:inline-block;padding:3px 10px;border-radius:20px;
+    font-size:11px;font-weight:600;background:rgba(255,255,255,.12);
+    margin-bottom:10px;color:rgba(255,255,255,.7)
+  }
+  .header h1{font-size:22px;font-weight:700;margin-bottom:6px;letter-spacing:-.3px}
+  .header .meta{font-size:13px;color:rgba(255,255,255,.55);display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+  .header .meta span{display:inline-flex;align-items:center;gap:4px}
+  .header .tag-free{
+    display:inline-block;padding:4px 12px;border-radius:20px;
+    background:rgba(52,199,89,.2);color:#34c759;font-size:12px;font-weight:600;margin-top:12px
+  }
+  .container{max-width:680px;margin:0 auto;padding:0 16px}
+  .step-nav{display:flex;gap:8px;padding:16px 0;overflow-x:auto;position:sticky;top:0;background:#f5f7fa;z-index:10;border-bottom:1px solid rgba(0,0,0,.06)}
+  .step-nav .sn-item{
+    flex:1;min-width:0;padding:8px 6px;border-radius:10px;border:1.5px solid #e5e5ea;
+    font-size:11px;text-align:center;transition:all .15s;white-space:nowrap;
+    background:rgba(255,255,255,.6);color:#636366
+  }
+  .step-nav .sn-item{cursor:pointer}
+  .step-nav .sn-item.active{border-color:#007aff;background:#e8f2ff;color:#007aff;font-weight:600}
+  .step-nav .sn-item .sn-icon{display:block;font-size:14px;margin-bottom:2px}
+  .section{margin:16px 0;background:rgba(255,255,255,.85);backdrop-filter:blur(20px);border-radius:20px;padding:20px;border:1px solid rgba(255,255,255,.6);box-shadow:0 2px 12px rgba(0,0,0,.04)}
+  .section-title{font-size:16px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .section-desc{font-size:13px;color:#636366;margin-bottom:10px;line-height:1.6}
+  .content{font-size:14px;line-height:1.8;color:#1d1d1f}
+  .content h3{font-size:15px;margin:16px 0 6px}
+  .content p{margin-bottom:8px}
+  .content ul,.content ol{padding-left:18px;margin-bottom:10px}
+  .content li{margin-bottom:4px}
+  .callout{
+    padding:12px 14px;border-radius:12px;margin:12px 0;
+    font-size:13px;line-height:1.6;
+    border-left:3px solid
+  }
+  .callout-tip{background:rgba(0,122,255,.06);border-color:#007aff;color:#1d1d1f}
+  .callout-warn{background:rgba(255,149,0,.08);border-color:#ff9500;color:#1d1d1f}
+  .callout-green{background:rgba(52,199,89,.08);border-color:#34c759;color:#1d1d1f}
+  .code-block{
+    background:#f0f2f5;border-radius:10px;padding:12px 14px;
+    font-family:'Courier New',monospace;font-size:13px;line-height:1.6;
+    white-space:pre-wrap;word-break:break-word;margin:8px 0
+  }
+  .cmp-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
+  .cmp-table th,.cmp-table td{padding:8px 10px;border:1px solid #e5e5ea;text-align:left}
+  .cmp-table th{background:rgba(0,0,0,.03);font-weight:600;font-size:12px;color:#636366}
+  .challenge{
+    background:rgba(255,255,255,.4);border:1px solid #e5e5ea;border-radius:12px;
+    padding:12px 14px;margin:8px 0
+  }
+  .challenge .ch-title{font-weight:600;font-size:13px;margin-bottom:4px}
+  .challenge .ch-desc{font-size:12px;color:#636366;line-height:1.5}
+  .step-box{
+    background:rgba(0,122,255,.04);border-radius:12px;padding:14px;margin:10px 0;border:1px solid rgba(0,122,255,.12)
+  }
+  .step-box .step-num{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:22px;height:22px;border-radius:50%;background:#007aff;color:#fff;
+    font-size:12px;font-weight:700;margin-right:6px;flex-shrink:0
+  }
+  .step-box .step-title{font-weight:600;font-size:14px;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+  .step-box .step-body{font-size:13px;line-height:1.7;color:#1d1d1f}
+  .goal-list{display:flex;flex-direction:column;gap:6px;margin:10px 0}
+  .goal-item{display:flex;align-items:center;gap:8px;font-size:13px;padding:4px 0}
+  .goal-check{width:18px;height:18px;border-radius:50%;background:#34c759;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+  .ex-pair{display:flex;flex-direction:column;gap:8px;margin:10px 0}
+  .ex-item{padding:10px 12px;border-radius:10px;font-size:13px;line-height:1.6;border:1px solid}
+  .ex-bad{background:rgba(255,59,48,.04);border-color:rgba(255,59,48,.15)}
+  .ex-bad .ex-label{color:#ff3b30;font-weight:600;margin-bottom:4px}
+  .ex-good{background:rgba(52,199,89,.06);border-color:rgba(52,199,89,.2)}
+  .ex-good .ex-label{color:#34c759;font-weight:600;margin-bottom:4px}
+  w{
+    cursor:pointer;border-bottom:1.5px dashed #007aff;
+    color:#007aff;font-weight:500;position:relative;
+    transition:background .15s
+  }
+  w:hover{background:rgba(0,122,255,.06)}
+  w.active{background:rgba(0,122,255,.12)}
+  .tip-box{
+    position:fixed;z-index:9999;display:none;
+    background:#1d1d1f;color:#fff;border-radius:10px;
+    padding:10px 14px;max-width:300px;
+    font-size:13px;line-height:1.6;
+    box-shadow:0 8px 24px rgba(0,0,0,.2);
+    animation:tipIn .2s ease
+  }
+  .tip-box .tip-title{font-weight:600;margin-bottom:3px;color:rgba(255,255,255,.6);font-size:11px}
+  .tip-box .tip-close{
+    position:absolute;top:6px;right:8px;
+    cursor:pointer;font-size:14px;color:rgba(255,255,255,.4);
+    line-height:1;border:none;background:none;padding:2px
+  }
+  .tip-box .tip-close:hover{color:#fff}
+  .tip-box::after{
+    content:'';position:absolute;left:50%;bottom:-6px;
+    margin-left:-6px;
+    border:6px solid transparent;border-top-color:#1d1d1f
+  }
+  @keyframes tipIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+<div class="header">
+<div class="badge">日常应用 · T1 基础免费</div>
+<h1>让AI秒懂你的日常需求</h1>
+<p style="font-size:14px;color:rgba(255,255,255,.7);margin-bottom:8px">从"随便推荐个"到"这个正是我想要的"</p>
+<div class="meta">
+<span>⏱ 约25分钟</span>
+<span>📄 图文课</span>
+<span>🛠 需AI聊天工具</span>
+</div>
+<div class="tag-free">🆓 免费</div>
+</div>
+<div class="container">
+<div class="step-nav" id="stepNav">
+<div class="sn-item active" data-step="s-explain"><span class="sn-icon">📌</span>为什么</div>
+<div class="sn-item" data-step="s-practice"><span class="sn-icon">🎯</span>实操</div>
+<div class="sn-item" data-step="s-insight"><span class="sn-icon">💡</span>原理</div>
+<div class="sn-item" data-step="s-consolidate"><span class="sn-icon">🔁</span>巩固</div>
+</div>
+<!-- 📌 Explain -->
+<div class="module section" data-tag="core:explain" id="s-explain">
+<div class="section-title">📌 同一个AI，差距在哪？</div>
+<div class="section-desc">3分钟 · 为什么别人用AI什么都能干，你聊两句就聊死了</div>
+<div class="content">
+<p>你跟AI说"推荐个电影"，它给你列了一长串，你翻了两屏一部都不想看。</p>
+<p>问题不是AI垃圾，是你给的<strong>信息太少</strong>。</p>
+<div class="ex-pair">
+<div class="ex-item ex-bad">
+<div class="ex-label">❌ 大多数人这样问</div>
+"帮我规划行程"、"推荐个餐厅"、"这个衣服怎么样"
+</div>
+<div class="ex-item ex-good">
+<div class="ex-label">✅ 稍微多说两句，结果天差地别</div>
+"我周五下午到杭州，周日下午走，带爸妈（60岁），想去西湖和灵隐寺，帮我排个不赶路的行程"<br/>
+"朝阳大悦城附近，人均150以内、有包厢的川菜，家庭聚餐"
+</div>
+</div>
+<p>日常场景下你跟AI聊天，不像写邮件那么正式，但也别指望它能猜透你的心。</p>
+<h3>这节课学完你能做到</h3>
+<div class="goal-list">
+<div class="goal-item"><span class="goal-check">✓</span> 让AI给你的推荐精准到"就是这个"的程度</div>
+<div class="goal-item"><span class="goal-check">✓</span> 一句话解决纠结：去哪儿吃、看什么、买不买</div>
+<div class="goal-item"><span class="goal-check">✓</span> 让AI帮你写朋友圈文案、群发祝福、回复消息</div>
+</div>
+</div>
+</div>
+<!-- 🎯 Practice -->
+<div class="module section" data-tag="P:practice" id="s-practice">
+<div class="section-title">🎯 动手实操</div>
+<div class="section-desc">15分钟 · 三步把AI从"随便说说的"变成"懂你的"</div>
+<div class="content">
+<div class="module" data-tag="P:step1"><div class="step-box">
+<div class="step-title"><span class="step-num">1</span> 说清三要素：谁 + 场景 + 偏好</div>
+<div class="step-body">
+<p>日常场景让AI给建议，你只需要多说三个东西：</p>
+<ol>
+<li><strong>对象</strong> — 给谁用的？你自己？带爸妈？跟朋友？有小孩吗？</li>
+<li><strong>场景</strong> — 什么场合？约会/家庭聚会/一个人发呆？</li>
+<li><strong>偏好</strong> — 你的口味/风格/预算/时间限制</li>
+</ol>
+<div class="code-block"># 差
+推荐个番剧
+
+# 好
+最近剧荒，求推荐。我喜欢悬疑烧脑的，<w d="每一集讲一个独立故事的单元剧格式">单元剧</w>最好，最近看了《胆小鬼》觉得节奏太慢。别推荐《开端》这种看过的主流热门。</div>
+<p>看到区别了吗？好问法给了AI三条线索——<strong>类型偏好、看过的不喜欢的、排雷热门款</strong>。</p>
+<div class="callout callout-tip">
+<strong>试试看：</strong>打开你的AI，把上面"好"的问法发过去，看看它给你的推荐是不是比平时准很多。
+</div>
+</div>
+</div></div>
+<div class="module" data-tag="P:step2"><div class="step-box">
+<div class="step-title"><span class="step-num">2</span> 不满意？别重问，给反馈</div>
+<div class="step-body">
+<p>日常用AI最容易犯的错：AI给了一个不行的答案 → 关掉重开 → 又问一遍差不多的 → 又得到一个不行的答案。</p>
+<p>别关！直接在同一个对话里<strong>追加反馈</strong>，AI会记住你的偏好并调整：</p>
+<div class="code-block"># AI推荐了A/B/C三部
+看过A了，B的画风不喜欢，C可以进一步说说吗？
+
+# AI推荐了川菜馆
+有没有不用排队的？上次等了1小时。
+
+# AI帮写的文案
+太正式了，我朋友群发不需要这么严肃，活泼一点</div>
+<p>追加反馈比重头来过快10倍，而且AI会越聊越懂你——因为同一个<w d="AI在对话窗口里记住之前说过的话">对话上下文</w>里，你的偏好它全记得。</p>
+<div class="callout callout-green">
+<strong>小技巧：</strong>顺便加一句"以后都按这个风格"，下次同话题直接继承。
+</div>
+</div>
+</div></div>
+<div class="module" data-tag="P:step3"><div class="step-box">
+<div class="step-title"><span class="step-num">3</span> 几个高频场景的万能问法</div>
+<div class="step-body">
+<p>日常场景不用每次都从头想prompt，记住几个套话就行：</p>
+<h3 style="margin:10px 0 4px">🍽 吃啥</h3>
+<div class="code-block">我在[地点]，[人数]个人，[场合]，人均[预算]，
+想吃[菜系]，帮我推荐，要求：[任何额外条件如停车/包厢/不辣]</div>
+<h3 style="margin:10px 0 4px">🌍 去哪玩</h3>
+<div class="code-block">我从[出发地]去[目的地]，[天数]天，带[谁]，
+喜欢[自然/人文/美食]，不要[什么类型的活动]，
+帮我排个不赶路的行程</div>
+<h3 style="margin:10px 0 4px">🎬 看什么</h3>
+<div class="code-block">最近想看[类型]，喜欢[参考作品A]和[B]，讨厌[C]，<w d="如果是系列作品，想知道里面的顺序或最佳观看顺序">入坑指南</w>也给我一份</div>
+<h3 style="margin:10px 0 4px">✍️ 发朋友圈</h3>
+<div class="code-block">我去了[地点]，拍了[描述照片]，感受是[一句话心情]，
+帮我写几条朋友圈文案，风格[文艺/幽默/凡尔赛/极简]，
+每条不超过50字</div>
+<p>把这些存到备忘录里，以后吃饭/旅游/发圈直接填空就行。</p>
+</div>
+</div></div>
+</div>
+</div>
+<!-- 💡 Insight -->
+<div class="module section" data-tag="core:insight" id="s-insight">
+<div class="section-title">💡 理解为什么</div>
+<div class="section-desc">5分钟 · 日常场景prompt的核心原理就四个字</div>
+<div class="content">
+<h3>信息越多，AI越准</h3>
+<p>AI不是读心术，它没有你的记忆。你跟说"推荐个餐厅"在它看来跟另一个用户说"推荐个餐厅"没区别。</p>
+<p>但只要你说"预算150、川菜、别太辣、有包厢"，它的推荐池就被缩到了原来的1%甚至更少——<strong>精度自然上去了</strong>。</p>
+<table class="cmp-table">
+<tr><th></th><th>模糊问法</th><th>清晰问法</th></tr>
+<tr><td>问法</td><td>"推荐个电影"</td><td>"喜欢悬疑，看过《消失的她》觉得太套路，求推冷门但高分的"</td></tr>
+<tr><td>结果</td><td>豆瓣Top250，你八成看过</td><td>可能会有你没看过的宝藏</td></tr>
+<tr><td>效率</td><td>花10分钟翻+3次重问</td><td>1次到位</td></tr>
+</table>
+<h3>这个套路能迁移到哪</h3>
+<ul>
+<li><strong>买东西决策</strong> — "我要买XX，预算XX，看重XX，跟YY比哪个好"</li>
+<li><strong>写小作文</strong> — "写一段道歉的话/面试自我介绍/相亲简介/感谢信"</li>
+<li><strong>日常学习</strong> — "我完全不懂XX，用小孩能听懂的语言解释，举个生活中的例子"</li>
+<li><strong>纠结时</strong> — "A和B各有啥优劣，帮我从[角度]分析选哪个"</li>
+</ul>
+<div class="callout callout-warn">
+<strong>注意：</strong>日常场景AI也可能出错。它说"这家店评分4.8"，你最好自己搜一下确认。建议/推荐类可以信，事实/数据类要核实。
+</div>
+</div>
+</div>
+<!-- 🔁 Consolidate -->
+<div class="module section" data-tag="optional:consolidate" id="s-consolidate">
+<div class="section-title">🔁 巩固练习</div>
+<div class="section-desc">5分钟 · 明天用起来才真的学会</div>
+<div class="content">
+<div class="callout callout-tip">
+<strong>明天做一次：</strong>下次你纠结吃什么/看什么/买什么的时候，打开AI，用三要素法（对象+场景+偏好）问一次。别翻教程，卡了再回来看。
+</div>
+<h3>进阶挑战</h3>
+<div class="challenge">
+<div class="ch-title">✅ 挑战1：反向过滤</div>
+<div class="ch-desc">让AI先推荐5个，然后说"去掉我不喜欢的XX类型/风格，再推荐3个"——体验连续对话的力量。</div>
+</div>
+<div class="challenge">
+<div class="ch-title">✅ 挑战2：让AI帮你砍价&比价</div>
+<div class="ch-desc">发一个商品链接或描述给AI，说"帮我在XX平台找一个更低价的同款"，或"帮我写一段砍价话术"。</div>
+</div>
+<div class="challenge">
+<div class="ch-title">✅ 挑战3：一份完整的周末计划</div>
+<div class="ch-desc">把你下周末的真实空闲时间、预算、想干什么（哪怕只是"想躺着")发给AI，让它出一份计划。不满意就追加上一条的反馈技巧。</div>
+</div>
+</div>
+</div>
+<!-- 一劳永逸 -->
+<div class="module section" data-tag="core:summary" style="background:linear-gradient(135deg,#e8f5e9,#c8e6c9);border:none;text-align:center">
+<h3 style="font-size:18px;margin-bottom:8px;color:#2e7d32">⚡ 记住一句话</h3>
+<p style="font-size:13px;color:#2e7d32;margin-bottom:8px">**日常场景 = 对象 + 场景 + 偏好 + 排雷**</p>
+<div class="code-block" style="background:#fff;text-align:left">1. 遇到纠结的事 → 打开AI → 说清三要素
+2. 不满意 → 追加反馈 → 别重开
+3. 把高频问法存备忘录 → 填空用</div>
+<div style="margin-top:10px;font-size:15px;color:#2e7d32;font-weight:600">
+    🎉 以后AI给你的推荐，不会再让你"不感兴趣"
+  </div>
+</div>
+</div>
+<div class="tip-box" id="tipBox">
+<div class="tip-title">📖 术语</div>
+<button class="tip-close" id="tipClose">&times;</button>
+<div id="tipDesc"></div>
+</div>
+<script>
+(function(){
+  var tb=document.getElementById("tipBox"),td=document.getElementById("tipDesc"),tc=document.getElementById("tipClose");
+  if(tb&&td){
+    document.querySelectorAll("w").forEach(function(el){
+      el.addEventListener("click",function(e){
+        e.stopPropagation();
+        td.textContent=this.getAttribute("d")||"暂无释义";
+        tb.querySelector(".tip-title").textContent="📖 "+this.textContent.trim();
+        var r=this.getBoundingClientRect(),w=tb.offsetWidth||280,left=Math.max(10,Math.min(r.left+r.width/2-w/2,document.body.clientWidth-w-10)),top=r.top-8-tb.offsetHeight;
+        if(top<10)top=r.bottom+10;
+        tb.style.left=left+"px";tb.style.top=top+"px";tb.style.display="block";
+        document.querySelectorAll("w.active").forEach(function(w){w.classList.remove("active")});
+        this.classList.add("active");
+      });
+    });
+    function ht(){tb.style.display="none";document.querySelectorAll("w.active").forEach(function(w){w.classList.remove("active")})}
+    tc.addEventListener("click",ht);
+    document.addEventListener("click",function(e){if(!e.target.closest("w")&&!e.target.closest(".tip-box"))ht()});
+    document.addEventListener("keydown",function(e){if(e.key==="Escape")ht()});
+  }
+  var nav=document.getElementById("stepNav");
+  if(nav){
+    var S=["s-explain","s-practice","s-insight","s-consolidate"];
+    nav.addEventListener("click",function(e){
+      var it=e.target.closest(".sn-item");if(!it)return;
+      var id=it.getAttribute("data-step"),el=document.getElementById(id);
+      if(el)el.scrollIntoView({behavior:"smooth",block:"start"});
+      var idx=S.indexOf(id);
+      for(var i=0;i<nav.children.length;i++)nav.children[i].classList.toggle("active",i===idx);
+    });
+    var st;
+    function uas(){
+      var bi=0,bd=Infinity;
+      S.forEach(function(id,i){
+        var el=document.getElementById(id);
+        if(el){var t=Math.abs(el.getBoundingClientRect().top);if(t<bd){bd=t;bi=i}}
+      });
+      for(var i=0;i<nav.children.length;i++)nav.children[i].classList.toggle("active",i===bi);
+    }
+    document.addEventListener("scroll",function(){clearTimeout(st);st=setTimeout(uas,100)});
+    uas();
+  }
+})();
+</script>
+<script>
+(function(){
+  var p=new URLSearchParams(location.search),c=p.get("cut");
+  if(c){
+    var INFO={
+      "P:step1":{l:"第一步·说清三要素",d:"对象/场景/偏好，让AI从读心变听人话"},
+      "P:step2":{l:"第二步·追加反馈",d:"不满意别重开，一条追加解决问题"},
+      "P:step3":{l:"第三步·万能问法",d:"填几个模板存备忘录，以后直接套"}
+    var MSGS=[
+      "看起来你对这部分已经有点基础了，帮你跳过基础的，直接看重点就好〜",
+      "看来你对这部分比较熟悉了，跳过基础内容，直奔核心！",
+      "你已经有不错的基础了，直接看后面的总结就好。点淡色区域可以展开查看完整内容"
+    ];
+    var E=[];
+    tags=c.split(",");
+    tags.forEach(function(t){t=t.trim();var n=INFO[t];if(n){var el=document.querySelector('[data-tag="'+t+'"]');if(el)E.push({el:el,info:n});}});
+    if(E.length>0){
+      E.forEach(function(x){
+        var el=x.el,info=x.info,bar=document.createElement("div");
+        bar.style.cssText="padding:10px 14px;margin:10px 0;border-radius:12px;background:rgba(255,149,0,.06);border:1.5px dashed rgba(255,149,0,.25);font-size:13px;cursor:pointer;transition:all .2s;user-select:none";
+        bar.innerHTML='<div style="display:flex;align-items:center;justify-content:space-between"><span style="font-weight:600;color:#e65100">⏭ '+info.l+'<span style="font-size:11px;color:rgba(230,81,0,.5);margin-left:8px">已跳过</span></span><span style="font-size:11px;color:rgba(230,81,0,.4)">▼ 展开</span></div>'+(info.d?'<div style="font-size:11px;color:rgba(0,0,0,.3);margin-top:3px;padding-left:24px">'+info.d+'</div>':'');
+        var p=el.parentNode;
+        if(p){p.insertBefore(bar,el);el.style.display="none";bar.onclick=function(){var h=el.style.display==="none";el.style.display=h?"":"none";bar.style.borderStyle=h?"solid":"dashed";bar.style.background=h?"rgba(255,149,0,.15)":"rgba(255,149,0,.06)";bar.querySelector("span:last-child").innerHTML=h?"▲ 收起":"▼ 展开";};}
+      });
+      var midx=Math.min(E.length-1,MSGS.length-1),msg=MSGS[midx];
+      var ov=document.createElement("div");
+      ov.id="skip-overlay";
+      ov.style.cssText="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.25);z-index:10000;display:flex;align-items:center;justify-content:center;animation:fadeIn .3s ease";
+      ov.innerHTML='<div style="background:#fff;border-radius:20px;padding:28px 24px;max-width:340px;width:90%;box-shadow:0 8px 40px rgba(0,0,0,.12);text-align:center"><div style="font-size:36px;margin-bottom:10px">👏</div><div style="font-size:16px;font-weight:600;margin-bottom:8px;color:#1d1d1f">已帮你跳过基础步骤</div><div style="font-size:13px;color:#636366;line-height:1.7">'+msg+'</div><button onclick="document.body.removeChild(document.getElementById(\'skip-overlay\'))" style="margin-top:14px;padding:9px 28px;border:none;border-radius:12px;background:#007aff;color:#fff;font-size:14px;font-weight:600;cursor:pointer;box-shadow:0 4px 12px rgba(0,122,255,.25)">好的，开始学习</button><span onclick="document.body.removeChild(document.getElementById(\'skip-overlay\'))" style="position:absolute;top:10px;right:14px;cursor:pointer;font-size:18px;color:rgba(0,0,0,.2)">&times;</span></div>';
+      ov.onclick=function(e){if(e.target===ov)document.body.removeChild(ov);};
+      document.body.appendChild(ov);
+      var st=document.createElement("style");st.textContent="@keyframes fadeIn{from{opacity:0}to{opacity:1}}";document.head.appendChild(st);
+    }
+  }
+})();
+</script>
+</body>
+</html>

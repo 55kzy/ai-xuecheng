@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI学程 — AI代码能信吗？程序员防坑实战</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;
+    background:#f5f7fa;color:#1d1d1f;padding-bottom:60px
+  }
+  .header{
+    background:linear-gradient(135deg,#1d1d1f 0%,#3a3a3c 100%);
+    color:#fff;padding:32px 20px 28px;text-align:center
+  }
+  .header .badge{
+    display:inline-block;padding:3px 10px;border-radius:20px;
+    font-size:11px;font-weight:600;background:rgba(255,255,255,.12);
+    margin-bottom:10px;color:rgba(255,255,255,.7)
+  }
+  .header h1{font-size:22px;font-weight:700;margin-bottom:6px;letter-spacing:-.3px}
+  .header .meta{font-size:13px;color:rgba(255,255,255,.55);display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+  .header .meta span{display:inline-flex;align-items:center;gap:4px}
+  .header .tag-free{
+    display:inline-block;padding:4px 12px;border-radius:20px;
+    background:rgba(52,199,89,.2);color:#34c759;font-size:12px;font-weight:600;margin-top:12px
+  }
+  .container{max-width:680px;margin:0 auto;padding:0 16px}
+  .step-nav{display:flex;gap:8px;padding:16px 0;overflow-x:auto;position:sticky;top:0;background:#f5f7fa;z-index:10;border-bottom:1px solid rgba(0,0,0,.06)}
+  .step-nav .sn-item{
+    flex:1;min-width:0;padding:8px 6px;border-radius:10px;border:1.5px solid #e5e5ea;
+    font-size:11px;text-align:center;transition:all .15s;white-space:nowrap;
+    background:rgba(255,255,255,.6);color:#636366
+  }
+  .step-nav .sn-item{cursor:pointer}
+  .step-nav .sn-item.active{border-color:#007aff;background:#e8f2ff;color:#007aff;font-weight:600}
+  .step-nav .sn-item .sn-icon{display:block;font-size:14px;margin-bottom:2px}
+  .section{margin:16px 0;background:rgba(255,255,255,.85);backdrop-filter:blur(20px);border-radius:20px;padding:20px;border:1px solid rgba(255,255,255,.6);box-shadow:0 2px 12px rgba(0,0,0,.04)}
+  .section-title{font-size:16px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .section-desc{font-size:13px;color:#636366;margin-bottom:10px;line-height:1.6}
+  .content{font-size:14px;line-height:1.8;color:#1d1d1f}
+  .content h3{font-size:15px;margin:16px 0 6px}
+  .content p{margin-bottom:8px}
+  .content ul,.content ol{padding-left:18px;margin-bottom:10px}
+  .content li{margin-bottom:4px}
+  .callout{
+    padding:12px 14px;border-radius:12px;margin:12px 0;
+    font-size:13px;line-height:1.6;
+    border-left:3px solid
+  }
+  .callout-tip{background:rgba(0,122,255,.06);border-color:#007aff;color:#1d1d1f}
+  .callout-warn{background:rgba(255,149,0,.08);border-color:#ff9500;color:#1d1d1f}
+  .callout-danger{background:rgba(255,59,48,.06);border-color:#ff3b30;color:#1d1d1f}
+  .callout-green{background:rgba(52,199,89,.08);border-color:#34c759;color:#1d1d1f}
+  .code-block{
+    background:#f0f2f5;border-radius:10px;padding:12px 14px;
+    font-family:'Courier New',monospace;font-size:13px;line-height:1.6;
+    white-space:pre-wrap;word-break:break-word;margin:8px 0
+  }
+  .cmp-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
+  .cmp-table th,.cmp-table td{padding:8px 10px;border:1px solid #e5e5ea;text-align:left}
+  .cmp-table th{background:rgba(0,0,0,.03);font-weight:600;font-size:12px;color:#636366}
+  .challenge{
+    background:rgba(255,255,255,.4);border:1px solid #e5e5ea;border-radius:12px;
+    padding:12px 14px;margin:8px 0
+  }
+  .challenge .ch-title{font-weight:600;font-size:13px;margin-bottom:4px}
+  .challenge .ch-desc{font-size:12px;color:#636366;line-height:1.5}
+  .step-box{
+    background:rgba(0,122,255,.04);border-radius:12px;padding:14px;margin:10px 0;border:1px solid rgba(0,122,255,.12)
+  }
+  .step-box .step-num{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:22px;height:22px;border-radius:50%;background:#007aff;color:#fff;
+    font-size:12px;font-weight:700;margin-right:6px;flex-shrink:0
+  }
+  .step-box .step-title{font-weight:600;font-size:14px;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+  .step-box .step-body{font-size:13px;line-height:1.7;color:#1d1d1f}
+  .goal-list{display:flex;flex-direction:column;gap:6px;margin:10px 0}
+  .goal-item{display:flex;align-items:center;gap:8px;font-size:13px;padding:4px 0}
+  .goal-check{width:18px;height:18px;border-radius:50%;background:#34c759;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+  .ex-pair{display:flex;flex-direction:column;gap:8px;margin:10px 0}
+  .ex-item{padding:10px 12px;border-radius:10px;font-size:13px;line-height:1.6;border:1px solid}
+  .ex-bad{background:rgba(255,59,48,.04);border-color:rgba(255,59,48,.15)}
+  .ex-bad .ex-label{color:#ff3b30;font-weight:600;margin-bottom:4px}
+  .ex-good{background:rgba(52,199,89,.06);border-color:rgba(52,199,89,.2)}
+  .ex-good .ex-label{color:#34c759;font-weight:600;margin-bottom:4px}
+  w{
+    cursor:pointer;border-bottom:1.5px dashed #007aff;
+    color:#007aff;font-weight:500;position:relative;
+    transition:background .15s
+  }
+  w:hover{background:rgba(0,122,255,.06)}
+  w.active{background:rgba(0,122,255,.12)}
+  .tip-box{
+    position:fixed;z-index:9999;display:none;
+    background:#1d1d1f;color:#fff;border-radius:10px;
+    padding:10px 14px;max-width:300px;
+    font-size:13px;line-height:1.6;
+    box-shadow:0 8px 24px rgba(0,0,0,.2);
+    animation:tipIn .2s ease
+  }
+  .tip-box .tip-title{font-weight:600;margin-bottom:3px;color:rgba(255,255,255,.6);font-size:11px}
+  .tip-box .tip-close{
+    position:absolute;top:6px;right:8px;
+    cursor:pointer;font-size:14px;color:rgba(255,255,255,.4);
+    line-height:1;border:none;background:none;padding:2px
+  }
+  .tip-box .tip-close:hover{color:#fff}
+  .tip-box::after{
+    content:'';position:absolute;left:50%;bottom:-6px;
+    margin-left:-6px;
+    border:6px solid transparent;border-top-color:#1d1d1f
+  }
+  @keyframes tipIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+<div class="header">
+<div class="badge">技术应用 · T1 基础免费</div>
+<h1>AI代码能信吗？程序员防坑实战</h1>
+<p style="font-size:14px;color:rgba(255,255,255,.7);margin-bottom:8px">AI写代码确实快，但你敢直接merge吗？</p>
+<div class="meta">
+<span>⏱ 约25分钟</span>
+<span>📄 图文课</span>
+<span>🛠 需AI编程工具+开发环境</span>
+</div>
+<div class="tag-free">🆓 免费</div>
+</div>
+<div class="container">
+<div class="step-nav" id="stepNav">
+<div class="sn-item active" data-step="s-explain"><span class="sn-icon">📌</span>为什么</div>
+<div class="sn-item" data-step="s-practice"><span class="sn-icon">🎯</span>实操</div>
+<div class="sn-item" data-step="s-insight"><span class="sn-icon">💡</span>原理</div>
+<div class="sn-item" data-step="s-consolidate"><span class="sn-icon">🔁</span>巩固</div>
+</div>
+<!-- 📌 Explain -->
+<div class="module section" data-tag="core:explain" id="s-explain">
+<div class="section-title">📌 AI写代码最大的坑不是"写不出来"</div>
+<div class="section-desc">3分钟 · 是"写得出来但有bug你发现不了"</div>
+<div class="content">
+<p>用AI写代码现在很普遍了。大家说"让AI写个功能，跑起来就完事"。</p>
+<p>但问题就出在这：</p>
+<ul>
+<li>AI写的代码<strong>能跑</strong>，但可能<strong>跑不对</strong></li>
+<li>AI写的代码<strong>功能对</strong>，但可能<strong>有严重安全隐患</strong></li>
+<li>AI写的代码<strong>表面看挺好</strong>，但可能<strong>性能差到爆炸</strong></li>
+</ul>
+<p>很多程序员把AI代码直接复制进项目，然后花一整天排查一个AI留下的隐蔽bug。还有更严重的——把含<w d="代码中隐藏的安全漏洞，可被攻击者利用进行注入攻击或数据泄露">安全漏洞</w>的代码部署到了线上。</p>
+<p>这节课教你<strong>如何在用AI代码的同时，守住质量和安全的底线</strong>。</p>
+<h3>这节课学完你能做到</h3>
+<div class="goal-list">
+<div class="goal-item"><span class="goal-check">✓</span> 快速发现AI代码中的逻辑bug和边界问题</div>
+<div class="goal-item"><span class="goal-check">✓</span> 识别常见的AI代码安全漏洞模式</div>
+<div class="goal-item"><span class="goal-check">✓</span> 建立一套AI代码"拿来用之前"的检查流程</div>
+</div>
+</div>
+</div>
+<!-- 🎯 Practice -->
+<div class="module section" data-tag="P:practice" id="s-practice">
+<div class="section-title">🎯 动手实操</div>
+<div class="section-desc">15分钟 · AI代码三关审查法</div>
+<div class="content">
+<div class="module" data-tag="P:step1"><div class="step-box">
+<div class="step-title"><span class="step-num">1</span> 第一关：逻辑审查</div>
+<div class="step-body">
+<p>AI最容易犯的逻辑错误：</p>
+<table class="cmp-table">
+<tr><th>常见问题</th><th>AI为什么这样写</th><th>怎么检查</th></tr>
+<tr><td>边界条件缺失</td><td>它只考虑了正常路径</td><td>思考"输入为空/最大/异常时"是否处理</td></tr>
+<tr><td>状态管理混乱</td><td>多轮对话后它忘记之前写过的变量</td><td>检查变量命名前后是否一致</td></tr>
+<tr><td>使用了不存在的API</td><td>它"猜"了一个函数名</td><td>去文档确认API是否存在</td></tr>
+<tr><td>死循环/递归无终止</td><td>只写了递归逻辑没写终止条件</td><td>找到所有循环和递归，检查退出条件</td></tr>
+</table>
+<p>一个最实用的习惯：拿到AI写的代码，第一件事不是跑，而是<strong>人肉走一遍关键逻辑路径</strong>。</p>
+<div class="code-block">// AI写了一段处理用户订单的代码
+// 问自己：如果用户没登录呢？如果订单为空呢？
+// 如果价格为0或者负数呢？如果刚好并发请求呢？</div>
+<div class="callout callout-tip">
+<strong>检查技巧：</strong>把AI写的代码发回给它自己，让它"用挑剔的代码审查者角度，找出这段代码的至少3个潜在bug"。你会发现它能找出自己的问题。
+</div>
+</div>
+</div></div>
+<div class="module" data-tag="P:step2"><div class="step-box">
+<div class="step-title"><span class="step-num">2</span> 第二关：安全审查</div>
+<div class="step-body">
+<p>这是最容易被忽视但后果最严重的。</p>
+<h3 style="margin:10px 0 4px">AI代码的高频安全雷区：</h3>
+<ol>
+<li><strong><w d="直接将用户输入拼接到SQL查询中，攻击者可借此操作数据库">SQL注入</w></strong> — AI有时会用字符串拼接写SQL</li>
+<li><strong>硬编码密钥</strong> — AI直接写死了API_KEY/AWS_SECRET</li>
+<li><strong>不验证用户输入</strong> — "用户说什么我就做什么"</li>
+<li><strong>暴露敏感信息</strong> — 错误信息里直接打印数据库密码</li>
+<li><strong>依赖过时版本</strong> — AI引用了一个三年前不安全的库版本</li>
+</ol>
+<p>审查时关注的三个关键点：</p>
+<div class="code-block"># 1. 所有用户输入来了以后有没有验证/过滤？
+# 2. 有没有密钥/密码/Token硬编码在代码里？
+# 3. 有没有直接操作文件/数据库/系统命令的地方？</div>
+<div class="callout callout-danger">
+<strong>真实案例：</strong>有人让AI写一个"用户头像上传功能"，AI生成的代码直接用了用户提供的文件名保存，并且没有类型检查——任何人都可以上传.php文件然后远程执行代码。这种漏洞放到线上就等着被黑。
+</div>
+</div>
+</div></div>
+<div class="module" data-tag="P:step3"><div class="step-box">
+<div class="step-title"><span class="step-num">3</span> 第三关：运行验证</div>
+<div class="step-body">
+<p>前两关通过后，才能让代码跑起来。</p>
+<h3 style="margin:10px 0 4px">验证流程：</h3>
+<ol>
+<li><strong>单元测试</strong> — 让AI自己写测试用例，覆盖率拉到80%以上</li>
+<li><strong>边界测试</strong> — 用空值、超大值、特殊字符、负数去测试</li>
+<li><strong><w d="模拟恶意输入来测试系统安全性">注入测试</w></strong> — 输入SQL语句/脚本代码/<w d="跨站脚本攻击，注入可执行代码">XSS</w> payload看是否被过滤</li>
+<li><strong>性能测试</strong> — 问AI"这个方案在大数据量下性能如何？瓶颈在哪？"</li>
+</ol>
+<div class="code-block">我只需要用来做测试，需要简洁的测试框架样例
+// 让AI帮你写测试：
+// "这是我上一个回复里写的函数，帮我对它写单元测试，
+// 覆盖正常输入、边界输入、异常输入三个场景"</div>
+<div class="callout callout-green">
+<strong>好习惯：</strong>每次用AI写的代码前，花5分钟跑一遍这三关。前三次你可能不习惯，十次之后就是肌肉记忆了。
+</div>
+</div>
+</div></div>
+</div>
+</div>
+<!-- 💡 Insight -->
+<div class="module section" data-tag="core:insight" id="s-insight">
+<div class="section-title">💡 理解为什么</div>
+<div class="section-desc">5分钟 · 为什么AI写的代码容易有这些问题</div>
+<div class="content">
+<h3>AI写代码的本质：模式匹配，不是理解</h3>
+<p>AI不是真的"理解"你的需求然后去实现。它是在<strong>海量代码里匹配最相似的模式</strong>然后拼接出来。</p>
+<ul>
+<li>它见过一万段安全的登录代码，也见过一千段有SQL注入的登录代码</li>
+<li>它的训练数据里既有最佳实践，也有反模式</li>
+<li>它不知道哪段代码会被部署到线上，哪段会被攻击</li>
+<li>它不会主动说"这个实现有安全风险"</li>
+</ul>
+<h3>跟已有课程的区别</h3>
+<ul>
+<li>已有<strong>E·P prompt实战课</strong> — 教你怎么给AI写好的prompt来生成代码（侧重<strong>输入</strong>）</li>
+<li>已有<strong>E·K 工具选型课</strong> — 教你选什么AI工具/平台来辅助开发（侧重<strong>工具</strong>）</li>
+<li>这节<strong>E·L 代码核实课</strong> — 教你验证AI生成的代码质量（侧重<strong>输出</strong>）</li>
+</ul>
+<p>三门课构成技术人的AI工作流闭环：**输入 → 工具 → 输出验证**。缺了这一环，前面两环做得再好也可能翻车。</p>
+<div class="callout callout-warn">
+<strong>核心原则：</strong>把AI当成"写初稿的实习生"，不是"提交代码的正式员工"。你永远要对AI的代码负最终责任。
+</div>
+</div>
+</div>
+<!-- 🔁 Consolidate -->
+<div class="module section" data-tag="optional:consolidate" id="s-consolidate">
+<div class="section-title">🔁 巩固练习</div>
+<div class="section-desc">5分钟 · 建立你的AI代码审查习惯</div>
+<div class="content">
+<div class="callout callout-tip">
+<strong>明天做一次：</strong>下次让AI生成一段代码后，故意不做审查直接跑。看看跑的过程中有没有出现边界崩溃。然后对照三关审查法检查，找到AI写的潜在问题。
+</div>
+<h3>进阶挑战</h3>
+<div class="challenge">
+<div class="ch-title">✅ 挑战1：让AI攻击自己的代码</div>
+<div class="ch-desc">把AI写的一段代码发回给它，说"请以安全审计员的身份，找出这段代码里的所有安全漏洞"。看它能找到几个。</div>
+</div>
+<div class="challenge">
+<div class="ch-title">✅ 挑战2：让AI补全缺少的验证</div>
+<div class="ch-desc">把AI生成的有安全问题的代码发回给它，说"给这段代码加上所有必要的输入验证和安全检查"。看第二版是否还漏了什么。</div>
+</div>
+<div class="challenge">
+<div class="ch-title">✅ 挑战3：对比两个AI的输出质量</div>
+<div class="ch-desc">同一个需求让两个不同AI生成实现，从正确性、安全性、可读性三个维度对比。你会发现质的差距。</div>
+</div>
+</div>
+</div>
+<!-- 一劳永逸 -->
+<div class="module section" data-tag="core:summary" style="background:linear-gradient(135deg,#e8f5e9,#c8e6c9);border:none;text-align:center">
+<h3 style="font-size:18px;margin-bottom:8px;color:#2e7d32">⚡ 记住一句话</h3>
+<p style="font-size:13px;color:#2e7d32;margin-bottom:8px">**AI代码 = 实习生写的代码，不审查别merge**</p>
+<div class="code-block" style="background:#fff;text-align:left">三关审查法（5分钟）：
+1. 逻辑审查 → 边界/状态/假API/死循环
+2. 安全审查 → SQL注入/硬编码/不验证输入/暴露信息
+3. 运行验证 → 单元测试/边界测试/安全测试/性能测试</div>
+<div style="margin-top:10px;font-size:15px;color:#2e7d32;font-weight:600">
+    🎉 以后AI代码进项目，你至少能睡得着觉
+  </div>
+</div>
+</div>
+<div class="tip-box" id="tipBox">
+<div class="tip-title">📖 术语</div>
+<button class="tip-close" id="tipClose">&times;</button>
+<div id="tipDesc"></div>
+</div>
+<script>
+(function(){
+  var tb=document.getElementById("tipBox"),td=document.getElementById("tipDesc"),tc=document.getElementById("tipClose");
+  if(tb&&td){
+    document.querySelectorAll("w").forEach(function(el){
+      el.addEventListener("click",function(e){
+        e.stopPropagation();
+        td.textContent=this.getAttribute("d")||"暂无释义";
+        tb.querySelector(".tip-title").textContent="📖 "+this.textContent.trim();
+        var r=this.getBoundingClientRect(),w=tb.offsetWidth||280,left=Math.max(10,Math.min(r.left+r.width/2-w/2,document.body.clientWidth-w-10)),top=r.top-8-tb.offsetHeight;
+        if(top<10)top=r.bottom+10;
+        tb.style.left=left+"px";tb.style.top=top+"px";tb.style.display="block";
+        document.querySelectorAll("w.active").forEach(function(w){w.classList.remove("active")});
+        this.classList.add("active");
+      });
+    });
+    function ht(){tb.style.display="none";document.querySelectorAll("w.active").forEach(function(w){w.classList.remove("active")})}
+    tc.addEventListener("click",ht);
+    document.addEventListener("click",function(e){if(!e.target.closest("w")&&!e.target.closest(".tip-box"))ht()});
+    document.addEventListener("keydown",function(e){if(e.key==="Escape")ht()});
+  }
+  var nav=document.getElementById("stepNav");
+  if(nav){
+    var S=["s-explain","s-practice","s-insight","s-consolidate"];
+    nav.addEventListener("click",function(e){
+      var it=e.target.closest(".sn-item");if(!it)return;
+      var id=it.getAttribute("data-step"),el=document.getElementById(id);
+      if(el)el.scrollIntoView({behavior:"smooth",block:"start"});
+      var idx=S.indexOf(id);
+      for(var i=0;i<nav.children.length;i++)nav.children[i].classList.toggle("active",i===idx);
+    });
+    var st;
+    function uas(){
+      var bi=0,bd=Infinity;
+      S.forEach(function(id,i){
+        var el=document.getElementById(id);
+        if(el){var t=Math.abs(el.getBoundingClientRect().top);if(t<bd){bd=t;bi=i}}
+      });
+      for(var i=0;i<nav.children.length;i++)nav.children[i].classList.toggle("active",i===bi);
+    }
+    document.addEventListener("scroll",function(){clearTimeout(st);st=setTimeout(uas,100)});
+    uas();
+  }
+})();
+</script>
+<script>
+(function(){
+  var p=new URLSearchParams(location.search),c=p.get("cut");
+  if(c){
+    var INFO={
+      "P:step1":{l:"第一关·逻辑审查",d:"关注边界条件、状态管理、假API、死循环"},
+      "P:step2":{l:"第二关·安全审查",d:"严防SQL注入、硬编码密钥、输入不验证"},
+      "P:step3":{l:"第三关·运行验证",d:"单元测试+边界测试+安全测试+性能测试"}
+    };
+    var MSGS=[
+      "看起来你对这部分已经有点基础了，帮你跳过基础的，直接看重点就好〜",
+      "看来你对这部分比较熟悉了，跳过基础内容，直奔核心！",
+      "你已经有不错的基础了，直接看后面的总结就好。点淡色区域可以展开查看完整内容"
+    ];
+    var E=[];
+    tags=c.split(",");
+    tags.forEach(function(t){t=t.trim();var n=INFO[t];if(n){var el=document.querySelector('[data-tag="'+t+'"]');if(el)E.push({el:el,info:n});}});
+    if(E.length>0){
+      E.forEach(function(x){
+        var el=x.el,info=x.info,bar=document.createElement("div");
+        bar.style.cssText="padding:10px 14px;margin:10px 0;border-radius:12px;background:rgba(255,149,0,.06);border:1.5px dashed rgba(255,149,0,.25);font-size:13px;cursor:pointer;transition:all .2s;user-select:none";
+        bar.innerHTML='<div style="display:flex;align-items:center;justify-content:space-between"><span style="font-weight:600;color:#e65100">⏭ '+info.l+'<span style="font-size:11px;color:rgba(230,81,0,.5);margin-left:8px">已跳过</span></span><span style="font-size:11px;color:rgba(230,81,0,.4)">▼ 展开</span></div>'+(info.d?'<div style="font-size:11px;color:rgba(0,0,0,.3);margin-top:3px;padding-left:24px">'+info.d+'</div>':'');
+        var p=el.parentNode;
+        if(p){p.insertBefore(bar,el);el.style.display="none";bar.onclick=function(){var h=el.style.display==="none";el.style.display=h?"":"none";bar.style.borderStyle=h?"solid":"dashed";bar.style.background=h?"rgba(255,149,0,.15)":"rgba(255,149,0,.06)";bar.querySelector("span:last-child").innerHTML=h?"▲ 收起":"▼ 展开";};}
+      });
+      var midx=Math.min(E.length-1,MSGS.length-1),msg=MSGS[midx];
+      var ov=document.createElement("div");
+      ov.id="skip-overlay";
+      ov.style.cssText="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.25);z-index:10000;display:flex;align-items:center;justify-content:center;animation:fadeIn .3s ease";
+      ov.innerHTML='<div style="background:#fff;border-radius:20px;padding:28px 24px;max-width:340px;width:90%;box-shadow:0 8px 40px rgba(0,0,0,.12);text-align:center"><div style="font-size:36px;margin-bottom:10px">👏</div><div style="font-size:16px;font-weight:600;margin-bottom:8px;color:#1d1d1f">已帮你跳过基础步骤</div><div style="font-size:13px;color:#636366;line-height:1.7">'+msg+'</div><button onclick="document.body.removeChild(document.getElementById(\'skip-overlay\'))" style="margin-top:14px;padding:9px 28px;border:none;border-radius:12px;background:#007aff;color:#fff;font-size:14px;font-weight:600;cursor:pointer;box-shadow:0 4px 12px rgba(0,122,255,.25)">好的，开始学习</button><span onclick="document.body.removeChild(document.getElementById(\'skip-overlay\'))" style="position:absolute;top:10px;right:14px;cursor:pointer;font-size:18px;color:rgba(0,0,0,.2)">&times;</span></div>';
+      ov.onclick=function(e){if(e.target===ov)document.body.removeChild(ov);};
+      document.body.appendChild(ov);
+      var st=document.createElement("style");st.textContent="@keyframes fadeIn{from{opacity:0}to{opacity:1}}";document.head.appendChild(st);
+    }
+  }
+})();
+</script>
+</body>
+</html>

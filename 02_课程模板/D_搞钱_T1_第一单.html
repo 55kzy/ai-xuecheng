@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>AI学程 — 发条朋友圈，接第一单AI副业</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;background:#f5f7fa;color:#1d1d1f;padding-bottom:60px}
+  .header{background:linear-gradient(135deg,#1d1d1f 0%,#3a3a3c 100%);color:#fff;padding:32px 20px 28px;text-align:center}
+  .header .badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(255,255,255,.12);margin-bottom:10px;color:rgba(255,255,255,.7)}
+  .header h1{font-size:22px;font-weight:700;margin-bottom:6px;letter-spacing:-.3px}
+  .header .meta{font-size:13px;color:rgba(255,255,255,.55);display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+  .header .tag-free{display:inline-block;padding:4px 12px;border-radius:20px;background:rgba(52,199,89,.2);color:#34c759;font-size:12px;font-weight:600;margin-top:12px}
+  .container{max-width:680px;margin:0 auto;padding:0 16px}
+  .step-nav{display:flex;gap:8px;padding:16px 0;overflow-x:auto;position:sticky;top:0;background:#f5f7fa;z-index:10;border-bottom:1px solid rgba(0,0,0,.06)}
+  .step-nav .sn-item{flex:1;min-width:0;padding:8px 6px;border-radius:10px;border:1.5px solid #e5e5ea;font-size:11px;text-align:center;transition:all .15s;white-space:nowrap;background:rgba(255,255,255,.6);color:#636366;cursor:pointer}
+  .step-nav .sn-item.active{border-color:#007aff;background:#e8f2ff;color:#007aff;font-weight:600}
+  .step-nav .sn-item .sn-icon{display:block;font-size:14px;margin-bottom:2px}
+  .section{margin:16px 0;background:rgba(255,255,255,.85);backdrop-filter:blur(20px);border-radius:20px;padding:20px;border:1px solid rgba(255,255,255,.6);box-shadow:0 2px 12px rgba(0,0,0,.04)}
+  .section-title{font-size:16px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .section-desc{font-size:13px;color:#636366;margin-bottom:10px;line-height:1.6}
+  .content{font-size:14px;line-height:1.8;color:#1d1d1f}
+  .content h3{font-size:15px;margin:16px 0 6px}
+  .content p{margin-bottom:8px}
+  .content ul,.content ol{padding-left:18px;margin-bottom:10px}
+  .content li{margin-bottom:4px}
+  .callout{padding:12px 14px;border-radius:12px;margin:12px 0;font-size:13px;line-height:1.6;border-left:3px solid}
+  .callout-tip{background:rgba(0,122,255,.06);border-color:#007aff;color:#1d1d1f}
+  .callout-warn{background:rgba(255,149,0,.08);border-color:#ff9500;color:#1d1d1f}
+  .callout-danger{background:rgba(255,59,48,.06);border-color:#ff3b30;color:#1d1d1f}
+  .callout-green{background:rgba(52,199,89,.08);border-color:#34c759;color:#1d1d1f}
+  .code-block{background:#f0f2f5;border-radius:10px;padding:12px 14px;font-family:'Courier New',monospace;font-size:13px;line-height:1.6;white-space:pre-wrap;word-break:break-word;margin:8px 0}
+  .cmp-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
+  .cmp-table th,.cmp-table td{padding:8px 10px;border:1px solid #e5e5ea;text-align:left}
+  .cmp-table th{background:rgba(0,0,0,.03);font-weight:600;font-size:12px;color:#636366}
+  .challenge{background:rgba(255,255,255,.4);border:1px solid #e5e5ea;border-radius:12px;padding:12px 14px;margin:8px 0}
+  .challenge .ch-title{font-weight:600;font-size:13px;margin-bottom:4px}
+  .challenge .ch-desc{font-size:12px;color:#636366;line-height:1.5}
+  .step-box{background:rgba(0,122,255,.04);border-radius:12px;padding:14px;margin:10px 0;border:1px solid rgba(0,122,255,.12)}
+  .step-box .step-num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:#007aff;color:#fff;font-size:12px;font-weight:700;margin-right:6px;flex-shrink:0}
+  .step-box .step-title{font-weight:600;font-size:14px;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+  .step-box .step-body{font-size:13px;line-height:1.7;color:#1d1d1f}
+  .goal-list{display:flex;flex-direction:column;gap:6px;margin:10px 0}
+  .goal-item{display:flex;align-items:center;gap:8px;font-size:13px;padding:4px 0}
+  .goal-check{width:18px;height:18px;border-radius:50%;background:#34c759;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+  .ex-pair{display:flex;flex-direction:column;gap:8px;margin:10px 0}
+  .ex-item{padding:10px 12px;border-radius:10px;font-size:13px;line-height:1.6;border:1px solid}
+  .ex-bad{background:rgba(255,59,48,.04);border-color:rgba(255,59,48,.15)}
+  .ex-bad .ex-label{color:#ff3b30;font-weight:600;margin-bottom:4px}
+  .ex-good{background:rgba(52,199,89,.06);border-color:rgba(52,199,89,.2)}
+  .ex-good .ex-label{color:#34c759;font-weight:600;margin-bottom:4px}
+  w{cursor:pointer;border-bottom:1.5px dashed #007aff;color:#007aff;font-weight:500;position:relative;transition:background .15s}
+  w:hover{background:rgba(0,122,255,.06)}
+  w.active{background:rgba(0,122,255,.12)}
+  .tip-box{position:fixed;z-index:9999;display:none;background:#1d1d1f;color:#fff;border-radius:10px;padding:10px 14px;max-width:300px;font-size:13px;line-height:1.6;box-shadow:0 8px 24px rgba(0,0,0,.2);animation:tipIn .2s ease}
+  .tip-box .tip-title{font-weight:600;margin-bottom:3px;color:rgba(255,255,255,.6);font-size:11px}
+  .tip-box .tip-close{position:absolute;top:6px;right:8px;cursor:pointer;font-size:14px;color:rgba(255,255,255,.4);line-height:1;border:none;background:none;padding:2px}
+  .tip-box .tip-close:hover{color:#fff}
+  .tip-box::after{content:'';position:absolute;left:50%;bottom:-6px;margin-left:-6px;border:6px solid transparent;border-top-color:#1d1d1f}
+  @keyframes tipIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+<div class="header">
+<div class="badge">搞钱变现 · T1 基础免费</div>
+<h1>💰 发条朋友圈，接第一单AI副业</h1>
+<p style="font-size:14px;color:rgba(255,255,255,.7);margin-bottom:8px">从知道到做到，就差这一单的距离</p>
+<div class="meta">
+<span>⏱ 约25分钟</span>
+<span>📄 图文课</span>
+<span>🛠 需AI聊天工具</span>
+</div>
+<div class="tag-free">🆓 免费</div>
+</div>
+<div class="container">
+<div class="step-nav" id="stepNav">
+<div class="sn-item active" data-step="s-explain"><span class="sn-icon">📌</span>为什么</div>
+<div class="sn-item" data-step="s-practice"><span class="sn-icon">🎯</span>实操</div>
+<div class="sn-item" data-step="s-insight"><span class="sn-icon">💡</span>原理</div>
+<div class="sn-item" data-step="s-consolidate"><span class="sn-icon">🔁</span>巩固</div>
+</div>
+<!-- 📌 Explain -->
+<div class="section module" data-tag="core:explain" id="s-explain">
+<div class="section-title">📌 你离搞钱差的不在能力，在"开始"</div>
+<div class="section-desc">3分钟 · 搞清楚卡在哪一步</div>
+<div class="content">
+<p>很多人说"我想用AI搞钱"，然后花大量时间研究——研究哪个平台赚钱、研究什么项目好，但就是不开始接单。</p>
+<p><strong>你不是不懂AI搞钱，你是不敢跨出第一步。</strong></p>
+<p>其实最简单的切入点就是<strong>代做</strong>——找人帮人家做PPT、写文案、修图、翻译……这不需要你有多强的能力，只需要你会用AI，对方不一定会。一单几十到几百块不等，做完你就知道流程了。</p>
+<div class="ex-pair">
+<div class="ex-item ex-bad">
+<div class="ex-label">❌ 大多数人这样</div>
+"等我把AI学透了再搞钱" → 学了三个月，一单没接
+</div>
+<div class="ex-item ex-good">
+<div class="ex-label">✅ 正确的姿势</div>
+"先接一单试试，边做边学" → 做完一单，比研究三个月都有用
+</div>
+</div>
+<p>这节不做产业分析，不画大饼，只教你：<strong>怎么找到第一单 + 怎么用AI把活干了 + 怎么收钱</strong>。</p>
+<h3>这节课学完你能做到</h3>
+<div class="goal-list">
+<div class="goal-item"><span class="goal-check">✓</span> 知道去哪里找第一单AI代做</div>
+<div class="goal-item"><span class="goal-check">✓</span> 用 <w d='你给AI的指令，告诉他怎么做才能按要求完成'>prompt</w> 快速完成代做任务</div>
+<div class="goal-item"><span class="goal-check">✓</span> 完成你的第一单并拿到收入</div>
+</div>
+</div>
+</div>
+<!-- 🎯 Practice -->
+<div class="section module" data-tag="P:practice" id="s-practice">
+<div class="section-title">🎯 动手实操</div>
+<div class="section-desc">15分钟 · 三步接到你第一个单</div>
+<div class="content">
+<div class="module" data-tag="P:step1">
+<div class="step-box">
+<div class="step-title"><span class="step-num">1</span> 找到你的第一个渠道</div>
+<div class="step-body">
+<p>别去淘宝、闲鱼竞争，那里太卷了。新手最适合的渠道是<strong>你身边的人</strong>和<strong>熟人圈子</strong>。</p>
+<p>打开微信，做三件事：</p>
+<ol>
+<li>发一条朋友圈："最近在学习用AI，可以免费帮忙做PPT/改文案/整理笔记，有需要的私我"</li>
+<li>给3个关系好的朋友发私信："我正在练AI技能，你有啥需要AI帮忙的吗？免费帮你做一次"</li>
+<li>如果有行业群/校友群/妈妈群，发一条："需要AI写文案/做PPT的吗？免费帮做，换点反馈就好"</li>
+</ol>
+<div class="callout callout-tip">
+<strong>为什么先免费？</strong>第一单的目的是跑通流程，不是赚大钱。免费反而能降低决策门槛，更快接到第一单。有了作品和流程，第二单就可以收费了。
+</div>
+<p>如果你不想从熟人开始，也可以看看这些平台：</p>
+<ul>
+<li>🍠 <strong>小红书</strong>——发笔记"免费帮做xxx，限5个名额"，一般很快有人问</li>
+<li>🐟 <strong>闲鱼</strong>——挂"AI代写/代做PPT/代画图"，定价从最低的9.9元开始</li>
+<li>📱 <strong>微信群/知识星球</strong>——群里经常有人需要帮忙写东西做东西</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="module" data-tag="P:step2">
+<div class="step-box">
+<div class="step-title"><span class="step-num">2</span> 接到需求后，让AI帮你干活</div>
+<div class="step-body">
+<p>接到需求后，别慌。用这个框架跟客户确认：</p>
+<div class="code-block">要复述需求：
+"您是想要[具体内容]对吗？时间是[日期]，风格是[正式/轻松/专业]，字数大概[字数]，对吗？"
+
+拿到确认后再开始做。避免做好后客户说"这不是我想要的"。</div>
+<p style="font-weight:600;margin:8px 0 4px">针对不同需求，用不同的prompt：</p>
+<table class="cmp-table">
+<tr><th>需求</th><th>prompt模板</th></tr>
+<tr><td>代写文案</td><td>"你是一个专业的文案写手。我需要一篇[类型]文案，主题是[主题]，目标读者是[人群]。要求[具体要求]"</td></tr>
+<tr><td>代做PPT</td><td>"你是一个PPT内容策划师。帮我写一个[主题]的PPT大纲，共[X]页，每页列标题和要点"</td></tr>
+<tr><td>代制图</td><td>"请生成一张[风格]图片，内容是[描述]，比例[16:9/1:1/3:4]"</td></tr>
+<tr><td>代翻译</td><td>"你是一个专业翻译，把以下[语种]内容翻译成[目标语言]，保持原文语气和风格"</td></tr>
+</table>
+<div class="callout callout-green" style="margin:8px 0">
+<strong>核心技巧：</strong>让AI先出初稿，你自己过一遍，改改明显不靠谱的地方，再发给客户。这不是作弊——你的人工审核和修改也是价值。
+</div>
+</div>
+</div>
+</div>
+<div class="module" data-tag="P:step3">
+<div class="step-box">
+<div class="step-title"><span class="step-num">3</span> 交付并为自己打样</div>
+<div class="step-body">
+<p>交付时注意这几点：</p>
+<ol>
+<li><strong>准时</strong>——说好哪天就哪天，提前半天更好</li>
+<li><strong>超出一点预期</strong>——客户要500字方案，你给600字。多出来的这部分可能就是回头客的来源</li>
+<li><strong>要反馈</strong>——"您觉得哪里可以改进？下次我想做得更好"</li>
+<li><strong>留个口子</strong>——"后续还有需要随时找我"</li>
+</ol>
+<p>做完第一单后，马上去做一个很重要的动作——把你这次做的东西整理成<strong>作品集</strong>：</p>
+<div class="code-block">把这次做的东西截图/存成PDF，放进一个叫"我的AI作品集"的文件夹。
+下次接单时，发作品集给客户看，这就是你"有经验"的证据。</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- 💡 Insight -->
+<div class="section module" data-tag="core:insight" id="s-insight">
+<div class="section-title">💡 理解为什么</div>
+<div class="section-desc">5分钟 · "第一单"的真正价值不是那几十块钱</div>
+<div class="content">
+<h3>核心原理：从"我知道"到"我做过"</h3>
+<p>大多数人在AI搞钱上卡住，不是因为能力不够，而是因为<strong>完美主义</strong>——想着"等我准备好了再开始"。</p>
+<table class="cmp-table">
+<tr><th></th><th>等准备好的</th><th>先开始的</th></tr>
+<tr><td>心态</td><td>"我还不够强"</td><td>"先做，边做边学"</td></tr>
+<tr><td>进步</td><td>研究了一个月，没行动</td><td>做了一单，有了作品和经验</td></tr>
+<tr><td>下一步</td><td>继续研究</td><td>可以涨价接第二单</td></tr>
+</table>
+<p>第一单的价值不在于赚了多少钱，在于：</p>
+<ul>
+<li>你完整跑通了<strong>接单→做活→交付→收钱</strong>这个闭环</li>
+<li>你有了一个<strong>真实的作品案例</strong></li>
+<li>你知道了自己的短板在哪（prompt不够好？沟通不够清楚？）</li>
+<li>你有了信心——"我能做到"</li>
+</ul>
+<h3>这个能力能迁移到哪</h3>
+<ul>
+<li><strong>涨价</strong> — 有了第一单的作品，第二单可以涨价50%-100%</li>
+<li><strong>批量</strong> — 把相同的prompt存成模板，同类型需求快捷处理</li>
+<li><strong>转介绍</strong> — 老客户满意了，他会帮你介绍新客户</li>
+</ul>
+<div class="callout callout-warn">
+<strong>一个提醒：</strong>AI代做赚的是"信息差"的钱—会用AI的人帮不会用的人做。随着越来越多人学会用AI，这个差价会缩小。所以别只盯着代做，这是入门，不是终点。
+</div>
+</div>
+</div>
+<!-- 🔁 Consolidate -->
+<div class="section module" data-tag="optional:consolidate" id="s-consolidate">
+<div class="section-title">🔁 巩固练习</div>
+<div class="section-desc">5分钟 · 把第一步踩出去</div>
+<div class="content">
+<div class="callout callout-tip">
+<strong>今天做一次：</strong>选一个渠道（朋友圈/小红书/闲鱼），发一条免费代做的帖子。今晚睡觉前看有没有人联系你。没人联系？明天换个渠道再试一次。</div>
+<h3>进阶挑战</h3>
+<div class="challenge">
+<div class="ch-title">✅ 挑战1：整理你的服务清单</div>
+<div class="ch-desc">用AI帮你整理一个"我能做什么"的清单。打开AI说："列出10个用AI可以帮他普通人做的兼职服务，每项简述"。选3个你觉得最容易上手的做你的服务菜单。</div>
+</div>
+<div class="challenge">
+<div class="ch-title">✅ 挑战2：做个简易报价单</div>
+<div class="ch-desc">让AI帮你设计一个简单的报价模板："帮我设计一个AI代做的报价单模板，包括服务项目、价格区间、交付时间"。保存好，有人问就直接发。</div>
+</div>
+<div class="challenge">
+<div class="ch-title">✅ 挑战3：从1到3</div>
+<div class="ch-desc">第一单做完后，复盘整个流程，找出拖慢你效率的环节，用AI优化它（比如让AI写一个更全面的沟通话术模板）。</div>
+</div>
+<h3>同类型迁移</h3>
+<p style="font-size:13px;color:#636366;margin-top:4px">"先做一单再优化"的思路还能用在：</p>
+<ul>
+<li><strong>做小红书号</strong> — 先发10篇笔记，再研究数据优化方向</li>
+<li><strong>学新技能</strong> — 先做出一个成品（哪怕很丑），再慢慢改进</li>
+<li><strong>接长期客户</strong> — 第一单做好了自然有回头客</li>
+</ul>
+</div>
+</div>
+<!-- 一劳永逸 -->
+<div class="section" data-tag="core:summary" style="background:linear-gradient(135deg,#e8f5e9,#c8e6c9);border:none;text-align:center">
+<h3 style="font-size:18px;margin-bottom:8px;color:#2e7d32">⚡ 一劳永逸</h3>
+<p style="font-size:13px;color:#2e7d32;margin-bottom:8px">存好这个流程，以后每次接单都这么走：</p>
+<div class="code-block" style="background:#fff;text-align:left">1. 发帖/发朋友圈 → "免费帮做XXX，限5个名额"
+2. 收到需求 → 用确认话术跟客户对齐
+3. AI干活 → 你过一遍 → 发给客户
+4. 交付完 → 保存作品 → 问客户是否有长期需求</div>
+<div style="margin-top:10px;font-size:15px;color:#2e7d32;font-weight:600">
+  🎉 完成第一单，你已经超过了90%停留在"想"阶段的人
+</div>
+</div>
+</div>
+<div class="tip-box" id="tipBox">
+<div class="tip-title">📖 术语</div>
+<span class="tip-close" id="tipClose">&times;</span>
+<div id="tipDesc">暂无释义</div>
+</div>
+<script>
+(function(){
+  var tb=document.getElementById("tipBox"),td=document.getElementById("tipDesc"),tc=document.getElementById("tipClose");
+  if(tb&&td){
+    document.querySelectorAll("w").forEach(function(el){
+      el.addEventListener("click",function(e){
+        e.stopPropagation();
+        td.textContent=this.getAttribute("d")||"暂无释义";
+        tb.querySelector(".tip-title").textContent="📖 "+this.textContent.trim();
+        var r=this.getBoundingClientRect(),w=tb.offsetWidth||280,left=Math.max(10,Math.min(r.left+r.width/2-w/2,document.body.clientWidth-w-10)),top=r.top-8-tb.offsetHeight;
+        if(top<10)top=r.bottom+10;
+        tb.style.left=left+"px";tb.style.top=top+"px";tb.style.display="block";
+        document.querySelectorAll("w.active").forEach(function(w){w.classList.remove("active")});
+        this.classList.add("active");
+      });
+    });
+    function ht(){tb.style.display="none";document.querySelectorAll("w.active").forEach(function(w){w.classList.remove("active")})}
+    tc.addEventListener("click",ht);
+    document.addEventListener("click",function(e){if(!e.target.closest("w")&&!e.target.closest(".tip-box"))ht()});
+    document.addEventListener("keydown",function(e){if(e.key==="Escape")ht()});
+  }
+  var nav=document.getElementById("stepNav");
+  if(nav){
+    var S=["s-explain","s-practice","s-insight","s-consolidate"];
+    nav.addEventListener("click",function(e){
+      var it=e.target.closest(".sn-item");if(!it)return;
+      var id=it.getAttribute("data-step"),el=document.getElementById(id);
+      if(el)el.scrollIntoView({behavior:"smooth",block:"start"});
+      var idx=S.indexOf(id);
+      for(var i=0;i<nav.children.length;i++)nav.children[i].classList.toggle("active",i===idx);
+    });
+    var st;
+    function uas(){
+      var bi=0,bd=Infinity;
+      S.forEach(function(id,i){
+        var el=document.getElementById(id);
+        if(el){var t=Math.abs(el.getBoundingClientRect().top);if(t<bd){bd=t;bi=i}}
+      });
+      for(var i=0;i<nav.children.length;i++)nav.children[i].classList.toggle("active",i===bi);
+    }
+    document.addEventListener("scroll",function(){clearTimeout(st);st=setTimeout(uas,100)});
+    uas();
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>AI学程 — 一条提示词顶一小时脚本</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;background:#f5f7fa;color:#1d1d1f;padding-bottom:60px}
+  .header{background:linear-gradient(135deg,#1d1d1f 0%,#3a3a3c 100%);color:#fff;padding:32px 20px 28px;text-align:center}
+  .header .badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(255,255,255,.12);margin-bottom:10px;color:rgba(255,255,255,.7)}
+  .header h1{font-size:22px;font-weight:700;margin-bottom:6px;letter-spacing:-.3px}
+  .header .meta{font-size:13px;color:rgba(255,255,255,.55);display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+  .header .tag-free{display:inline-block;padding:4px 12px;border-radius:20px;background:rgba(52,199,89,.2);color:#34c759;font-size:12px;font-weight:600;margin-top:12px}
+  .container{max-width:680px;margin:0 auto;padding:0 16px}
+  .step-nav{display:flex;gap:8px;padding:16px 0;overflow-x:auto;position:sticky;top:0;background:#f5f7fa;z-index:10;border-bottom:1px solid rgba(0,0,0,.06)}
+  .step-nav .sn-item{flex:1;min-width:0;padding:8px 6px;border-radius:10px;border:1.5px solid #e5e5ea;font-size:11px;text-align:center;transition:all .15s;white-space:nowrap;background:rgba(255,255,255,.6);color:#636366;cursor:pointer}
+  .step-nav .sn-item.active{border-color:#007aff;background:#e8f2ff;color:#007aff;font-weight:600}
+  .step-nav .sn-item .sn-icon{display:block;font-size:14px;margin-bottom:2px}
+  .section{margin:16px 0;background:rgba(255,255,255,.85);backdrop-filter:blur(20px);border-radius:20px;padding:20px;border:1px solid rgba(255,255,255,.6);box-shadow:0 2px 12px rgba(0,0,0,.04)}
+  .section-title{font-size:16px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .section-desc{font-size:13px;color:#636366;margin-bottom:10px;line-height:1.6}
+  .content{font-size:14px;line-height:1.8;color:#1d1d1f}
+  .content h3{font-size:15px;margin:16px 0 6px}
+  .content p{margin-bottom:8px}
+  .content ul,.content ol{padding-left:18px;margin-bottom:10px}
+  .content li{margin-bottom:4px}
+  .callout{padding:12px 14px;border-radius:12px;margin:12px 0;font-size:13px;line-height:1.6;border-left:3px solid}
+  .callout-tip{background:rgba(0,122,255,.06);border-color:#007aff;color:#1d1d1f}
+  .callout-warn{background:rgba(255,149,0,.08);border-color:#ff9500;color:#1d1d1f}
+  .callout-danger{background:rgba(255,59,48,.06);border-color:#ff3b30;color:#1d1d1f}
+  .callout-green{background:rgba(52,199,89,.08);border-color:#34c759;color:#1d1d1f}
+  .code-block{background:#f0f2f5;border-radius:10px;padding:12px 14px;font-family:'Courier New',monospace;font-size:13px;line-height:1.6;white-space:pre-wrap;word-break:break-word;margin:8px 0}
+  .cmp-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
+  .cmp-table th,.cmp-table td{padding:8px 10px;border:1px solid #e5e5ea;text-align:left}
+  .cmp-table th{background:rgba(0,0,0,.03);font-weight:600;font-size:12px;color:#636366}
+  .challenge{background:rgba(255,255,255,.4);border:1px solid #e5e5ea;border-radius:12px;padding:12px 14px;margin:8px 0}
+  .challenge .ch-title{font-weight:600;font-size:13px;margin-bottom:4px}
+  .challenge .ch-desc{font-size:12px;color:#636366;line-height:1.5}
+  .step-box{background:rgba(0,122,255,.04);border-radius:12px;padding:14px;margin:10px 0;border:1px solid rgba(0,122,255,.12)}
+  .step-box .step-num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:#007aff;color:#fff;font-size:12px;font-weight:700;margin-right:6px;flex-shrink:0}
+  .step-box .step-title{font-weight:600;font-size:14px;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+  .step-box .step-body{font-size:13px;line-height:1.7;color:#1d1d1f}
+  .goal-list{display:flex;flex-direction:column;gap:6px;margin:10px 0}
+  .goal-item{display:flex;align-items:center;gap:8px;font-size:13px;padding:4px 0}
+  .goal-check{width:18px;height:18px;border-radius:50%;background:#34c759;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+  .ex-pair{display:flex;flex-direction:column;gap:8px;margin:10px 0}
+  .ex-item{padding:10px 12px;border-radius:10px;font-size:13px;line-height:1.6;border:1px solid}
+  .ex-bad{background:rgba(255,59,48,.04);border-color:rgba(255,59,48,.15)}
+  .ex-bad .ex-label{color:#ff3b30;font-weight:600;margin-bottom:4px}
+  .ex-good{background:rgba(52,199,89,.06);border-color:rgba(52,199,89,.2)}
+  .ex-good .ex-label{color:#34c759;font-weight:600;margin-bottom:4px}
+  w{cursor:pointer;border-bottom:1.5px dashed #007aff;color:#007aff;font-weight:500;position:relative;transition:background .15s}
+  w:hover{background:rgba(0,122,255,.06)}
+  w.active{background:rgba(0,122,255,.12)}
+  .tip-box{position:fixed;z-index:9999;display:none;background:#1d1d1f;color:#fff;border-radius:10px;padding:10px 14px;max-width:300px;font-size:13px;line-height:1.6;box-shadow:0 8px 24px rgba(0,0,0,.2);animation:tipIn .2s ease}
+  .tip-box .tip-title{font-weight:600;margin-bottom:3px;color:rgba(255,255,255,.6);font-size:11px}
+  .tip-box .tip-close{position:absolute;top:6px;right:8px;cursor:pointer;font-size:14px;color:rgba(255,255,255,.4);line-height:1;border:none;background:none;padding:2px}
+  .tip-box .tip-close:hover{color:#fff}
+  .tip-box::after{content:'';position:absolute;left:50%;bottom:-6px;margin-left:-6px;border:6px solid transparent;border-top-color:#1d1d1f}
+  @keyframes tipIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+<div class="header">
+<div class="badge">自媒体 · T1 基础免费</div>
+<h1>🎬 一条提示词顶一小时脚本</h1>
+<p style="font-size:14px;color:rgba(255,255,255,.7);margin-bottom:8px">从卡壳到3分钟出一版能用脚本</p>
+<div class="meta">
+<span>⏱ 约25分钟</span>
+<span>📄 图文课</span>
+<span>🛠 需AI聊天工具</span>
+</div>
+<div class="tag-free">🆓 免费</div>
+</div>
+<div class="container">
+<div class="step-nav" id="stepNav">
+<div class="sn-item active" data-step="s-explain"><span class="sn-icon">📌</span>为什么</div>
+<div class="sn-item" data-step="s-practice"><span class="sn-icon">🎯</span>实操</div>
+<div class="sn-item" data-step="s-insight"><span class="sn-icon">💡</span>原理</div>
+<div class="sn-item" data-step="s-consolidate"><span class="sn-icon">🔁</span>巩固</div>
+</div>
+<!-- 📌 Explain -->
+<div class="section module" data-tag="core:explain" id="s-explain">
+<div class="section-title">📌 为什么你的脚本总是写不出来</div>
+<div class="section-desc">3分钟 · 先搞清卡在哪一步</div>
+<div class="content">
+<p>很多人想做短视频，打开文档对着空白的编辑框，大脑也一片空白。</p>
+<p>不是你没内容可讲，是你把"写脚本"这件事想得太重了——总想一次性写出完美的台本，结果越想越写不出来。</p>
+<p><strong>换个思路：</strong>让AI帮你把框架搭好，你只需要往里面填你自己的观点和经验。一篇文章、一段录音、甚至几个关键词都能变成脚本。</p>
+<div class="ex-pair">
+<div class="ex-item ex-bad">
+<div class="ex-label">❌ 大多数人这样跟AI说</div>
+"帮我写个短视频脚本"
+</div>
+<div class="ex-item ex-good">
+<div class="ex-label">✅ 给出素材和方向效果完全不同</div>
+"我想做一个讲<w d='AI在具体场景中的应用方法和技巧'>AI干货</w>的短视频，主题是AI怎么做PPT。给我写个45秒口播脚本，开头抓眼球、中间讲实用操作、结尾总结"
+</div>
+</div>
+<p>差的 <w d='你给AI的指令，决定了AI如何回应你'>prompt</w> → 笼统的脚本 → 你觉得没用。<br/>
+好的prompt → 你可以直接用的框架 → 填上你的内容就完事。</p>
+<h3>这节课学完你能做到</h3>
+<div class="goal-list">
+<div class="goal-item"><span class="goal-check">✓</span> 从零到一快速生成脚本框架</div>
+<div class="goal-item"><span class="goal-check">✓</span> 按不同的视频类型（口播/教程/测评）调整结构</div>
+<div class="goal-item"><span class="goal-check">✓</span> 做出你的专属脚本 <w d='事先写好的prompt格式，把内容填进去就能用'>prompt模板</w></div>
+</div>
+</div>
+</div>
+<!-- 🎯 Practice -->
+<div class="section module" data-tag="P:practice" id="s-practice">
+<div class="section-title">🎯 动手实操</div>
+<div class="section-desc">15分钟 · 三步把AI变成你的脚本助手</div>
+<div class="content">
+<div class="module" data-tag="P:step1">
+<div class="step-box">
+<div class="step-title"><span class="step-num">1</span> 先给框架再给内容</div>
+<div class="step-body">
+<p>不要指望AI一次就写出完美脚本。先让它给你一个结构模板，你再往里填自己的料。</p>
+<div class="code-block">你是一个短视频脚本写作助手。帮我生成一个[口播类型]视频的脚本框架。
+视频主题：[写你的主题，比如"用AI做PPT"]
+目标观众：[谁在看，比如"职场人"]
+时长：[30秒 / 45秒 / 60秒]
+风格：[干货型 / 故事型 / 教程型]
+
+框架包含：开场钩子→核心内容（分点）→结尾号召。每段标注预计时长。</div>
+<p style="margin-top:8px">AI给你框架后，你再告诉它每个部分你的具体内容：</p>
+<div class="code-block">现在帮我填内容。开场钩子就用这句："你是不是每次做PPT都要熬到半夜？"
+核心内容写三点：
+1. 打开AI工具，把你要的内容描述给它
+2. AI生成后，让它帮你浓缩成一页三行
+3. 复制进去，调字体和颜色就完事
+结尾号召：关注我，下期教你用AI做汇报PPT</div>
+<p>你会发现，这样出来的脚本不是AI的"创作"，而是<strong>你的观点 + AI的结构</strong>。</p>
+</div>
+</div>
+</div>
+<div class="module" data-tag="P:step2">
+<div class="step-box">
+<div class="step-title"><span class="step-num">2</span> 把一篇文章变成脚本</div>
+<div class="step-body">
+<p>如果你写过公众号、知乎、小红书，上面的内容可以直接「翻译」成视频脚本，不用重写。</p>
+<p>把你已有的文字稿贴给AI：</p>
+<div class="code-block">以下是一篇关于"怎么写prompt"的文章，请把它改写成45秒的短视频口播脚本。
+要求：保留核心观点，用口语化表达，每句话不超过15个字。
+开头用一个反问句抓人。
+[粘贴你的文章]</div>
+<p style="margin-top:6px;font-size:12px;color:#636366">这个方法的好处：你已经有内容了，只是换一种形式。AI帮你做"格式转换"，你省了从零构思的时间。</p>
+</div>
+</div>
+</div>
+<div class="module" data-tag="P:step3">
+<div class="step-box">
+<div class="step-title"><span class="step-num">3</span> 做你自己的脚本模板</div>
+<div class="step-body">
+<p>最后这步很关键——把你常用的脚本类型做成模板，以后每次填关键词就出。</p>
+<p style="font-weight:600;margin:8px 0 4px">存这个到备忘录：</p>
+<div class="code-block">你是一个[类型]短视频脚本助手。帮我写[时长]脚本。
+主题：[主题]
+目标观众：[人群]
+风格：[风格]
+
+结构要求：
+1. 开场钩子（5-7秒，用反问/数据/痛点）
+2. 核心内容（分3点，每点加一个小标题，总长25-35秒）
+3. 收尾总结+行动号召（5秒）
+
+输出格式：每句一行，标注建议画面或表情。
+参考风格：[可选，给一个你喜欢的UP主或风格说明]</div>
+<p style="margin-top:6px;font-size:12px;color:#636366">存到备忘录/飞书/Notion里，每次想做哪个方向的视频，填空就行。</p>
+<div class="callout callout-green">
+<strong>小技巧：</strong>如果你有自己拍的爆款视频，把它的文案喂给AI，让它提炼模板，以后再按这个风格生成新的脚本。
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- 💡 Insight -->
+<div class="section module" data-tag="core:insight" id="s-insight">
+<div class="section-title">💡 理解为什么</div>
+<div class="section-desc">5分钟 · 你不是在学"写脚本"，是在学"给AI搭框架"</div>
+<div class="content">
+<h3>这节课的核心原理就三个字：先搭架子</h3>
+<p>很多人让AI写脚本效果不好，是因为<strong>把该自己做的事丢给了AI</strong>。AI不懂你的个人风格、不知道你积累了什么案例、不清楚你的观众是谁。</p>
+<p><w d='AI不像人类编辑，它没有你的个人经验。你给它结构，它填充内容'>AI的局限</w>。好的AI协作不是"AI帮我写"，而是<strong>"给我结构我来填"</strong>或<strong>"我出内容AI帮我组"</strong>。</p>
+<table class="cmp-table">
+<tr><th></th><th>差的用法</th><th>好的用法</th></tr>
+<tr><td>方式</td><td>"帮我写脚本"</td><td>"这是框架，帮我填内容" 或 "这是我写的内容，帮我编成脚本"</td></tr>
+<tr><td>结果</td><td>AI的脚本，你不想用</td><td>你的内容，AI的结构，你愿意录</td></tr>
+<tr><td>时长</td><td>改到不想发</td><td>3分钟出一版，微调就开录</td></tr>
+</table>
+<h3>这个套路能迁移到哪</h3>
+<ul>
+<li><strong>做教程视频</strong> — 把你会的步骤写成bullet points，让AI帮你扩展成完整的讲解词</li>
+<li><strong>测评/开箱</strong> — 列出你发现的产品优缺点，让AI帮你排好逻辑顺序</li>
+<li><strong>直播话术</strong> — 给产品卖点和常见问题，让AI帮你写成开场+讲品+逼单三段</li>
+<li><strong>口播练习</strong> — 让AI把脚本改成"说人话"版本，方便你对着念</li>
+</ul>
+<div class="callout callout-warn">
+<strong>一个提醒：</strong>AI写出来的脚本可能太"像AI"——太规整、太完美、缺少真实的口语气感。拿到脚本后，<strong>用自己的话顺一遍</strong>，改成你平时说话的节奏。观众要的是"像人在说话"，不是"AI写的完美稿"。
+</div>
+</div>
+</div>
+<!-- 🔁 Consolidate -->
+<div class="section module" data-tag="optional:consolidate" id="s-consolidate">
+<div class="section-title">🔁 巩固练习</div>
+<div class="section-desc">5分钟 · 连做三次变成习惯</div>
+<div class="content">
+<div class="callout callout-tip">
+<strong>今天睡前做一次：</strong>打开AI工具，用三步法（框架→填内容→出脚本）生成一个60秒口播脚本。主题就用你最近想做的那个。不要看教程，卡住再翻回来。
+</div>
+<h3>进阶挑战</h3>
+<div class="challenge">
+<div class="ch-title">✅ 挑战1：多版本输出</div>
+<div class="ch-desc">同一个主题，让AI给你写三个不同风格的版本（干货型/故事型/搞笑型），看看同一个内容不同讲法的差别。</div>
+</div>
+<div class="challenge">
+<div class="ch-title">✅ 挑战2：从评论挖选题</div>
+<div class="ch-desc">复制你同领域爆款视频底下的评论发给AI，让它从评论里提炼新视频选题。需求往往藏在评论区。</div>
+</div>
+<div class="challenge">
+<div class="ch-title">✅ 挑战3：先录音再转脚本</div>
+<div class="ch-desc">不写脚本直接打开录音，把想说的内容说一遍。把语音转文字后扔给AI："帮我整理成结构化的口播脚本"。</div>
+</div>
+<h3>同类型迁移</h3>
+<p style="font-size:13px;color:#636366;margin-top:4px">"给AI搭框架"的思路还能用在：</p>
+<ul>
+<li><strong>写直播话术</strong> → 给产品信息和常见Q&A → "帮我写成开场+介绍+逼单的直播话术"</li>
+<li><strong>做产品介绍页</strong> → 给产品三个卖点 → "按AIDA模型写一段产品介绍"</li>
+<li><strong>写课程大纲</strong> → 给你会的知识点 → "帮我排成一门课的大纲，每节15分钟"</li>
+</ul>
+</div>
+</div>
+<!-- 一劳永逸 -->
+<div class="section" data-tag="core:summary" style="background:linear-gradient(135deg,#e8f5e9,#c8e6c9);border:none;text-align:center">
+<h3 style="font-size:18px;margin-bottom:8px;color:#2e7d32">⚡ 一劳永逸</h3>
+<p style="font-size:13px;color:#2e7d32;margin-bottom:8px">存好上面的 <w d='事先写好的prompt格式，把内容填进去就能用'>prompt模板</w>，以后每次拍视频流程：</p>
+<div class="code-block" style="background:#fff;text-align:left">1. 打开备忘录 → 选要用的脚本模板（口播/教程/测评）
+2. 填上主题和你的核心内容 → 发给AI
+3. 拿到脚本 → 用自己的话顺一遍 → 开录</div>
+<div style="margin-top:10px;font-size:15px;color:#2e7d32;font-weight:600">
+  🎉 以后你的脚本，从想到出不超过10分钟
+</div>
+</div>
+</div>
+<div class="tip-box" id="tipBox">
+<div class="tip-title">📖 术语</div>
+<span class="tip-close" id="tipClose">&times;</span>
+<div id="tipDesc">暂无释义</div>
+</div>
+<script>
+(function(){
+  var tb=document.getElementById("tipBox"),td=document.getElementById("tipDesc"),tc=document.getElementById("tipClose");
+  if(tb&&td){
+    document.querySelectorAll("w").forEach(function(el){
+      el.addEventListener("click",function(e){
+        e.stopPropagation();
+        td.textContent=this.getAttribute("d")||"暂无释义";
+        tb.querySelector(".tip-title").textContent="📖 "+this.textContent.trim();
+        var r=this.getBoundingClientRect(),w=tb.offsetWidth||280,left=Math.max(10,Math.min(r.left+r.width/2-w/2,document.body.clientWidth-w-10)),top=r.top-8-tb.offsetHeight;
+        if(top<10)top=r.bottom+10;
+        tb.style.left=left+"px";tb.style.top=top+"px";tb.style.display="block";
+        document.querySelectorAll("w.active").forEach(function(w){w.classList.remove("active")});
+        this.classList.add("active");
+      });
+    });
+    function ht(){tb.style.display="none";document.querySelectorAll("w.active").forEach(function(w){w.classList.remove("active")})}
+    tc.addEventListener("click",ht);
+    document.addEventListener("click",function(e){if(!e.target.closest("w")&&!e.target.closest(".tip-box"))ht()});
+    document.addEventListener("keydown",function(e){if(e.key==="Escape")ht()});
+  }
+  var nav=document.getElementById("stepNav");
+  if(nav){
+    var S=["s-explain","s-practice","s-insight","s-consolidate"];
+    nav.addEventListener("click",function(e){
+      var it=e.target.closest(".sn-item");if(!it)return;
+      var id=it.getAttribute("data-step"),el=document.getElementById(id);
+      if(el)el.scrollIntoView({behavior:"smooth",block:"start"});
+      var idx=S.indexOf(id);
+      for(var i=0;i<nav.children.length;i++)nav.children[i].classList.toggle("active",i===idx);
+    });
+    var st;
+    function uas(){
+      var bi=0,bd=Infinity;
+      S.forEach(function(id,i){
+        var el=document.getElementById(id);
+        if(el){var t=Math.abs(el.getBoundingClientRect().top);if(t<bd){bd=t;bi=i}}
+      });
+      for(var i=0;i<nav.children.length;i++)nav.children[i].classList.toggle("active",i===bi);
+    }
+    document.addEventListener("scroll",function(){clearTimeout(st);st=setTimeout(uas,100)});
+    uas();
+  }
+})();
+</script>
+</body>
+</html>

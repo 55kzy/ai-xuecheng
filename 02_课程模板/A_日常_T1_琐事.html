@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>AI学程 — 让AI帮你搞定日常琐事</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;background:#f5f7fa;color:#1d1d1f;padding-bottom:60px}
+  .header{background:linear-gradient(135deg,#1d1d1f 0%,#3a3a3c 100%);color:#fff;padding:32px 20px 28px;text-align:center}
+  .header .badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(255,255,255,.12);margin-bottom:10px;color:rgba(255,255,255,.7)}
+  .header h1{font-size:22px;font-weight:700;margin-bottom:6px;letter-spacing:-.3px}
+  .header .meta{font-size:13px;color:rgba(255,255,255,.55);display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+  .header .tag-free{display:inline-block;padding:4px 12px;border-radius:20px;background:rgba(52,199,89,.2);color:#34c759;font-size:12px;font-weight:600;margin-top:12px}
+  .container{max-width:680px;margin:0 auto;padding:0 16px}
+  .step-nav{display:flex;gap:8px;padding:16px 0;overflow-x:auto;position:sticky;top:0;background:#f5f7fa;z-index:10;border-bottom:1px solid rgba(0,0,0,.06)}
+  .step-nav .sn-item{flex:1;min-width:0;padding:8px 6px;border-radius:10px;border:1.5px solid #e5e5ea;font-size:11px;text-align:center;transition:all .15s;white-space:nowrap;background:rgba(255,255,255,.6);color:#636366;cursor:pointer}
+  .step-nav .sn-item.active{border-color:#007aff;background:#e8f2ff;color:#007aff;font-weight:600}
+  .step-nav .sn-item .sn-icon{display:block;font-size:14px;margin-bottom:2px}
+  .section{margin:16px 0;background:rgba(255,255,255,.85);backdrop-filter:blur(20px);border-radius:20px;padding:20px;border:1px solid rgba(255,255,255,.6);box-shadow:0 2px 12px rgba(0,0,0,.04)}
+  .section-title{font-size:16px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .section-desc{font-size:13px;color:#636366;margin-bottom:10px;line-height:1.6}
+  .content{font-size:14px;line-height:1.8;color:#1d1d1f}
+  .content h3{font-size:15px;margin:16px 0 6px}
+  .content p{margin-bottom:8px}
+  .content ul,.content ol{padding-left:18px;margin-bottom:10px}
+  .content li{margin-bottom:4px}
+  .callout{padding:12px 14px;border-radius:12px;margin:12px 0;font-size:13px;line-height:1.6;border-left:3px solid}
+  .callout-tip{background:rgba(0,122,255,.06);border-color:#007aff;color:#1d1d1f}
+  .callout-warn{background:rgba(255,149,0,.08);border-color:#ff9500;color:#1d1d1f}
+  .callout-danger{background:rgba(255,59,48,.06);border-color:#ff3b30;color:#1d1d1f}
+  .callout-green{background:rgba(52,199,89,.08);border-color:#34c759;color:#1d1d1f}
+  .code-block{background:#f0f2f5;border-radius:10px;padding:12px 14px;font-family:'Courier New',monospace;font-size:13px;line-height:1.6;white-space:pre-wrap;word-break:break-word;margin:8px 0}
+  .cmp-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
+  .cmp-table th,.cmp-table td{padding:8px 10px;border:1px solid #e5e5ea;text-align:left}
+  .cmp-table th{background:rgba(0,0,0,.03);font-weight:600;font-size:12px;color:#636366}
+  .challenge{background:rgba(255,255,255,.4);border:1px solid #e5e5ea;border-radius:12px;padding:12px 14px;margin:8px 0}
+  .challenge .ch-title{font-weight:600;font-size:13px;margin-bottom:4px}
+  .challenge .ch-desc{font-size:12px;color:#636366;line-height:1.5}
+  .step-box{background:rgba(0,122,255,.04);border-radius:12px;padding:14px;margin:10px 0;border:1px solid rgba(0,122,255,.12)}
+  .step-box .step-num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:#007aff;color:#fff;font-size:12px;font-weight:700;margin-right:6px;flex-shrink:0}
+  .step-box .step-title{font-weight:600;font-size:14px;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+  .step-box .step-body{font-size:13px;line-height:1.7;color:#1d1d1f}
+  .goal-list{display:flex;flex-direction:column;gap:6px;margin:10px 0}
+  .goal-item{display:flex;align-items:center;gap:8px;font-size:13px;padding:4px 0}
+  .goal-check{width:18px;height:18px;border-radius:50%;background:#34c759;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+  .ex-pair{display:flex;flex-direction:column;gap:8px;margin:10px 0}
+  .ex-item{padding:10px 12px;border-radius:10px;font-size:13px;line-height:1.6;border:1px solid}
+  .ex-bad{background:rgba(255,59,48,.04);border-color:rgba(255,59,48,.15)}
+  .ex-bad .ex-label{color:#ff3b30;font-weight:600;margin-bottom:4px}
+  .ex-good{background:rgba(52,199,89,.06);border-color:rgba(52,199,89,.2)}
+  .ex-good .ex-label{color:#34c759;font-weight:600;margin-bottom:4px}
+  w{cursor:pointer;border-bottom:1.5px dashed #007aff;color:#007aff;font-weight:500;position:relative;transition:background .15s}
+  w:hover{background:rgba(0,122,255,.06)}
+  w.active{background:rgba(0,122,255,.12)}
+  .tip-box{position:fixed;z-index:9999;display:none;background:#1d1d1f;color:#fff;border-radius:10px;padding:10px 14px;max-width:300px;font-size:13px;line-height:1.6;box-shadow:0 8px 24px rgba(0,0,0,.2);animation:tipIn .2s ease}
+  .tip-box .tip-title{font-weight:600;margin-bottom:3px;color:rgba(255,255,255,.6);font-size:11px}
+  .tip-box .tip-close{position:absolute;top:6px;right:8px;cursor:pointer;font-size:14px;color:rgba(255,255,255,.4);line-height:1;border:none;background:none;padding:2px}
+  .tip-box .tip-close:hover{color:#fff}
+  .tip-box::after{content:'';position:absolute;left:50%;bottom:-6px;margin-left:-6px;border:6px solid transparent;border-top-color:#1d1d1f}
+  @keyframes tipIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+<div class="header">
+<div class="badge">日常生活 · T1 基础免费</div>
+<h1>🏠 让AI帮你搞定日常琐事</h1>
+<p style="font-size:14px;color:rgba(255,255,255,.7);margin-bottom:8px">写消息、做计划、查信息，一句话的事</p>
+<div class="meta">
+<span>⏱ 约25分钟</span>
+<span>📄 图文课</span>
+<span>🛠 需AI聊天工具</span>
+</div>
+<div class="tag-free">🆓 免费</div>
+</div>
+<div class="container">
+<div class="step-nav" id="stepNav">
+<div class="sn-item active" data-step="s-explain"><span class="sn-icon">📌</span>为什么</div>
+<div class="sn-item" data-step="s-practice"><span class="sn-icon">🎯</span>实操</div>
+<div class="sn-item" data-step="s-insight"><span class="sn-icon">💡</span>原理</div>
+<div class="sn-item" data-step="s-consolidate"><span class="sn-icon">🔁</span>巩固</div>
+</div>
+<!-- 📌 Explain -->
+<div class="section module" data-tag="core:explain" id="s-explain">
+<div class="section-title">📌 有些事问AI，比问朋友省事多了</div>
+<div class="section-desc">3分钟 · 先搞清楚AI在日常生活中能帮你省什么</div>
+<div class="content">
+<p>你可能觉得AI是用来写代码、做分析、搞自媒体的。但日常里面最琐碎的事——写条消息、做个计划、查个东西——反而是<strong>AI最被低估的场景</strong>。</p>
+<div class="ex-pair">
+<div class="ex-item ex-bad">
+<div class="ex-label">❌ 很多人以为AI只能干大事</div>
+"AI？我用不上，我又不是搞技术的"
+</div>
+<div class="ex-item ex-good">
+<div class="ex-label">✅ 其实AI最擅长干小事</div>
+"帮我写个请假的微信"<br/>
+"帮我出个一日游计划"<br/>
+"帮我对比这两款耳机"
+</div>
+</div>
+<p><w d='Artificial Intelligence，人工智能'>AI</w> 在日常场景里最大的价值不是"帮你写完"，而是<strong>"帮你起个头"</strong>。你写个消息要想10分钟，AI 3秒给你一版，你改改就能发。</p>
+<h3>这节课学完你能做到</h3>
+<div class="goal-list">
+<div class="goal-item"><span class="goal-check">✓</span> 用AI写消息、请假条、朋友圈文案</div>
+<div class="goal-item"><span class="goal-check">✓</span> 用AI做日常计划和时间安排</div>
+<div class="goal-item"><span class="goal-check">✓</span> 用AI快速查信息和做对比</div>
+</div>
+</div>
+</div>
+<!-- 🎯 Practice -->
+<div class="section module" data-tag="P:practice" id="s-practice">
+<div class="section-title">🎯 动手实操</div>
+<div class="section-desc">15分钟 · 三个日常场景，跟做一遍</div>
+<div class="content">
+<div class="module" data-tag="P:step1">
+<div class="step-box">
+<div class="step-title"><span class="step-num">1</span> 场景一：写消息和文案</div>
+<div class="step-body">
+<p>打开你的AI工具，跟着做：</p>
+<p style="font-weight:600;margin:8px 0 4px">试试这个：</p>
+<div class="code-block">帮我写一条微信消息：约朋友周末来家里聚餐
+- 语气轻松
+- 说明时间：周日下午5点
+- 让他们带点酒水就行
+- 字数控制在80字以内</div>
+<p>看到AI出的版本，你可以继续改：</p>
+<div class="code-block">再加一句：如果下雨就改期
+风格再随意一点，像平时聊天的语气</div>
+<p>这就是AI在日常场景的用法——<strong>不是让它替你写，是让它帮你起稿</strong>。你平时写个请假可能要斟酌半天：</p>
+<div class="code-block">帮我写一条请假微信给领导
+- 请一天假，明天
+- 理由是身体不舒服
+- 语气恭敬但不啰嗦</div>
+<div class="callout callout-tip" style="margin:8px 0">
+<strong>关键：</strong>告诉AI背景（是谁、什么事）、要求（语气、字数），剩下的交给它。
+</div>
+</div>
+</div>
+</div>
+<div class="module" data-tag="P:step2">
+<div class="step-box">
+<div class="step-title"><span class="step-num">2</span> 场景二：做计划和安排</div>
+<div class="step-body">
+<p>日常最费脑的就是做计划——不管是一日游还是周末安排。给AI几个关键信息就行：</p>
+<div class="code-block">帮我规划一个上海一日游
+- 出发地点：徐家汇
+- 人数：两人
+- 预算：人均500以内
+- 偏好：不要排队太久、不要全是景点、留一些吃饭和休息的时间
+- 要求：列出每个时间段的安排、大概花费</div>
+<p>不满意？接着问：</p>
+<div class="code-block">去掉外滩，换成武康路和安福路那边的咖啡店路线
+时间改得松一点，中午留两小时吃饭</div>
+<p>AI会基于上下文调整，不用重新问一遍。日常场景里这种"来回改"的体验比搜攻略爽多了。</p>
+</div>
+</div>
+</div>
+<div class="module" data-tag="P:step3">
+<div class="step-box">
+<div class="step-title"><span class="step-num">3</span> 场景三：查信息和做对比</div>
+<div class="step-body">
+<p>生活中经常要对比——买哪个、去哪个、选哪个。AI做这个比你自己翻测评快：</p>
+<div class="code-block">帮我对比一下这两款无线耳机：华为FreeBuds Pro 4 和 苹果AirPods Pro 2
+从以下几个维度对比：价格、音质、降噪、续航、兼容性（我用的是安卓手机）
+最后给我一个推荐</div>
+<p>你也可以用它查具体信息：</p>
+<div class="code-block">我家的签证快到期了，我是旅游签，在日本。需要续签还是出境再入境？具体流程是什么？</div>
+<div class="callout callout-warn" style="margin:8px 0">
+<strong>注意：</strong>AI查的信息不一定永远准确，尤其是签证、政策这类会变的内容。用它<strong>参考框架</strong>，具体细节还是查一下官方渠道。
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- 💡 Insight -->
+<div class="section module" data-tag="core:insight" id="s-insight">
+<div class="section-title">💡 理解为什么</div>
+<div class="section-desc">5分钟 · 日常用AI的核心不是技能，是习惯</div>
+<div class="content">
+<h3>核心原理：日常场景 = 低门槛 + 高频率</h3>
+<p>很多人学AI为什么坚持不下来？因为一上来就学难的——写代码、做分析、搞自动流程。学到一半就放弃了。</p>
+<p>但你如果从日常场景开始——<strong>今天帮写个请假条，明天做个周末计划</strong>——你每天都用一次，两周就养成了习惯。有了习惯，自然会想探索更多用法。</p>
+<table class="cmp-table">
+<tr><th></th><th>从难的开始</th><th>从日常开始</th></tr>
+<tr><td>第一步</td><td>"学AI写代码"</td><td>"让AI帮我写条消息"</td></tr>
+<tr><td>一周后</td><td>语法没搞懂，放弃了</td><td>会用AI写请假、做计划、查信息</td></tr>
+<tr><td>一个月后</td><td>继续放弃</td><td>开始试试AI写周报、做分析</td></tr>
+</table>
+<p>日常AI就三个字：<strong>试一试</strong>。遇到任何需要写东西、做计划、查信息的事，第一反应不是自己折腾，是打开AI问一嘴。问多了你就知道什么它擅长、什么不行。</p>
+<h3>这个套路能迁移到哪</h3>
+<ul>
+<li><strong>写文案</strong> — 写朋友圈、写商品评价、写祝福语，AI起稿你润色</li>
+<li><strong>做攻略</strong> — 旅游路线、餐厅推荐、购物清单</li>
+<li><strong>学东西</strong> — "帮我用大白话解释XX概念"，不比看教程快？</li>
+<li><strong>做决策</strong> — "帮我列出买A和买B的优缺点"，比写备忘录强多了</li>
+</ul>
+<div class="callout callout-warn">
+<strong>一个提醒：</strong>日常用AI最要注意的是<strong>隐私</strong>。别把身份证号、银行卡密码、家庭住址这些敏感信息发给AI。日常场景一般不需要这些，但注意一下总是好的。
+</div>
+</div>
+</div>
+<!-- 🔁 Consolidate -->
+<div class="section module" data-tag="optional:consolidate" id="s-consolidate">
+<div class="section-title">🔁 巩固练习</div>
+<div class="section-desc">5分钟 · 建立"先问AI"的习惯</div>
+<div class="content">
+<div class="callout callout-tip">
+<strong>今天睡前列一个清单：</strong>想三件明天可能会遇到的"要写东西/做计划/查信息"的事。比如：明天要给同事发一条什么消息？周末想吃什么？想买一个东西但不确定选哪个？明天遇到这些事，先开AI问一嘴，再自己做决定。
+</div>
+<h3>进阶挑战</h3>
+<div class="challenge">
+<div class="ch-title">✅ 挑战1：翻译小助手</div>
+<div class="ch-desc">遇到一个看不懂的英文菜单/商品说明/邮件，直接截图或粘贴给AI："帮我翻译成中文，顺便解释一下这是什么"。比查词典快10倍。</div>
+</div>
+<div class="challenge">
+<div class="ch-title">✅ 挑战2：让AI帮你选礼物</div>
+<div class="ch-desc">"朋友30岁生日，男生，喜欢电子产品，预算500以内，帮我推荐5个礼物选项" — 比你想半天强多了。</div>
+</div>
+<div class="challenge">
+<div class="ch-title">✅ 挑战3：随手记变给AI整理</div>
+<div class="ch-desc">把今天的流水账扔给AI："帮我整理一下今天要做的事，按优先级排序，标出需要做的和可以推迟的"</div>
+</div>
+<h3>同类型迁移</h3>
+<p style="font-size:13px;color:#636366;margin-top:4px">"遇到事先问AI"的习惯还能用在：</p>
+<ul>
+<li><strong>学做菜</strong> — "冰箱里有鸡蛋、西红柿、青椒，能做什么菜？"</li>
+<li><strong>处理琐事</strong> — "物业费该交了，流程是什么？"</li>
+<li><strong>健康建议</strong> — "最近老是失眠，帮我列10个不用吃药的方法，排序从简单到有效"</li>
+</ul>
+</div>
+</div>
+<!-- 一劳永逸 -->
+<div class="section" data-tag="core:summary" style="background:linear-gradient(135deg,#e8f5e9,#c8e6c9);border:none;text-align:center">
+<h3 style="font-size:18px;margin-bottom:8px;color:#2e7d32">⚡ 一劳永逸</h3>
+<p style="font-size:13px;color:#2e7d32;margin-bottom:8px">记住这个原则，以后日常遇到任何事——</p>
+<div class="code-block" style="background:#fff;text-align:left">
+遇到要写的 → 给背景+语气 → 让AI起稿你润色
+遇到要计划的 → 给条件+偏好 → 让AI安排你调
+遇到要查的 → 给具体问题 → 让AI对比你选
+</div>
+<div style="margin-top:10px;font-size:15px;color:#2e7d32;font-weight:600">
+  🎉 从此小事不求人，先问AI再说
+</div>
+</div>
+</div>
+<div class="tip-box" id="tipBox">
+<div class="tip-title">📖 术语</div>
+<span class="tip-close" id="tipClose">&times;</span>
+<div id="tipDesc">暂无释义</div>
+</div>
+<script>
+(function(){
+  var tb=document.getElementById("tipBox"),td=document.getElementById("tipDesc"),tc=document.getElementById("tipClose");
+  if(tb&&td){
+    document.querySelectorAll("w").forEach(function(el){
+      el.addEventListener("click",function(e){
+        e.stopPropagation();
+        td.textContent=this.getAttribute("d")||"暂无释义";
+        tb.querySelector(".tip-title").textContent="📖 "+this.textContent.trim();
+        var r=this.getBoundingClientRect(),w=tb.offsetWidth||280,left=Math.max(10,Math.min(r.left+r.width/2-w/2,document.body.clientWidth-w-10)),top=r.top-8-tb.offsetHeight;
+        if(top<10)top=r.bottom+10;
+        tb.style.left=left+"px";tb.style.top=top+"px";tb.style.display="block";
+        document.querySelectorAll("w.active").forEach(function(w){w.classList.remove("active")});
+        this.classList.add("active");
+      });
+    });
+    function ht(){tb.style.display="none";document.querySelectorAll("w.active").forEach(function(w){w.classList.remove("active")})}
+    tc.addEventListener("click",ht);
+    document.addEventListener("click",function(e){if(!e.target.closest("w")&&!e.target.closest(".tip-box"))ht()});
+    document.addEventListener("keydown",function(e){if(e.key==="Escape")ht()});
+  }
+  var nav=document.getElementById("stepNav");
+  if(nav){
+    var S=["s-explain","s-practice","s-insight","s-consolidate"];
+    nav.addEventListener("click",function(e){
+      var it=e.target.closest(".sn-item");if(!it)return;
+      var id=it.getAttribute("data-step"),el=document.getElementById(id);
+      if(el)el.scrollIntoView({behavior:"smooth",block:"start"});
+      var idx=S.indexOf(id);
+      for(var i=0;i<nav.children.length;i++)nav.children[i].classList.toggle("active",i===idx);
+    });
+    var st;
+    function uas(){
+      var bi=0,bd=Infinity;
+      S.forEach(function(id,i){
+        var el=document.getElementById(id);
+        if(el){var t=Math.abs(el.getBoundingClientRect().top);if(t<bd){bd=t;bi=i}}
+      });
+      for(var i=0;i<nav.children.length;i++)nav.children[i].classList.toggle("active",i===bi);
+    }
+    document.addEventListener("scroll",function(){clearTimeout(st);st=setTimeout(uas,100)});
+    uas();
+  }
+})();
+</script>
+</body>
+</html>

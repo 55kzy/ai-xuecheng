@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>AI学程 — 技术人写prompt的实战秘籍</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;background:#f5f7fa;color:#1d1d1f;padding-bottom:60px}
+  .header{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%);color:#fff;padding:32px 20px 28px;text-align:center}
+  .header .badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(255,255,255,.12);margin-bottom:10px;color:rgba(255,255,255,.7)}
+  .header h1{font-size:22px;font-weight:700;margin-bottom:6px;letter-spacing:-.3px}
+  .header .meta{font-size:13px;color:rgba(255,255,255,.55);display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+  .header .tag-free{display:inline-block;padding:4px 12px;border-radius:20px;background:rgba(52,199,89,.2);color:#34c759;font-size:12px;font-weight:600;margin-top:12px}
+  .container{max-width:680px;margin:0 auto;padding:0 16px}
+  .step-nav{display:flex;gap:8px;padding:16px 0;overflow-x:auto;position:sticky;top:0;background:#f5f7fa;z-index:10;border-bottom:1px solid rgba(0,0,0,.06)}
+  .step-nav .sn-item{flex:1;min-width:0;padding:8px 6px;border-radius:10px;border:1.5px solid #e5e5ea;font-size:11px;text-align:center;transition:all .15s;white-space:nowrap;background:rgba(255,255,255,.6);color:#636366;cursor:pointer}
+  .step-nav .sn-item.active{border-color:#007aff;background:#e8f2ff;color:#007aff;font-weight:600}
+  .step-nav .sn-item .sn-icon{display:block;font-size:14px;margin-bottom:2px}
+  .section{margin:16px 0;background:rgba(255,255,255,.85);backdrop-filter:blur(20px);border-radius:20px;padding:20px;border:1px solid rgba(255,255,255,.6);box-shadow:0 2px 12px rgba(0,0,0,.04)}
+  .section-title{font-size:16px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .section-desc{font-size:13px;color:#636366;margin-bottom:10px;line-height:1.6}
+  .content{font-size:14px;line-height:1.8;color:#1d1d1f}
+  .content h3{font-size:15px;margin:16px 0 6px}
+  .content p{margin-bottom:8px}
+  .content ul,.content ol{padding-left:18px;margin-bottom:10px}
+  .content li{margin-bottom:4px}
+  .callout{padding:12px 14px;border-radius:12px;margin:12px 0;font-size:13px;line-height:1.6;border-left:3px solid}
+  .callout-tip{background:rgba(0,122,255,.06);border-color:#007aff;color:#1d1d1f}
+  .callout-warn{background:rgba(255,149,0,.08);border-color:#ff9500;color:#1d1d1f}
+  .callout-danger{background:rgba(255,59,48,.06);border-color:#ff3b30;color:#1d1d1f}
+  .callout-green{background:rgba(52,199,89,.08);border-color:#34c759;color:#1d1d1f}
+  .code-block{background:#1e1e2e;border-radius:10px;padding:12px 14px;font-family:'Cascadia Code','Fira Code','JetBrains Mono',monospace;font-size:13px;line-height:1.6;white-space:pre-wrap;word-break:break-word;margin:8px 0;color:#cdd6f4}
+  .code-block .kw{color:#89b4fa}.code-block .str{color:#a6e3a1}.code-block .cm{color:#6c7086}.code-block .fn{color:#fab387}.code-block .num{color:#f38ba8}
+  .cmp-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
+  .cmp-table th,.cmp-table td{padding:8px 10px;border:1px solid #e5e5ea;text-align:left}
+  .cmp-table th{background:rgba(0,0,0,.03);font-weight:600;font-size:12px;color:#636366}
+  .challenge{background:rgba(255,255,255,.4);border:1px solid #e5e5ea;border-radius:12px;padding:12px 14px;margin:8px 0}
+  .challenge .ch-title{font-weight:600;font-size:13px;margin-bottom:4px}
+  .challenge .ch-desc{font-size:12px;color:#636366;line-height:1.5}
+  .step-box{background:rgba(0,122,255,.04);border-radius:12px;padding:14px;margin:10px 0;border:1px solid rgba(0,122,255,.12)}
+  .step-box .step-num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:#007aff;color:#fff;font-size:12px;font-weight:700;margin-right:6px;flex-shrink:0}
+  .step-box .step-title{font-weight:600;font-size:14px;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+  .step-box .step-body{font-size:13px;line-height:1.7;color:#1d1d1f}
+  .goal-list{display:flex;flex-direction:column;gap:6px;margin:10px 0}
+  .goal-item{display:flex;align-items:center;gap:8px;font-size:13px;padding:4px 0}
+  .goal-check{width:18px;height:18px;border-radius:50%;background:#34c759;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+  w{cursor:pointer;border-bottom:1.5px dashed #007aff;color:#007aff;font-weight:500;position:relative;transition:background .15s}
+  w:hover{background:rgba(0,122,255,.06)}
+  w.active{background:rgba(0,122,255,.12)}
+  .tip-box{position:fixed;z-index:9999;display:none;background:#1d1d1f;color:#fff;border-radius:10px;padding:10px 14px;max-width:300px;font-size:13px;line-height:1.6;box-shadow:0 8px 24px rgba(0,0,0,.2);animation:tipIn .2s ease}
+  .tip-box .tip-title{font-weight:600;margin-bottom:3px;color:rgba(255,255,255,.6);font-size:11px}
+  .tip-box .tip-close{position:absolute;top:6px;right:8px;cursor:pointer;font-size:14px;color:rgba(255,255,255,.4);line-height:1;border:none;background:none;padding:2px}
+  .tip-box .tip-close:hover{color:#fff}
+  .tip-box::after{content:'';position:absolute;left:50%;bottom:-6px;margin-left:-6px;border:6px solid transparent;border-top-color:#1d1d1f}
+  @keyframes tipIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+<div class="header">
+<div class="badge">技术应用 · T1 基础免费</div>
+<h1>⌨️ 技术人写prompt的实战秘籍</h1>
+<p style="font-size:14px;color:rgba(255,255,255,.7);margin-bottom:8px">不只是"帮我写个函数"——技术场景的prompt要这样写</p>
+<div class="meta">
+<span>⏱ 约25分钟</span>
+<span>📄 图文课</span>
+<span>💻 需要能打开IDE</span>
+</div>
+<div class="tag-free">🆓 免费</div>
+</div>
+<div class="container">
+<div class="step-nav" id="stepNav">
+<div class="sn-item active" data-step="s-explain"><span class="sn-icon">📌</span>为什么</div>
+<div class="sn-item" data-step="s-practice"><span class="sn-icon">🎯</span>实操</div>
+<div class="sn-item" data-step="s-insight"><span class="sn-icon">💡</span>原理</div>
+<div class="sn-item" data-step="s-consolidate"><span class="sn-icon">🔁</span>巩固</div>
+</div>
+
+<!-- 📌 Explain -->
+<div class="section module" data-tag="core:explain" id="s-explain">
+<div class="section-title">📌 你让AI写代码，AI是不是总给你"能用但不好用"的代码？</div>
+<div class="section-desc">3分钟 · 为什么你以为写得很清楚的prompt，AI就是听不懂</div>
+<div class="content">
+<p>你让AI"帮我写个查询函数"，它给你一个SELECT * FROM users WHERE id = 1。</p>
+<p>你让AI"优化一下这段代码"，它给你把两个for循环改成了列表推导式，性能提升1%，但可读性下降了50%。</p>
+<p><strong>不是你表达能力差，是你还在用跟人沟通的方式跟AI说话。</strong></p>
+<p>写代码的prompt跟日常对话的prompt完全是两码事。代码prompt需要包含：</p>
+<ul>
+<li>具体的技术约束（框架、<w d=\"编程语言版本\">语言版本</w>、性能要求）</li>
+<li>明确的输入输出</li>
+<li>边界情况和错误处理</li>
+</ul>
+
+<div class="callout callout-warn">
+<strong>先看一个对比：</strong><br/><br/>
+<strong>❌ 差输入（就像你在Slack上问同事）：</strong><br/>
+<div class="code-block" style="background:#fff;color:#1d1d1f">帮我写个函数，处理用户上传的CSV文件。</div>
+<em style="font-size:12px;color:#8e8e93">AI反馈：写了一个简单的read_csv，不处理编码、不验格式、没有错误处理</em><br/><br/>
+<strong>✅ 好输入（像在写技术需求文档）：</strong><br/>
+<div class="code-block" style="background:#fff;color:#1d1d1f">写一个Python函数 process_csv(file_path: str) -> pd.DataFrame
+要求：
+1. 自动检测编码（UTF-8/GBK）
+2. 如果文件不是CSV格式，抛出自定义异常
+3. 处理空行和列数不匹配的行
+4. 返回DataFrame并打印 rows_processed 和 rows_skipped
+5. 加类型标注和docstring
+只用标准库 + pandas</div>
+<em style="font-size:12px;color:#8e8e93">AI反馈：生成了一段几乎可以直接上生产的代码，包含类型标注、异常处理、日志输出</em><br/><br/>
+<strong>核心差异：</strong>差输入在"表达需求"，好输入在"写技术规约"。你给AI的信息量决定了它给你的代码质量——给多给少，回报完全不同。
+</div>
+
+<h3>这节课学完你能做到</h3>
+<div class="goal-list">
+<div class="goal-item"><span class="goal-check">✓</span> 写出让AI一次生成可用代码的prompt，减少返工</div>
+<div class="goal-item"><span class="goal-check">✓</span> 能精准描述技术约束（框架、版本、性能指标）</div>
+<div class="goal-item"><span class="goal-check">✓</span> 知道不同场景（写函数、重构、查bug）分别用什么prompt策略</div>
+</div>
+</div>
+</div>
+
+<!-- 🎯 Practice -->
+<div class="section module" data-tag="P:practice" id="s-practice">
+<div class="section-title">🎯 动手实操</div>
+<div class="section-desc">15分钟 · 三步写出AI一次搞懂的代码prompt</div>
+<div class="content">
+
+<div class="module" data-tag="P:step1">
+<div class="step-box">
+<div class="step-title"><span class="step-num">1</span> 套用"技术模板"——别再只说需求了</div>
+<div class="step-body">
+<p>写代码prompt套这个模板，别偷懒：</p>
+<div class="code-block">语言和框架：Python 3.11 + FastAPI
+任务描述：写一个POST接口，接收用户上传的JSON
+输入：{user_id: string, items: array}
+输出：{status: string, created_at: string}
+技术约束：用Pydantic做类型校验，错误信息用中文
+边界情况：user_id为空时返回400，
+           items为空数组时返回200但status为"empty"
+不要用：同步IO以外的第三方库</div>
+<p>模板结构：<strong>环境 + 任务 + 输入/出 + 约束 + 边界 + 禁忌</strong></p>
+<p>你不是在跟AI"聊天"，你是在给它<strong>写一个简短的PRD</strong>。越接近代码规范描述，AI给你的越接近可用代码。</p>
+</div>
+</div>
+</div>
+
+<div class="module" data-tag="P:step2">
+<div class="step-box">
+<div class="step-title"><span class="step-num">2</span> 三个场景的prompt备忘录</div>
+<div class="step-body">
+<p>不同场景要换不同的prompt策略，分享三个你马上就能用的：</p>
+
+<div class="callout callout-tip" style="margin:8px 0">
+<strong>🔧 场景一：写新函数</strong><br/>
+用第1步的"技术模板" + 加一句"写完顺便写3个单元测试"。这样才能确保AI考虑了边界情况和返回值。
+</div>
+
+<div class="callout callout-warn">
+<strong>🔄 场景二：重构代码</strong><br/>
+先贴代码，再说：<br/>
+<em>"这段代码的目标是{xxx}。请在不改变核心逻辑的前提下，提升可读性和性能。每处改动说明理由。"</em><br/>
+注意：一定要告诉AI"不能改目标"——不然它会把你的业务逻辑也改掉。
+</div>
+
+<div class="callout callout-danger">
+<strong>🐛 场景三：调试bug</strong><br/>
+先贴报错信息，再说：<br/>
+<em>"这个报错可能的原因有哪些？按可能性从高到低列出。把你最怀疑的那个原因对应的解决方案写出来，其他原因只写排查方法。"</em><br/>
+这样AI不会只给一种可能性，你能系统地排查。
+</div>
+</div>
+</div>
+</div>
+
+<div class="module" data-tag="P:step3">
+<div class="step-box">
+<div class="step-title"><span class="step-num">3</span> 验证——别直接粘代码就跑</div>
+<div class="step-body">
+<p>AI给的代码，就算看起来再完整，也按这个流程验证：</p>
+<div class="code-block">1. 只读不改：先通读一遍，看逻辑对不对
+2. 检查API：如果调了第三方库，确认API签名没错
+3. 逐步执行：如果是核心逻辑，在REPL里一行一行跑
+4. 看异常路径：传个空值/边界值进去
+5. 最多改3行：如果超过3行需要改，重建prompt重来吧</div>
+<p>为什么最多只改3行？因为超过3行说明AI没有理解你的需求，硬改出来的代码后面会有更多bug。重建prompt加上上一步的教训，重来一次通常比硬改快。</p>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<!-- 💡 Insight -->
+<div class="section module" data-tag="core:insight" id="s-insight">
+<div class="section-title">💡 理解为什么</div>
+<div class="section-desc">5分钟 · 你给AI的信息量 = AI给你的代码质量</div>
+<div class="content">
+<h3>核心原理：代码prompt本质上是一份"微型技术文档"</h3>
+<p>非技术人写prompt像是在指方向（"那里有块肉"），技术人写代码prompt应该像在画图纸（"长20cm宽15cm厚3cm，铁质"）。</p>
+<p>为什么你的prompt要包含环境、约束、边界？因为<w d=\"大语言模型的工作原理\">AI的工作方式</w>是：它见过的代码越多，给出来的就越符合那个模式。你给的约束越精确，它就越能匹配到"这个需求+这个约束"对应的最佳代码模式。</p>
+
+<div class="callout callout-tip">
+<strong>一个数据点：</strong>把同一个需求写成"帮我写个函数"（6个字）和写成"技术模板"（约100字），AI生成的代码通过率从<strong>约30%提升到约80%</strong>。不是AI变强了，是你给它提供了足够的信息来理解你的需求。
+</div>
+
+<h3>这个能力能迁移到哪</h3>
+<ul>
+<li><strong>写技术方案</strong> — 给AI一个"环境+目标+约束"的模板，它能生成80%初稿</li>
+<li><strong>写技术文档</strong> — 让AI根据你的代码和注释生成README和API文档</li>
+<li><strong>做技术选型</strong> — 用"技术模板"的方式让AI比较不同方案，比搜博客高效</li>
+</ul>
+</div>
+</div>
+
+<!-- 🔁 Consolidate -->
+<div class="section module" data-tag="optional:consolidate" id="s-consolidate">
+<div class="section-title">🔁 巩固练习</div>
+<div class="section-desc">5分钟 · 形成习惯</div>
+<div class="content">
+<div class="callout callout-tip">
+<strong>今天做一次：</strong>找一个你最近让AI写的代码，把当时用的prompt拿出来。然后用这节课的"技术模板"重新写一遍，让AI重新生成。对比两次的结果——你是不是发现第二次生成的代码可以直接用？</div>
+
+<h3>进阶挑战</h3>
+<div class="challenge">
+<div class="ch-title">✅ 挑战1：存一份个人代码prompt模板库</div>
+<div class="ch-desc">创建一个"代码prompt模板.md"文件，把你常用的几个场景（写API、写工具函数、写测试、写SQL）的prompt模板存进去。每次写代码前对着模板填参数。</div>
+</div>
+<div class="challenge">
+<div class="ch-title">✅ 挑战2：让AI写一个完整的单元测试</div>
+<div class="ch-desc">找一个你最近写的函数（50行以上），用"技术模板"写好prompt，让AI生成完整的单元测试。要求覆盖：正常路径、边界值、异常输入、性能指标各一条。</div>
+</div>
+<div class="challenge">
+<div class="ch-title">✅ 挑战3：让AI重构一段代码并解释理由</div>
+<div class="ch-desc">找一段你已经写好的代码（100-200行），用重构prompt让AI优化。然后逐条看它的理由，判断每条是否有道理。这是最好的学习"怎么写出更好代码"的方式。</div>
+</div>
+
+<h3>这节课只是个开始</h3>
+<p style="font-size:13px;color:#636366;margin-top:4px">掌握了基础的代码prompt模板，你还有很长的路可以走：</p>
+<ul>
+<li><strong>大型重构</strong> — 不只是单个函数，而是跨文件的模块级重构</li>
+<li><strong>架构级prompt</strong> — 让AI理解你的项目架构，在正确的位置做改动</li>
+<li><strong>代码审查自动化</strong> — 让AI做第一轮CR，你只看AI标记的问题</li>
+</ul>
+<p>这些在<strong>T2进阶课</strong>里会继续深入——不只是"写一个函数"的教学，而是让你在真实项目中高效使用AI开发。你现在学会的模板，就是未来自动化工作流的起点。</p>
+</div>
+</div>
+
+<!-- 一劳永逸 -->
+<div class="section" data-tag="core:summary" style="background:linear-gradient(135deg,#e8f5e9,#c8e6c9);border:none;text-align:center">
+<h3 style="font-size:18px;margin-bottom:8px;color:#2e7d32">⚡ 一劳永逸</h3>
+<p style="font-size:13px;color:#2e7d32;margin-bottom:8px">以后每次让AI写代码前，默念：</p>
+<div class="code-block" style="background:#fff;text-align:left;color:#1d1d1f">环境 + 任务 + 输入出 + 约束 + 边界 + 禁忌</div>
+<div style="margin-top:10px;font-size:15px;color:#2e7d32;font-weight:600">
+  🎉 你不是在问AI写代码，是在给AI写需求文档
+</div>
+</div>
+</div>
+
+<div class="tip-box" id="tipBox">
+<div class="tip-title">📖 术语</div>
+<span class="tip-close" id="tipClose">&times;</span>
+<div id="tipDesc">暂无释义</div>
+</div>
+<script>
+(function(){
+  var tb=document.getElementById("tipBox"),td=document.getElementById("tipDesc"),tc=document.getElementById("tipClose");
+  if(tb&&td){
+    document.querySelectorAll("w").forEach(function(el){
+      el.addEventListener("click",function(e){
+        e.stopPropagation();
+        td.textContent=this.getAttribute("d")||"暂无释义";
+        tb.querySelector(".tip-title").textContent="📖 "+this.textContent.trim();
+        var r=this.getBoundingClientRect(),w=tb.offsetWidth||280,left=Math.max(10,Math.min(r.left+r.width/2-w/2,document.body.clientWidth-w-10)),top=r.top-8-tb.offsetHeight;
+        if(top<10)top=r.bottom+10;
+        tb.style.left=left+"px";tb.style.top=top+"px";tb.style.display="block";
+        document.querySelectorAll("w.active").forEach(function(w){w.classList.remove("active")});
+        this.classList.add("active");
+      });
+    });
+    function ht(){tb.style.display="none";document.querySelectorAll("w.active").forEach(function(w){w.classList.remove("active")})}
+    tc.addEventListener("click",ht);
+    document.addEventListener("click",function(e){if(!e.target.closest("w")&&!e.target.closest(".tip-box"))ht()});
+    document.addEventListener("keydown",function(e){if(e.key==="Escape")ht()});
+  }
+  var nav=document.getElementById("stepNav");
+  if(nav){
+    var S=["s-explain","s-practice","s-insight","s-consolidate"];
+    nav.addEventListener("click",function(e){
+      var it=e.target.closest(".sn-item");if(!it)return;
+      var id=it.getAttribute("data-step"),el=document.getElementById(id);
+      if(el)el.scrollIntoView({behavior:"smooth",block:"start"});
+      var idx=S.indexOf(id);
+      for(var i=0;i<nav.children.length;i++)nav.children[i].classList.toggle("active",i===idx);
+    });
+    var st;
+    function uas(){
+      var bi=0,bd=Infinity;
+      S.forEach(function(id,i){
+        var el=document.getElementById(id);
+        if(el){var t=Math.abs(el.getBoundingClientRect().top);if(t<bd){bd=t;bi=i}}
+      });
+      for(var i=0;i<nav.children.length;i++)nav.children[i].classList.toggle("active",i===bi);
+    }
+    document.addEventListener("scroll",function(){clearTimeout(st);st=setTimeout(uas,100)});
+    uas();
+  }
+})();
+</script>
+</body>
+</html>

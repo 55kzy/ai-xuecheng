@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>AI学程 — 学术研究别被AI带沟里</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;background:#f5f7fa;color:#1d1d1f;padding-bottom:60px}
+  .header{background:linear-gradient(135deg,#1d1d1f 0%,#3a3a3c 100%);color:#fff;padding:32px 20px 28px;text-align:center}
+  .header .badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(255,255,255,.12);margin-bottom:10px;color:rgba(255,255,255,.7)}
+  .header h1{font-size:22px;font-weight:700;margin-bottom:6px;letter-spacing:-.3px}
+  .header .meta{font-size:13px;color:rgba(255,255,255,.55);display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+  .header .tag-free{display:inline-block;padding:4px 12px;border-radius:20px;background:rgba(52,199,89,.2);color:#34c759;font-size:12px;font-weight:600;margin-top:12px}
+  .container{max-width:680px;margin:0 auto;padding:0 16px}
+  .step-nav{display:flex;gap:8px;padding:16px 0;overflow-x:auto;position:sticky;top:0;background:#f5f7fa;z-index:10;border-bottom:1px solid rgba(0,0,0,.06)}
+  .step-nav .sn-item{flex:1;min-width:0;padding:8px 6px;border-radius:10px;border:1.5px solid #e5e5ea;font-size:11px;text-align:center;transition:all .15s;white-space:nowrap;background:rgba(255,255,255,.6);color:#636366;cursor:pointer}
+  .step-nav .sn-item.active{border-color:#007aff;background:#e8f2ff;color:#007aff;font-weight:600}
+  .step-nav .sn-item .sn-icon{display:block;font-size:14px;margin-bottom:2px}
+  .section{margin:16px 0;background:rgba(255,255,255,.85);backdrop-filter:blur(20px);border-radius:20px;padding:20px;border:1px solid rgba(255,255,255,.6);box-shadow:0 2px 12px rgba(0,0,0,.04)}
+  .section-title{font-size:16px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .section-desc{font-size:13px;color:#636366;margin-bottom:10px;line-height:1.6}
+  .content{font-size:14px;line-height:1.8;color:#1d1d1f}
+  .content h3{font-size:15px;margin:16px 0 6px}
+  .content p{margin-bottom:8px}
+  .content ul,.content ol{padding-left:18px;margin-bottom:10px}
+  .content li{margin-bottom:4px}
+  .callout{padding:12px 14px;border-radius:12px;margin:12px 0;font-size:13px;line-height:1.6;border-left:3px solid}
+  .callout-tip{background:rgba(0,122,255,.06);border-color:#007aff;color:#1d1d1f}
+  .callout-warn{background:rgba(255,149,0,.08);border-color:#ff9500;color:#1d1d1f}
+  .callout-danger{background:rgba(255,59,48,.06);border-color:#ff3b30;color:#1d1d1f}
+  .callout-green{background:rgba(52,199,89,.08);border-color:#34c759;color:#1d1d1f}
+  .code-block{background:#f0f2f5;border-radius:10px;padding:12px 14px;font-family:'Courier New',monospace;font-size:13px;line-height:1.6;white-space:pre-wrap;word-break:break-word;margin:8px 0}
+  .cmp-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
+  .cmp-table th,.cmp-table td{padding:8px 10px;border:1px solid #e5e5ea;text-align:left}
+  .cmp-table th{background:rgba(0,0,0,.03);font-weight:600;font-size:12px;color:#636366}
+  .challenge{background:rgba(255,255,255,.4);border:1px solid #e5e5ea;border-radius:12px;padding:12px 14px;margin:8px 0}
+  .challenge .ch-title{font-weight:600;font-size:13px;margin-bottom:4px}
+  .challenge .ch-desc{font-size:12px;color:#636366;line-height:1.5}
+  .step-box{background:rgba(0,122,255,.04);border-radius:12px;padding:14px;margin:10px 0;border:1px solid rgba(0,122,255,.12)}
+  .step-box .step-num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:#007aff;color:#fff;font-size:12px;font-weight:700;margin-right:6px;flex-shrink:0}
+  .step-box .step-title{font-weight:600;font-size:14px;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+  .step-box .step-body{font-size:13px;line-height:1.7;color:#1d1d1f}
+  .goal-list{display:flex;flex-direction:column;gap:6px;margin:10px 0}
+  .goal-item{display:flex;align-items:center;gap:8px;font-size:13px;padding:4px 0}
+  .goal-check{width:18px;height:18px;border-radius:50%;background:#34c759;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+  w{cursor:pointer;border-bottom:1.5px dashed #007aff;color:#007aff;font-weight:500;position:relative;transition:background .15s}
+  w:hover{background:rgba(0,122,255,.06)}
+  w.active{background:rgba(0,122,255,.12)}
+  .tip-box{position:fixed;z-index:9999;display:none;background:#1d1d1f;color:#fff;border-radius:10px;padding:10px 14px;max-width:300px;font-size:13px;line-height:1.6;box-shadow:0 8px 24px rgba(0,0,0,.2);animation:tipIn .2s ease}
+  .tip-box .tip-title{font-weight:600;margin-bottom:3px;color:rgba(255,255,255,.6);font-size:11px}
+  .tip-box .tip-close{position:absolute;top:6px;right:8px;cursor:pointer;font-size:14px;color:rgba(255,255,255,.4);line-height:1;border:none;background:none;padding:2px}
+  .tip-box .tip-close:hover{color:#fff}
+  .tip-box::after{content:'';position:absolute;left:50%;bottom:-6px;margin-left:-6px;border:6px solid transparent;border-top-color:#1d1d1f}
+  @keyframes tipIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+<div class="header">
+<div class="badge">学术研究 · T1 基础免费</div>
+<h1>📚 学术研究别被AI带沟里</h1>
+<p style="font-size:14px;color:rgba(255,255,255,.7);margin-bottom:8px">AI能帮你查文献，但小心它给你编论文</p>
+<div class="meta">
+<span>⏱ 约25分钟</span>
+<span>📄 图文课</span>
+<span>💻 需要能连知网/Google Scholar</span>
+</div>
+<div class="tag-free">🆓 免费</div>
+</div>
+<div class="container">
+<div class="step-nav" id="stepNav">
+<div class="sn-item active" data-step="s-explain"><span class="sn-icon">📌</span>为什么</div>
+<div class="sn-item" data-step="s-practice"><span class="sn-icon">🎯</span>实操</div>
+<div class="sn-item" data-step="s-insight"><span class="sn-icon">💡</span>原理</div>
+<div class="sn-item" data-step="s-consolidate"><span class="sn-icon">🔁</span>巩固</div>
+</div>
+
+<!-- 📌 Explain -->
+<div class="section module" data-tag="core:explain" id="s-explain">
+<div class="section-title">📌 用AI查文献，最怕什么？</div>
+<div class="section-desc">3分钟 · 论文写到一半发现引用的文献不存在，你就知道了</div>
+<div class="content">
+<p>你让AI"帮我找一下近年关于xx主题的文献"，AI列了10篇，每篇都有标题、作者、期刊、年份，看起来像模像样。你开心地写进了论文。</p>
+<p>然后你去找原文……<strong>发现其中3篇根本不存在</strong>。AI编造了标题、编造了作者、编造了期刊，甚至编造了DOI号——但它们从来没被发表过。</p>
+<p>这不是偶发事件。<w d=\"AI生成听起来合理但实际上不存在的内容\">AI幻觉</w>在学术场景特别致命，因为：</p>
+<ul>
+<li>它知道"一篇标准学术论文应该长什么样"</li>
+<li>它见过的论文足够多，拼凑一篇假论文比编一个假新闻要'逼真'得多</li>
+<li>学生/研究者往往相信"AI至少不会编文献吧"</li>
+</ul>
+
+<div class="callout callout-warn">
+<strong>先看真实案例：</strong><br/><br/>
+<strong>❌ 错误做法（很多人正在做）：</strong><br/>
+"帮我找5篇关于迁移学习在医疗图像应用的论文"<br/>
+→ AI给了5篇"看起来非常专业"的文献列表<br/>
+→ 你直接引用，没有验证→论文提交后被导师发现文献不存在<br/><br/>
+<strong>✅ 正确做法：</strong><br/>
+"帮我找5篇关于迁移学习在医疗图像应用的论文。注意：<br/>
+1. 每篇必须提供真实的DOI或PubMed链接<br/>
+2. 对每篇我用期刊官网验证后才会引用<br/>
+3. 如果你不确定哪些是真实存在的，请标注'确认中'"<br/>
+→ AI给的文献经过你逐篇验证，3篇可用、2篇标记待确认<br/>
+→ 你只引用验证过的，不留隐患<br/><br/>
+<strong>差别：</strong>前者把AI当"文献搜索引擎"，后者把AI当"研究助理"。一个最危险的区别是——搜索引擎错了你会自己怀疑，AI错了你更可能相信它。
+</div>
+
+<h3>这节课学完你能做到</h3>
+<div class="goal-list">
+<div class="goal-item"><span class="goal-check">✓</span> 用AI做文献调研但不会掉进"假文献陷阱"</div>
+<div class="goal-item"><span class="goal-check">✓</span> 建立一套学术场景的"先AI后搜"核实流程</div>
+<div class="goal-item"><span class="goal-check">✓</span> 让AI成为你的"研究初稿工具"而不是"答案生成器"</div>
+</div>
+</div>
+</div>
+
+<!-- 🎯 Practice -->
+<div class="section module" data-tag="P:practice" id="s-practice">
+<div class="section-title">🎯 动手实操</div>
+<div class="section-desc">15分钟 · 三步避开学术AI陷阱</div>
+<div class="content">
+
+<div class="module" data-tag="P:step1">
+<div class="step-box">
+<div class="step-title"><span class="step-num">1</span> 摸底：你的AI知不知道这个话题</div>
+<div class="step-body">
+<p>让AI帮你做文献调研之前，先问这一个问题：</p>
+<div class="code-block">你对"XXX"这个研究方向了解多少？
+请评估你的知识范围（1=只知道皮毛，5=非常熟悉）。
+并列出这个方向下你最确定的3-5个经典文献和它们的DOI。</div>
+<p>如果AI说"1-2分"或"不确定"——你就知道它对这个方向不熟，它的文献推荐需要高度警惕。如果它自信满满说"5分"，你可以追问几个经典文献的DOI号，去Google Scholar验证一下。</p>
+<div class="callout callout-tip">
+<strong>为什么要先做这一步？</strong>因为AI不会主动告诉你"我不懂这个"。只有你问它"你有多懂"，它才会如实说。这是学术场景下最重要的AI使用技巧。
+</div>
+</div>
+</div>
+</div>
+
+<div class="module" data-tag="P:step2">
+<div class="step-box">
+<div class="step-title"><span class="step-num">2</span> 要求AI带"证"说话</div>
+<div class="step-body">
+<p>每次让AI整理文献或提出观点时，在prompt里加上这种约束：</p>
+<div class="code-block">要求：
+1. 每条文献必须附带DOI或PubMed ID
+2. 如果该信息来自某篇特定论文，标注对应论文
+3. 对不确定的内容，标注『不确定』并说明原因
+4. 不要编造任何来源——如果不确定就说"我不确定"</div>
+<p>多数AI会遵守这个约束。如果它编造了DOI，你验证时会发现；如果它老实标注"不确定"，你就可以通过它给你的线索去真正搜索。</p>
+<p>关键心态：<strong>AI是来协助你研究的，不是替你研究的。</strong>它的初稿能帮你节省70%的摸索时间，但剩下的30%——验证和判断——你必须自己做。</p>
+</div>
+</div>
+</div>
+
+<div class="module" data-tag="P:step3">
+<div class="step-box">
+<div class="step-title"><span class="step-num">3</span> 建立一个"学术核实流水线"</div>
+<div class="step-body">
+<p>让AI帮你做文献研究时，按这个流水线操作：</p>
+<div class="code-block">1. 让AI列出研究方向的关键词和概念（不做文献推荐）
+2. 你用这些关键词去Google Scholar/知网/PubMed搜索
+3. 把搜到的真实文献标题丢回给AI，让它帮你总结
+4. AI总结后，你去打开原文验证总结是否准确
+5. 确认准确的总结，才能用在论文里</div>
+<p>这条流水线的核心：<strong>AI提供方向和初筛，你自己做搜索和引用</strong>。各司其职。</p>
+<div class="callout callout-tip">
+<strong>一个实用提示：</strong>用<w d=\"能联网搜实时信息的AI工具\">带搜索功能的AI</w>（比如秘塔AI搜索、Perplexity、天工AI搜索）代替纯对话AI做文献调研。虽然它们也可能出错，但至少会附上来源链接，方便你验证。
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<!-- 💡 Insight -->
+<div class="section module" data-tag="core:insight" id="s-insight">
+<div class="section-title">💡 理解为什么</div>
+<div class="section-desc">5分钟 · 学术AI幻觉是最危险的，也是最容易防范的</div>
+<div class="content">
+<h3>核心原理：为什么AI会编造学术文献？</h3>
+<p>AI编造文献不是"坏了"，而是它工作的必然结果：</p>
+<table class="cmp-table">
+<tr><th>AI做了什么</th><th>看起来像</th><th>实际上</th></tr>
+<tr><td>AI看到"迁移学习"+"医疗图像"</td><td>它在检索相关知识</td><td>它在激活训练中学到的相关模式</td></tr>
+<tr><td>AI生成"Smith et al. (2022)"</td><td>它记得这篇论文</td><td>它认为"Smith"+"2022"+"迁移学习"这个组合很合理</td></tr>
+<tr><td>AI生成DOI"10.xxxx/yyyy"</td><td>它有可靠的来源</td><td>它模仿了DOI的格式，但完全随机组合</td></tr>
+</table>
+<p><strong>学术文献的"合理感"正是AI最大的陷阱。</strong>一篇假论文比一个假新闻更容易骗过人——因为论文有严格的格式，AI恰好擅长模拟格式。</p>
+
+<div class="callout callout-danger">
+<strong>铁律：</strong>学术场景下，AI推荐的每一篇文献、每一个数据、每一条引用，都必须经过人工验证。不是"大部分"要验证，而是<strong>全部</strong>。一篇假文献被发表，后果可能是撤稿。
+</div>
+
+<h3>这个能力能迁移到哪</h3>
+<ul>
+<li><strong>写文献综述</strong> — AI给你框架和思路，你自己找文献填充</li>
+<li><strong>写研究计划</strong> — AI帮你理清思路和结构，你自己确定研究方法和参考文献</li>
+<li><strong>论文润色</strong> — AI改语法和表达，但所有的学术内容你自己把关</li>
+<li><strong>答辩准备</strong> — 让AI模拟问答，但每道题的"可能回答"你自己验证过才能用</li>
+</ul>
+</div>
+</div>
+
+<!-- 🔁 Consolidate -->
+<div class="section module" data-tag="optional:consolidate" id="s-consolidate">
+<div class="section-title">🔁 巩固练习</div>
+<div class="section-desc">5分钟 · 建立使用AI做研究的好习惯</div>
+<div class="content">
+<div class="callout callout-tip">
+<strong>今天做一次：</strong>在AI上输入"关于[你的研究主题]，推荐5篇近年最重要论文"。自己要求带DOI。然后把DOI一个一个在Google Scholar上验证。把验证结果（几篇真/几篇假）记下来。</div>
+
+<h3>进阶挑战</h3>
+<div class="challenge">
+<div class="ch-title">✅ 挑战1：让AI分析一篇真实论文</div>
+<div class="ch-desc">找一篇你自己下载的PDF论文，把摘要和结论贴给AI，让它总结核心贡献和方法。然后你自己读原文对比AI的理解是否准确。这是测试AI理解深度的好方法。</div>
+</div>
+<div class="challenge">
+<div class="ch-title">✅ 挑战2：让AI帮你发现研究空白</div>
+<div class="ch-desc">把你的研究方向和已有进展告诉AI，让它帮你列出该方向上"目前研究还没覆盖的3个问题"。但每一条你都要去学术数据库搜索验证，看是否真的没人做过。</div>
+</div>
+<div class="challenge">
+<div class="ch-title">✅ 挑战3：用AI写一篇规范的论文摘要</div>
+<div class="ch-desc">把你的一篇已完成论文的背景、方法、结果告诉AI，让它写一个规范的摘要。然后逐句检查——AI有没有加入它自己编造的信息？你会发现即使是摘要，AI也可能塞进不存在的发现。</div>
+</div>
+
+<h3>这节课只是个开始</h3>
+<p style="font-size:13px;color:#636366;margin-top:4px">AI在学术研究中的潜力远不止文献调研。真正高效的学术AI应用包括：</p>
+<ul>
+<li><strong>论文结构优化</strong> — 从摘要到结论的全流程AI辅助</li>
+<li><strong>数据分析辅助</strong> — AI帮你写统计分析代码、解释结果</li>
+<li><strong>投稿前检查</strong> — AI帮你检查逻辑漏洞和表达问题</li>
+</ul>
+<p>这些在<strong>T2进阶课</strong>里会结合真实学术写作案例讲解——从"用AI查文献"到"用AI完整辅助研究写作"。你现在学会的核实能力，就是学术AI使用的护城河。</p>
+</div>
+</div>
+
+<!-- 一劳永逸 -->
+<div class="section" data-tag="core:summary" style="background:linear-gradient(135deg,#e8f5e9,#c8e6c9);border:none;text-align:center">
+<h3 style="font-size:18px;margin-bottom:8px;color:#2e7d32">⚡ 一劳永逸</h3>
+<p style="font-size:13px;color:#2e7d32;margin-bottom:8px">学术场景用AI的铁律：</p>
+<div class="code-block" style="background:#fff;text-align:left;color:#1d1d1f">AI的初稿 × 你的验证 = 高效研究
+AI的初稿 × 盲目引用 = 学术自杀</div>
+<div style="margin-top:10px;font-size:15px;color:#2e7d32;font-weight:600">
+  🎉 你不是依赖AI做研究，是用AI加速你的研究
+</div>
+</div>
+</div>
+
+<div class="tip-box" id="tipBox">
+<div class="tip-title">📖 术语</div>
+<span class="tip-close" id="tipClose">&times;</span>
+<div id="tipDesc">暂无释义</div>
+</div>
+<script>
+(function(){
+  var tb=document.getElementById("tipBox"),td=document.getElementById("tipDesc"),tc=document.getElementById("tipClose");
+  if(tb&&td){
+    document.querySelectorAll("w").forEach(function(el){
+      el.addEventListener("click",function(e){
+        e.stopPropagation();
+        td.textContent=this.getAttribute("d")||"暂无释义";
+        tb.querySelector(".tip-title").textContent="📖 "+this.textContent.trim();
+        var r=this.getBoundingClientRect(),w=tb.offsetWidth||280,left=Math.max(10,Math.min(r.left+r.width/2-w/2,document.body.clientWidth-w-10)),top=r.top-8-tb.offsetHeight;
+        if(top<10)top=r.bottom+10;
+        tb.style.left=left+"px";tb.style.top=top+"px";tb.style.display="block";
+        document.querySelectorAll("w.active").forEach(function(w){w.classList.remove("active")});
+        this.classList.add("active");
+      });
+    });
+    function ht(){tb.style.display="none";document.querySelectorAll("w.active").forEach(function(w){w.classList.remove("active")})}
+    tc.addEventListener("click",ht);
+    document.addEventListener("click",function(e){if(!e.target.closest("w")&&!e.target.closest(".tip-box"))ht()});
+    document.addEventListener("keydown",function(e){if(e.key==="Escape")ht()});
+  }
+  var nav=document.getElementById("stepNav");
+  if(nav){
+    var S=["s-explain","s-practice","s-insight","s-consolidate"];
+    nav.addEventListener("click",function(e){
+      var it=e.target.closest(".sn-item");if(!it)return;
+      var id=it.getAttribute("data-step"),el=document.getElementById(id);
+      if(el)el.scrollIntoView({behavior:"smooth",block:"start"});
+      var idx=S.indexOf(id);
+      for(var i=0;i<nav.children.length;i++)nav.children[i].classList.toggle("active",i===idx);
+    });
+    var st;
+    function uas(){
+      var bi=0,bd=Infinity;
+      S.forEach(function(id,i){
+        var el=document.getElementById(id);
+        if(el){var t=Math.abs(el.getBoundingClientRect().top);if(t<bd){bd=t;bi=i}}
+      });
+      for(var i=0;i<nav.children.length;i++)nav.children[i].classList.toggle("active",i===bi);
+    }
+    document.addEventListener("scroll",function(){clearTimeout(st);st=setTimeout(uas,100)});
+    uas();
+  }
+})();
+</script>
+</body>
+</html>

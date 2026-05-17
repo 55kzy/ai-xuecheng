@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>自媒体AI能力全景图：从选题到爆款，AI渗透自媒体每一个环节</title>
+<style>
+/* ===== 重置 ===== */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;background:#f5f5f7;color:#1d1d1f;line-height:1.8;font-size:16px}
+
+/* ===== Header ===== */
+.header{background:linear-gradient(135deg,#4776E6 0%,#8E54E9 100%);color:#fff;padding:48px 24px 36px;text-align:center}
+.header h1{font-size:28px;font-weight:700;margin-bottom:8px;letter-spacing:1px}
+.header .subtitle{font-size:16px;opacity:.85;margin-bottom:16px}
+.header .meta{font-size:13px;opacity:.7;display:flex;justify-content:center;gap:16px;flex-wrap:wrap}
+.header .badge{display:inline-block;background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.35);border-radius:99px;padding:4px 14px;font-size:12px;margin-top:12px}
+
+/* ===== Container ===== */
+.container{max-width:780px;margin:0 auto;padding:24px 20px 60px}
+
+/* ===== Step Nav ===== */
+.step-nav{display:flex;gap:6px;overflow-x:auto;padding:4px 0;margin-bottom:28px;white-space:nowrap;-webkit-overflow-scrolling:touch}
+.step-nav a{flex-shrink:0;padding:6px 14px;border-radius:99px;font-size:13px;text-decoration:none;color:#666;background:#e8e8ed;transition:all .2s}
+.step-nav a.active{background:#4776E6;color:#fff;font-weight:500}
+.step-nav a:hover:not(.active){background:#ddd}
+
+/* ===== Section ===== */
+.section{background:#fff;border-radius:16px;padding:28px 24px;margin-bottom:24px;box-shadow:0 1px 3px rgba(0,0,0,.06)}
+.section h2{font-size:20px;margin-bottom:14px;display:flex;align-items:center;gap:8px}
+.section h3{font-size:17px;margin:18px 0 10px;color:#333}
+.section h4{font-size:15px;margin:14px 0 8px;color:#555}
+.section p{font-size:15px;color:#444;margin-bottom:12px}
+.section ul,.section ol{padding-left:22px;margin-bottom:14px}
+.section li{font-size:15px;color:#444;margin-bottom:6px}
+.section .highlight{background:#f0f4ff;border-left:4px solid #4776E6;padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0;font-size:14px;color:#333}
+
+/* ===== Tables ===== */
+.section table{width:100%;border-collapse:collapse;margin:14px 0;font-size:14px}
+.section table th{background:#4776E6;color:#fff;padding:10px 12px;text-align:left;font-weight:600}
+.section table td{padding:10px 12px;border-bottom:1px solid #eee;color:#444}
+.section table tr:nth-child(even) td{background:#f8f9fb}
+.section table tr:last-child td{border-bottom:none}
+
+/* ===== Cards ===== */
+.card-grid{display:grid;grid-template-columns:1fr;gap:12px;margin:14px 0}
+@media(min-width:520px){.card-grid{grid-template-columns:1fr 1fr}}
+.card{border:1px solid #e8e8ed;border-radius:12px;padding:16px;background:#fafafc}
+.card h4{font-size:14px;margin-bottom:6px;color:#1d1d1f}
+.card p{font-size:13px;color:#666;margin-bottom:0}
+
+/* ===== Summary Block ===== */
+.summary-block{background:linear-gradient(135deg,#f0f4ff,#f5f0ff);border:1px solid #d0d5f0;border-radius:12px;padding:20px;margin:16px 0}
+.summary-block .slogan{font-size:20px;font-weight:700;color:#4776E6;text-align:center;margin-bottom:12px}
+.summary-block code{display:block;background:rgba(71,118,230,.08);padding:12px 16px;border-radius:8px;font-size:14px;color:#333;line-height:1.7;white-space:pre-wrap;font-family:inherit}
+.summary-block .celebrate{text-align:center;font-size:40px;margin-top:12px}
+
+/* ===== Challenge ===== */
+.challenge-card{background:#fafafc;border:1px solid #e8e8ed;border-radius:12px;padding:16px;margin:10px 0}
+.challenge-card .num{display:inline-block;width:28px;height:28px;border-radius:28px;background:#4776E6;color:#fff;text-align:center;line-height:28px;font-size:14px;font-weight:600;margin-right:8px;float:left}
+.challenge-card p{margin-bottom:0;overflow:hidden}
+
+/* ===== Red Line ===== */
+.red-line{border-left:4px solid #e74c3c;background:#fef0ef;padding:12px 16px;border-radius:0 8px 8px 0;margin:14px 0}
+.red-line h4{color:#c0392b;margin-bottom:4px;font-size:15px}
+.red-line p{font-size:14px;color:#555;margin-bottom:0}
+
+/* ===== Judgment Box ===== */
+.judgment-box{background:#f5f5f7;border:1px solid #ddd;border-radius:12px;padding:16px;margin:12px 0}
+.judgment-box p{margin-bottom:6px;font-size:14px}
+.judgment-box .q{font-weight:600;color:#333}
+
+/* ===== Term Popup ===== */
+.term{color:#4776E6;cursor:pointer;border-bottom:1px dashed #4776E6;position:relative}
+.term .popup{display:none;position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);background:#1d1d1f;color:#fff;padding:8px 14px;border-radius:8px;font-size:13px;white-space:nowrap;z-index:10;box-shadow:0 4px 12px rgba(0,0,0,.2);pointer-events:none}
+.term .popup::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:#1d1d1f}
+.term.show .popup{display:block}
+
+/* ===== Footer ===== */
+.footer{text-align:center;padding:24px;color:#999;font-size:13px}
+</style>
+</head>
+<body>
+
+<!-- ========== HEADER ========== -->
+<div class="header">
+  <div class="badge">自媒体 · T1 基础免费</div>
+  <h1>自媒体AI能力全景图：你到底能用AI干嘛</h1>
+  <div class="subtitle">从选题到爆款，AI渗透自媒体每一个环节</div>
+  <div class="meta">
+    <span>⏱ 约25分钟</span>
+    <span>📄 图文课</span>
+    <span>🛠 无需工具，纯认知</span>
+  </div>
+</div>
+
+<!-- ========== STEP NAV ========== -->
+<div class="container">
+<nav class="step-nav" id="stepNav">
+  <a href="#explain">📌 Explain</a>
+  <a href="#practice">🎯 Practice</a>
+  <a href="#insight">💡 Insight</a>
+  <a href="#consolidate">🔁 Consolidate</a>
+  <a href="#summary">📝 总结</a>
+</nav>
+
+<!-- ========== EXPLAIN ========== -->
+<div class="section" id="explain" data-tag="core:explain">
+  <h2>📌 Explain · 自媒体人用AI的普遍误区</h2>
+  <p>大多数自媒体人对<w class="term" d="人工智能的简称，这里指大语言模型和生成式AI工具">AI</w>的认知，停留在"帮我写文案"——打开ChatGPT，说一句"帮我写一篇关于xx的文章"，然后复制粘贴，发出去。</p>
+  <p>但你有没有想过——<strong>还有三件事，你从来没有让AI试过</strong>：</p>
+  <ul>
+    <li><strong>选题分析：</strong>让AI告诉你什么话题今天最值得写、哪个角度最容易出爆款</li>
+    <li><strong>爆款拆解：</strong>把一篇10w+文章扔给AI，让它告诉你为什么火</li>
+    <li><strong>评论区管理：</strong>用AI帮你分类评论、提炼粉丝反馈、生成回复模板</li>
+  </ul>
+  <div class="highlight">
+    <strong>这节课的目标：</strong>给你一张"自媒体AI能力地图"——知道自媒体哪些环节可以靠AI代劳、哪些必须你亲自来。
+  </div>
+</div>
+
+<!-- ========== PRACTICE ========== -->
+<div class="section" id="practice" data-tag="P:practice">
+  <h2>🎯 Practice · 15分钟带你摸清AI的能力边界</h2>
+
+  <!-- Step 1 -->
+  <h3 data-tag="P:step1">Step 1 · 自媒体AI的五大战场</h3>
+  <p>AI能帮你做的事情远比你想的多。以下是自媒体人最应该关注的五个领域——每个领域里，AI都是你的"得力干将"：</p>
+
+  <table>
+    <thead>
+      <tr><th style="width:22%">领域</th><th>AI能做什么</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>选题策划</strong></td>
+        <td>趋势分析、热点捕捉、角度挖掘、竞品选题复盘</td>
+      </tr>
+      <tr>
+        <td><strong>内容创作</strong></td>
+        <td>文案初稿、视频脚本、标题生成、口播稿优化</td>
+      </tr>
+      <tr>
+        <td><strong>视觉设计</strong></td>
+        <td>封面图建议、配图方案、排版风格推荐</td>
+      </tr>
+      <tr>
+        <td><strong>运营管理</strong></td>
+        <td>最佳发布时间预测、评论自动回复、<w class="term" d="基于平台或后台数据的量化分析">数据分析</w>报告</td>
+      </tr>
+      <tr>
+        <td><strong>粉丝互动</strong></td>
+        <td>评论分类与情绪分析、私信模板、社群运营SOP</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="highlight">
+    <strong>⚡ 记住一句话：</strong>AI是"初稿助手"，你是"终审定稿人"。AI负责把摊子铺开，你负责让它有灵魂。
+  </div>
+
+  <!-- Step 2 -->
+  <h3 data-tag="P:step2">Step 2 · 自媒体AI的三大红线</h3>
+  <p>AI不是万能的。下面这三件事，<strong>千万不要全信AI</strong>：</p>
+
+  <div class="red-line">
+    <h4>🚫 红线一：个人风格和口吻</h4>
+    <p>AI写的东西千篇一律——听起来都像"官方说明书"。<strong>你的语气、你的梗、你那种"一看就是你"的味道</strong>，AI学不来，必须你改过才有"人味"。</p>
+  </div>
+  <div class="red-line">
+    <h4>🚫 红线二：热点实时判断</h4>
+    <p>AI不知道此时此刻什么正在火——除非你让它联网。别让AI替你做"今天该追什么热点"的决策。AI说"这个话题有潜力"时，看看热搜榜再说。</p>
+  </div>
+  <div class="red-line">
+    <h4>🚫 红线三：内容风险</h4>
+    <p>行业敏感词、政策红线、平台规则——<strong>AI不一定知道</strong>。AI说"这篇没问题"不代表真的没问题。涉及名誉、法律、商业的，必须你自己过目。</p>
+  </div>
+
+  <!-- Step 3 -->
+  <h3 data-tag="P:step3">Step 3 · 建立自媒体AI工作流</h3>
+  <p>把AI嵌入你日常的每一个环节，而不是只在"写稿"时想起它。一个完整的"选题→创作→发布→复盘"工作流：</p>
+
+  <div class="card-grid">
+    <div class="card">
+      <h4>📌 选题阶段</h4>
+      <p><strong>AI角色：</strong>发散灵感、竞品分析、关键词热度预判</p>
+      <p><strong>你来：</strong>从AI给的10个选题里，挑那个"你最想写+别人没写过"的</p>
+    </div>
+    <div class="card">
+      <h4>✍️ 创作阶段</h4>
+      <p><strong>AI角色：</strong>初稿生成、润色优化、标题A/B测试</p>
+      <p><strong>你来：</strong>加个人观点、加亲身经历、改成本色输出</p>
+    </div>
+    <div class="card">
+      <h4>📢 发布阶段</h4>
+      <p><strong>AI角色：</strong>封面文案、标签建议、发布时间建议</p>
+      <p><strong>你来：</strong>审核封面、确定最终标题、调发布时间</p>
+    </div>
+    <div class="card">
+      <h4>📊 复盘阶段</h4>
+      <p><strong>AI角色：</strong>数据分析、评论总结、改进方向建议</p>
+      <p><strong>你来：</strong>判断方向对不对，决定下一篇写什么</p>
+    </div>
+  </div>
+</div>
+
+<!-- ========== INSIGHT ========== -->
+<div class="section" id="insight" data-tag="core:insight">
+  <h2>💡 Insight · AI在自媒体行业的本质</h2>
+
+  <p><strong>AI降低创作门槛，但提高对"人"的要求。</strong></p>
+
+  <p>听起来矛盾？想想看：以前要做出爆款内容，你得有写作功底、审美、运营经验。现在只要会"问对问题"，AI就能帮你写出及格线以上的内容。<strong>门槛确实低了。</strong></p>
+
+  <p>但问题来了——<strong>因为门槛低了，所有人都在用AI写。</strong>你会发现内容越来越像了：一样的结构、一样的措辞、一样的金句模板。</p>
+
+  <div class="highlight">
+    <strong>为什么AI让内容同质化更严重？</strong> 因为大家都在用同一批大模型，给相似的提示词，得到相似的结果。<strong>差异化的唯一来源：你的个人经历、独到视角、审美判断。</strong>
+  </div>
+
+  <p>以后要想在自媒体领域脱颖而出，你需要一个<w class="term" d="用于衡量是否应该在某个环节使用AI的思考框架">核心判断框架</w>：</p>
+
+  <div class="judgment-box">
+    <p class="q">🤔 问题①：这事儿AI能帮我省多少时间？</p>
+    <p>→ <strong>省时 &gt; 50%</strong> → 必用。比如写初稿、整理数据、批量生成文案。</p>
+  </div>
+  <div class="judgment-box">
+    <p class="q">🤔 问题②：AI做了之后我需要"翻译"成自己的风格吗？</p>
+    <p>→ <strong>需要 → 让AI做初稿</strong>。你负责翻译成"人话"、加个人观点、改成本色输出。</p>
+  </div>
+  <div class="judgment-box">
+    <p class="q">🤔 问题③：内容出现偏差的后果大吗？</p>
+    <p>→ <strong>涉及名誉/法律/商业 → 必须你亲自过目</strong>。AI可以给建议，但决策权在你自己手里。</p>
+  </div>
+
+  <p style="margin-top:16px">这套框架帮你快速判断：哪个环节放心交给AI，哪个环节必须上心。</p>
+</div>
+
+<!-- ========== CONSOLIDATE ========== -->
+<div class="section" id="consolidate" data-tag="optional:consolidate">
+  <h2>🔁 Consolidate · 来，动手练一下</h2>
+  <p>别光看——下面三个挑战，挑一个去做：</p>
+
+  <div class="challenge-card">
+    <span class="num">1</span>
+    <p><strong>同一个选题，让AI写3个版本</strong> → 然后你拿去改，改到它看起来像你自己写的。感受一下"AI初稿→人润色"的差距。</p>
+  </div>
+  <div class="challenge-card">
+    <span class="num">2</span>
+    <p><strong>用AI分析一个你最喜欢的账号</strong> → 把账号简介+最新3篇标题发给AI，让它分析这个号为什么做得好。看看AI说的跟你想的是否一致。</p>
+  </div>
+  <div class="challenge-card">
+    <span class="num">3</span>
+    <p><strong>让AI帮你写5条评论区回复模板</strong> → 分别对应：夸奖、批评、提问、引战、广告。存下来，下次直接用。</p>
+  </div>
+</div>
+
+<!-- ========== SUMMARY ========== -->
+<div class="section" id="summary" data-tag="core:summary">
+  <h2>📝 总结 · 记住这一句话</h2>
+
+  <div class="summary-block">
+    <div class="slogan">AI是强大的"初稿助手"，但你是独一无二的"终审定稿人"</div>
+    <code>📋 本节课要点：
+• AI覆盖自媒体五大战场：选题、创作、视觉、运营、互动
+• 三大红线不越界：个人风格、热点判断、内容风险
+• 建立"选题→创作→发布→复盘"全流程AI协作模式
+• 核心判断框架：省时>50%必用 / 需翻译成自己风格就做初稿 / 有风险必过目
+• 差异化的唯一来源 = 你的经历 × 你的视角 × 你的审美</code>
+    <div class="celebrate">🎉</div>
+  </div>
+</div>
+
+</div><!-- /container -->
+
+<!-- ========== FOOTER ========== -->
+<div class="footer">AI学程 · 自媒体板块 · T1 基础认知</div>
+
+<script>
+// ===== 术语弹窗 =====
+document.querySelectorAll('.term').forEach(function(el){
+  var def = el.getAttribute('d');
+  if(!def) return;
+  var popup = document.createElement('span');
+  popup.className = 'popup';
+  popup.textContent = def;
+  el.appendChild(popup);
+  el.addEventListener('click',function(e){
+    e.stopPropagation();
+    document.querySelectorAll('.term.show').forEach(function(x){if(x!==el)x.classList.remove('show')});
+    el.classList.toggle('show');
+  });
+});
+document.addEventListener('click',function(){
+  document.querySelectorAll('.term.show').forEach(function(el){el.classList.remove('show')});
+});
+
+// ===== 导航滚动高亮 =====
+(function(){
+  var navLinks = document.querySelectorAll('.step-nav a');
+  var sections = [];
+  navLinks.forEach(function(a){
+    var id = a.getAttribute('href').replace('#','');
+    var sec = document.getElementById(id);
+    if(sec) sections.push({el:sec,link:a});
+  });
+  function updateNav(){
+    var scrollY = window.scrollY + 120;
+    var current = null;
+    sections.forEach(function(item){
+      var top = item.el.offsetTop;
+      if(scrollY >= top - 100) current = item;
+    });
+    navLinks.forEach(function(a){a.classList.remove('active')});
+    if(current) current.link.classList.add('active');
+  }
+  window.addEventListener('scroll',updateNav);
+  updateNav();
+})();
+
+// ===== cut参数支持 =====
+(function(){
+  var params = new URLSearchParams(window.location.search);
+  var cut = params.get('cut');
+  if(!cut) return;
+  var parts = cut.split(',').map(function(s){return s.trim()});
+  var sections = document.querySelectorAll('.section');
+  sections.forEach(function(sec){
+    var tags = (sec.getAttribute('data-tag')||'').split(';').map(function(s){return s.trim()});
+    var keep = false;
+    parts.forEach(function(p){
+      tags.forEach(function(t){
+        if(t.indexOf(p)===0) keep = true;
+      });
+    });
+    if(!keep) sec.style.display = 'none';
+  });
+  // hide step nav when cut used
+  document.getElementById('stepNav').style.display = 'none';
+  // also hide footer
+  document.querySelector('.footer').style.display = 'none';
+})();
+</script>
+
+</body>
+</html>

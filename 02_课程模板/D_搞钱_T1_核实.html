@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI学程 — 搞钱避坑：别让AI假信息坑了你</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;
+    background:#f5f7fa;color:#1d1d1f;padding-bottom:60px
+  }
+  .header{
+    background:linear-gradient(135deg,#1d1d1f 0%,#3a3a3c 100%);
+    color:#fff;padding:32px 20px 28px;text-align:center
+  }
+  .header .badge{
+    display:inline-block;padding:3px 10px;border-radius:20px;
+    font-size:11px;font-weight:600;background:rgba(255,255,255,.12);
+    margin-bottom:10px;color:rgba(255,255,255,.7)
+  }
+  .header h1{font-size:22px;font-weight:700;margin-bottom:6px;letter-spacing:-.3px}
+  .header .meta{font-size:13px;color:rgba(255,255,255,.55);display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+  .header .meta span{display:inline-flex;align-items:center;gap:4px}
+  .header .tag-free{
+    display:inline-block;padding:4px 12px;border-radius:20px;
+    background:rgba(52,199,89,.2);color:#34c759;font-size:12px;font-weight:600;margin-top:12px
+  }
+  .container{max-width:680px;margin:0 auto;padding:0 16px}
+  .step-nav{display:flex;gap:8px;padding:16px 0;overflow-x:auto;position:sticky;top:0;background:#f5f7fa;z-index:10;border-bottom:1px solid rgba(0,0,0,.06)}
+  .step-nav .sn-item{
+    flex:1;min-width:0;padding:8px 6px;border-radius:10px;border:1.5px solid #e5e5ea;
+    font-size:11px;text-align:center;transition:all .15s;white-space:nowrap;
+    background:rgba(255,255,255,.6);color:#636366
+  }
+  .step-nav .sn-item{cursor:pointer}
+  .step-nav .sn-item.active{border-color:#007aff;background:#e8f2ff;color:#007aff;font-weight:600}
+  .step-nav .sn-item .sn-icon{display:block;font-size:14px;margin-bottom:2px}
+  .section{margin:16px 0;background:rgba(255,255,255,.85);backdrop-filter:blur(20px);border-radius:20px;padding:20px;border:1px solid rgba(255,255,255,.6);box-shadow:0 2px 12px rgba(0,0,0,.04)}
+  .section-title{font-size:16px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .section-desc{font-size:13px;color:#636366;margin-bottom:10px;line-height:1.6}
+  .content{font-size:14px;line-height:1.8;color:#1d1d1f}
+  .content h3{font-size:15px;margin:16px 0 6px}
+  .content p{margin-bottom:8px}
+  .content ul,.content ol{padding-left:18px;margin-bottom:10px}
+  .content li{margin-bottom:4px}
+  .callout{
+    padding:12px 14px;border-radius:12px;margin:12px 0;
+    font-size:13px;line-height:1.6;
+    border-left:3px solid
+  }
+  .callout-tip{background:rgba(0,122,255,.06);border-color:#007aff;color:#1d1d1f}
+  .callout-warn{background:rgba(255,149,0,.08);border-color:#ff9500;color:#1d1d1f}
+  .callout-danger{background:rgba(255,59,48,.06);border-color:#ff3b30;color:#1d1d1f}
+  .callout-green{background:rgba(52,199,89,.08);border-color:#34c759;color:#1d1d1f}
+  .code-block{
+    background:#f0f2f5;border-radius:10px;padding:12px 14px;
+    font-family:'Courier New',monospace;font-size:13px;line-height:1.6;
+    white-space:pre-wrap;word-break:break-word;margin:8px 0
+  }
+  .cmp-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
+  .cmp-table th,.cmp-table td{padding:8px 10px;border:1px solid #e5e5ea;text-align:left}
+  .cmp-table th{background:rgba(0,0,0,.03);font-weight:600;font-size:12px;color:#636366}
+  .challenge{
+    background:rgba(255,255,255,.4);border:1px solid #e5e5ea;border-radius:12px;
+    padding:12px 14px;margin:8px 0
+  }
+  .challenge .ch-title{font-weight:600;font-size:13px;margin-bottom:4px}
+  .challenge .ch-desc{font-size:12px;color:#636366;line-height:1.5}
+  .step-box{
+    background:rgba(0,122,255,.04);border-radius:12px;padding:14px;margin:10px 0;border:1px solid rgba(0,122,255,.12)
+  }
+  .step-box .step-num{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:22px;height:22px;border-radius:50%;background:#007aff;color:#fff;
+    font-size:12px;font-weight:700;margin-right:6px;flex-shrink:0
+  }
+  .step-box .step-title{font-weight:600;font-size:14px;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+  .step-box .step-body{font-size:13px;line-height:1.7;color:#1d1d1f}
+  .goal-list{display:flex;flex-direction:column;gap:6px;margin:10px 0}
+  .goal-item{display:flex;align-items:center;gap:8px;font-size:13px;padding:4px 0}
+  .goal-check{width:18px;height:18px;border-radius:50%;background:#34c759;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+  .ex-pair{display:flex;flex-direction:column;gap:8px;margin:10px 0}
+  .ex-item{padding:10px 12px;border-radius:10px;font-size:13px;line-height:1.6;border:1px solid}
+  .ex-bad{background:rgba(255,59,48,.04);border-color:rgba(255,59,48,.15)}
+  .ex-bad .ex-label{color:#ff3b30;font-weight:600;margin-bottom:4px}
+  .ex-good{background:rgba(52,199,89,.06);border-color:rgba(52,199,89,.2)}
+  .ex-good .ex-label{color:#34c759;font-weight:600;margin-bottom:4px}
+  w{
+    cursor:pointer;border-bottom:1.5px dashed #007aff;
+    color:#007aff;font-weight:500;position:relative;
+    transition:background .15s
+  }
+  w:hover{background:rgba(0,122,255,.06)}
+  w.active{background:rgba(0,122,255,.12)}
+  .tip-box{
+    position:fixed;z-index:9999;display:none;
+    background:#1d1d1f;color:#fff;border-radius:10px;
+    padding:10px 14px;max-width:300px;
+    font-size:13px;line-height:1.6;
+    box-shadow:0 8px 24px rgba(0,0,0,.2);
+    animation:tipIn .2s ease
+  }
+  .tip-box .tip-title{font-weight:600;margin-bottom:3px;color:rgba(255,255,255,.6);font-size:11px}
+  .tip-box .tip-close{
+    position:absolute;top:6px;right:8px;
+    cursor:pointer;font-size:14px;color:rgba(255,255,255,.4);
+    line-height:1;border:none;background:none;padding:2px
+  }
+  .tip-box .tip-close:hover{color:#fff}
+  .tip-box::after{
+    content:'';position:absolute;left:50%;bottom:-6px;
+    margin-left:-6px;
+    border:6px solid transparent;border-top-color:#1d1d1f
+  }
+  @keyframes tipIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+<div class="header">
+<div class="badge">搞钱应用 · T1 基础免费</div>
+<h1>搞钱避坑：别让AI假信息坑了你</h1>
+<p style="font-size:14px;color:rgba(255,255,255,.7);margin-bottom:8px">想用AI搞钱？先学会不被假项目假数据割韭菜</p>
+<div class="meta">
+<span>⏱ 约25分钟</span>
+<span>📄 图文课</span>
+<span>🛠 需AI聊天工具</span>
+</div>
+<div class="tag-free">🆓 免费</div>
+</div>
+<div class="container">
+<div class="step-nav" id="stepNav">
+<div class="sn-item active" data-step="s-explain"><span class="sn-icon">📌</span>为什么</div>
+<div class="sn-item" data-step="s-practice"><span class="sn-icon">🎯</span>实操</div>
+<div class="sn-item" data-step="s-insight"><span class="sn-icon">💡</span>原理</div>
+<div class="sn-item" data-step="s-consolidate"><span class="sn-icon">🔁</span>巩固</div>
+</div>
+<!-- 📌 Explain -->
+<div class="module section" data-tag="core:explain" id="s-explain">
+<div class="section-title">📌 搞钱路上，假信息比没信息更可怕</div>
+<div class="section-desc">3分钟 · 为什么AI让你更容易被割韭菜</div>
+<div class="content">
+<p>AI搞钱确实有机会——接单、写文案、做内容、卖服务。</p>
+<p>但有个被严重低估的风险：<strong>AI输出的"看起来很有理"的假信息</strong>。</p>
+<p>你以为AI帮你筛选了优质信息，实际它可能：</p>
+<ul>
+<li>给你推荐一个"月入过万的平台" — 其实根本没人提现过</li>
+<li>帮你分析"这个项目值得做" — 其实数据是它编的</li>
+<li>告诉你"同行都在用XX方案" — 其实AI从几个营销号学来的</li>
+</ul>
+<p>更危险的是：AI说出来的话<strong>自带一种"权威感"</strong>。它用肯定句式、用结构化框架说出来，你很容易信以为真。</p>
+<p>这节课教你在搞钱场景下，怎么识别AI给你的信息是靠谱还是瞎编。</p>
+<h3>这节课学完你能做到</h3>
+<div class="goal-list">
+<div class="goal-item"><span class="goal-check">✓</span> 一眼识别AI在"一本正经胡说八道"</div>
+<div class="goal-item"><span class="goal-check">✓</span> 用AI反向验证AI给的项目/数据是否靠谱</div>
+<div class="goal-item"><span class="goal-check">✓</span> 避免至少一次被假项目/假方案坑钱</div>
+</div>
+</div>
+</div>
+<!-- 🎯 Practice -->
+<div class="module section" data-tag="P:practice" id="s-practice">
+<div class="section-title">🎯 动手实操</div>
+<div class="section-desc">15分钟 · 三招识别搞钱路上的AI假信息</div>
+<div class="content">
+<div class="module" data-tag="P:step1"><div class="step-box">
+<div class="step-title"><span class="step-num">1</span> 第一招：让AI自证出处</div>
+<div class="step-body">
+<p>这是最简单但也最有效的一招。<strong>每次AI给你一个搞钱建议或数据时，立刻追加这句</strong>：</p>
+<div class="code-block">你刚才说的这些，哪些是你自己编的？哪些有真实出处？
+把每个结论的具体来源列出来，包括网站名称和链接。</div>
+<p>如果AI开始支支吾吾、或者列出的来源根本打不开、或者来源是一些你没听过的博客/营销号——说明它在胡扯。</p>
+<div class="callout callout-danger">
+<strong>真实案例：</strong>有人让AI推荐"适合新手的AI接单平台"，AI列了5个"靠谱平台"，结果3个根本不存在，2个的真实口碑是"坑得很"。如果直接信了，要么被骗信息费，要么浪费时间。
+</div>
+</div>
+</div></div>
+<div class="module" data-tag="P:step2"><div class="step-box">
+<div class="step-title"><span class="step-num">2</span> 第二招：让AI唱反调</div>
+<div class="step-body">
+<p>AI天生爱说"是的"和"这个不错"，因为它的训练数据里肯定句多于质疑句。</p>
+<p>你要主动让它<strong>从反面想</strong>：</p>
+<div class="code-block">你刚才推荐的这个[项目/平台/方案]，请列一下：
+1. 最大的3个风险是什么？
+2. 什么情况下会翻车？
+3. 哪类人不适合做这个？
+4. 网上有没有负面评价？总结一下</div>
+<p>一个项目如果AI能同时给出正反两面分析，可信度才高。如果它想不出风险——要么它不够懂，要么它靠编的信息没法质疑自己。</p>
+<div class="callout callout-tip">
+<strong>关键：</strong>问"为什么不"比问"为什么要"更能挖出真实信息。
+</div>
+</div>
+</div></div>
+<div class="module" data-tag="P:step3"><div class="step-box">
+<div class="step-title"><span class="step-num">3</span> 第三招：三条底线核查法</div>
+<div class="step-body">
+<p>不管AI说得多么头头是道，以下<strong>三条底线一定要亲自核实</strong>：</p>
+<table class="cmp-table">
+<tr><th>底线</th><th>怎么核</th><th>千万别只信AI</th></tr>
+<tr><td><strong>💰 钱</strong></td><td>自己去平台注册看实际报价、看别人晒的收益截图</td><td>AI说的"月入过万"</td></tr>
+<tr><td><strong>📊 数据</strong></td><td>去搜索引擎搜相关数据，交叉对比</td><td>AI给你的行业数据/用户量</td></tr>
+<tr><td><strong>👥 口碑</strong></td><td>去小红书/知乎/B站搜"XX项目 坑"</td><td>AI总结的"用户评价"</td></tr>
+</table>
+<p>每次AI给你推荐一个搞钱路子，你先花10分钟自己做一遍三条底线核查，再决定要不要投入时间或钱。</p>
+<div class="code-block">我做完核查的检查清单：
+☐ 钱：我亲眼看到的真实报价/收益数据
+☐ 数据：我搜了资料交叉验证
+☐ 口碑：搜了"项目名+坑"没有大量负面</div>
+<p>三条都过 → 可以进一步了解<br/>
+两条过 → 谨慎，继续深挖<br/>
+一条或以下 → 大概率是坑</p>
+<div class="callout callout-warn">
+<strong>记住：</strong>AI是帮你"起稿"和"发散思路"的，不是帮你"做决策"的。涉及花钱花时间的事，你自己核实。
+</div>
+</div>
+</div></div>
+</div>
+</div>
+<!-- 💡 Insight -->
+<div class="module section" data-tag="core:insight" id="s-insight">
+<div class="section-title">💡 理解为什么</div>
+<div class="section-desc">5分钟 · 为什么AI在搞钱话题上尤其容易胡说</div>
+<div class="content">
+<h3>三个原因：</h3>
+<ol>
+<li><strong>搞钱类信息鱼龙混杂</strong> — AI的训练数据里，"月入过万""副业自由"这种内容充斥营销号。AI学的就是这些，自然产出类似风格。</li>
+<li><strong>AI分不清"事实"和"营销"</strong> — 一个网站说"XX平台日入500"，一个论坛说"XX平台骗人的"，AI会平均两者。但如果你只问"XX平台怎么样"，它更倾向输出那个"日入500"的版本——因为这种句式在网上出现频率更高。</li>
+<li><strong>搞钱信息更新极快</strong> — AI的知识截止日期在那，一些平台已经倒闭了它还在推荐。</li>
+</ol>
+<h3>跟其他信息核实课的区别</h3>
+<ul>
+<li><strong>A·L日常核实</strong> — 聚焦日常场景（AI说的天气预报/菜谱/百科信息怎么验证）</li>
+<li><strong>B·L职场核实</strong> — 聚焦职场场景（AI写的报告/邮件/方案怎么验证）</li>
+<li><strong>F·L学术核实</strong> — 聚焦学术研究（论文引用/实验数据/文献综述怎么核实）</li>
+<li><strong>这节D·L</strong> — 聚焦<strong>搞钱场景</strong>（识别虚假项目、假数据的套路，防止被割韭菜）</li>
+</ul>
+<div class="callout callout-green">
+<strong>核心区别：</strong>其他L课教"怎么验证信息的真实性"，这节D·L教"怎么识别别人用AI制造出来的虚假项目/数据"。前者是验证已有的信息，后者是防骗防坑。两个完全不同的场景。
+</div>
+</div>
+</div>
+<!-- 🔁 Consolidate -->
+<div class="module section" data-tag="optional:consolidate" id="s-consolidate">
+<div class="section-title">🔁 巩固练习</div>
+<div class="section-desc">5分钟 · 把核查变成习惯</div>
+<div class="content">
+<div class="callout callout-tip">
+<strong>明天做一次：</strong>找一个你在网上看到过的"搞钱项目"（不管是不是AI推荐的），用这节课的三条底线法核查一遍，看它经不经得起查。
+</div>
+<h3>进阶挑战</h3>
+<div class="challenge">
+<div class="ch-title">✅ 挑战1：让AI做一个项目的双面分析</div>
+<div class="ch-desc">让AI推荐一个热门副业，然后追问"这个副业最大的坑是什么？适合什么人？不适合什么人？什么人做这个大概率失败？"</div>
+</div>
+<div class="challenge">
+<div class="ch-title">✅ 挑战2：让AI教你核实它自己</div>
+<div class="ch-desc">让AI教你"我该怎么核实你刚才说的这个数据/项目？具体步骤是什么？有哪些第三方渠道可以查?"</div>
+</div>
+<div class="challenge">
+<div class="ch-title">✅ 挑战3：找一篇AI生成的"搞钱经验帖"来拷问</div>
+<div class="ch-desc">搜一篇明显是AI写的搞钱攻略（通常结构过于规整、没有真实细节、开头全是"随着XX发展"），用三招拷问法自己走一遍流程。</div>
+</div>
+</div>
+</div>
+<!-- 一劳永逸 -->
+<div class="module section" data-tag="core:summary" style="background:linear-gradient(135deg,#e8f5e9,#c8e6c9);border:none;text-align:center">
+<h3 style="font-size:18px;margin-bottom:8px;color:#2e7d32">⚡ 记住一句话</h3>
+<p style="font-size:13px;color:#2e7d32;margin-bottom:8px">**涉及钱的事，AI的建议只信50%，另外50%自己去核实**</p>
+<div class="code-block" style="background:#fff;text-align:left">AI推荐一个项目 → 
+1. 让AI自证出处（哪些是编的？）
+2. 让AI唱反调（风险是什么？）
+3. 三条底线自己查（钱/数据/口碑）</div>
+<div style="margin-top:10px;font-size:15px;color:#2e7d32;font-weight:600">
+    🎉 以后再看到"月入过万"的AI推荐，你至少会先打个问号
+  </div>
+</div>
+</div>
+<div class="tip-box" id="tipBox">
+<div class="tip-title">📖 术语</div>
+<button class="tip-close" id="tipClose">&times;</button>
+<div id="tipDesc"></div>
+</div>
+<script>
+(function(){
+  var tb=document.getElementById("tipBox"),td=document.getElementById("tipDesc"),tc=document.getElementById("tipClose");
+  if(tb&&td){
+    document.querySelectorAll("w").forEach(function(el){
+      el.addEventListener("click",function(e){
+        e.stopPropagation();
+        td.textContent=this.getAttribute("d")||"暂无释义";
+        tb.querySelector(".tip-title").textContent="📖 "+this.textContent.trim();
+        var r=this.getBoundingClientRect(),w=tb.offsetWidth||280,left=Math.max(10,Math.min(r.left+r.width/2-w/2,document.body.clientWidth-w-10)),top=r.top-8-tb.offsetHeight;
+        if(top<10)top=r.bottom+10;
+        tb.style.left=left+"px";tb.style.top=top+"px";tb.style.display="block";
+        document.querySelectorAll("w.active").forEach(function(w){w.classList.remove("active")});
+        this.classList.add("active");
+      });
+    });
+    function ht(){tb.style.display="none";document.querySelectorAll("w.active").forEach(function(w){w.classList.remove("active")})}
+    tc.addEventListener("click",ht);
+    document.addEventListener("click",function(e){if(!e.target.closest("w")&&!e.target.closest(".tip-box"))ht()});
+    document.addEventListener("keydown",function(e){if(e.key==="Escape")ht()});
+  }
+  var nav=document.getElementById("stepNav");
+  if(nav){
+    var S=["s-explain","s-practice","s-insight","s-consolidate"];
+    nav.addEventListener("click",function(e){
+      var it=e.target.closest(".sn-item");if(!it)return;
+      var id=it.getAttribute("data-step"),el=document.getElementById(id);
+      if(el)el.scrollIntoView({behavior:"smooth",block:"start"});
+      var idx=S.indexOf(id);
+      for(var i=0;i<nav.children.length;i++)nav.children[i].classList.toggle("active",i===idx);
+    });
+    var st;
+    function uas(){
+      var bi=0,bd=Infinity;
+      S.forEach(function(id,i){
+        var el=document.getElementById(id);
+        if(el){var t=Math.abs(el.getBoundingClientRect().top);if(t<bd){bd=t;bi=i}}
+      });
+      for(var i=0;i<nav.children.length;i++)nav.children[i].classList.toggle("active",i===bi);
+    }
+    document.addEventListener("scroll",function(){clearTimeout(st);st=setTimeout(uas,100)});
+    uas();
+  }
+})();
+</script>
+<script>
+(function(){
+  var p=new URLSearchParams(location.search),c=p.get("cut");
+  if(c){
+    var INFO={
+      "P:step1":{l:"第一招·自证出处",d:"让AI告诉你哪些是编的，哪些有真实来源"},
+      "P:step2":{l:"第二招·唱反调",d:"让AI从反面和风险角度分析，避免被肯定句式洗脑"},
+      "P:step3":{l:"第三招·三条底线核查",d:"钱/数据/口碑三项亲自核实，决定是否信任"}
+    };
+    var MSGS=[
+      "看起来你对这部分已经有点基础了，帮你跳过基础的，直接看重点就好〜",
+      "看来你对这部分比较熟悉了，跳过基础内容，直奔核心！",
+      "你已经有不错的基础了，直接看后面的总结就好。点淡色区域可以展开查看完整内容"
+    ];
+    var E=[];
+    tags=c.split(",");
+    tags.forEach(function(t){t=t.trim();var n=INFO[t];if(n){var el=document.querySelector('[data-tag="'+t+'"]');if(el)E.push({el:el,info:n});}});
+    if(E.length>0){
+      E.forEach(function(x){
+        var el=x.el,info=x.info,bar=document.createElement("div");
+        bar.style.cssText="padding:10px 14px;margin:10px 0;border-radius:12px;background:rgba(255,149,0,.06);border:1.5px dashed rgba(255,149,0,.25);font-size:13px;cursor:pointer;transition:all .2s;user-select:none";
+        bar.innerHTML='<div style="display:flex;align-items:center;justify-content:space-between"><span style="font-weight:600;color:#e65100">⏭ '+info.l+'<span style="font-size:11px;color:rgba(230,81,0,.5);margin-left:8px">已跳过</span></span><span style="font-size:11px;color:rgba(230,81,0,.4)">▼ 展开</span></div>'+(info.d?'<div style="font-size:11px;color:rgba(0,0,0,.3);margin-top:3px;padding-left:24px">'+info.d+'</div>':'');
+        var p=el.parentNode;
+        if(p){p.insertBefore(bar,el);el.style.display="none";bar.onclick=function(){var h=el.style.display==="none";el.style.display=h?"":"none";bar.style.borderStyle=h?"solid":"dashed";bar.style.background=h?"rgba(255,149,0,.15)":"rgba(255,149,0,.06)";bar.querySelector("span:last-child").innerHTML=h?"▲ 收起":"▼ 展开";};}
+      });
+      var midx=Math.min(E.length-1,MSGS.length-1),msg=MSGS[midx];
+      var ov=document.createElement("div");
+      ov.id="skip-overlay";
+      ov.style.cssText="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.25);z-index:10000;display:flex;align-items:center;justify-content:center;animation:fadeIn .3s ease";
+      ov.innerHTML='<div style="background:#fff;border-radius:20px;padding:28px 24px;max-width:340px;width:90%;box-shadow:0 8px 40px rgba(0,0,0,.12);text-align:center"><div style="font-size:36px;margin-bottom:10px">👏</div><div style="font-size:16px;font-weight:600;margin-bottom:8px;color:#1d1d1f">已帮你跳过基础步骤</div><div style="font-size:13px;color:#636366;line-height:1.7">'+msg+'</div><button onclick="document.body.removeChild(document.getElementById(\'skip-overlay\'))" style="margin-top:14px;padding:9px 28px;border:none;border-radius:12px;background:#007aff;color:#fff;font-size:14px;font-weight:600;cursor:pointer;box-shadow:0 4px 12px rgba(0,122,255,.25)">好的，开始学习</button><span onclick="document.body.removeChild(document.getElementById(\'skip-overlay\'))" style="position:absolute;top:10px;right:14px;cursor:pointer;font-size:18px;color:rgba(0,0,0,.2)">&times;</span></div>';
+      ov.onclick=function(e){if(e.target===ov)document.body.removeChild(ov);};
+      document.body.appendChild(ov);
+      var st=document.createElement("style");st.textContent="@keyframes fadeIn{from{opacity:0}to{opacity:1}}";document.head.appendChild(st);
+    }
+  }
+})();
+</script>
+</body>
+</html>

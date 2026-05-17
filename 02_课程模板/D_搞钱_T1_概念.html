@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI学程 — AI副业全景地图：从0到1的搞钱思路</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{
+    font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;
+    background:#f5f7fa;color:#1d1d1f;padding-bottom:60px
+  }
+  .header{
+    background:linear-gradient(135deg,#1d1d1f 0%,#3a3a3c 100%);
+    color:#fff;padding:32px 20px 28px;text-align:center
+  }
+  .header .badge{
+    display:inline-block;padding:3px 10px;border-radius:20px;
+    font-size:11px;font-weight:600;background:rgba(255,255,255,.12);
+    margin-bottom:10px;color:rgba(255,255,255,.7)
+  }
+  .header h1{font-size:22px;font-weight:700;margin-bottom:6px;letter-spacing:-.3px}
+  .header .meta{font-size:13px;color:rgba(255,255,255,.55);display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+  .header .meta span{display:inline-flex;align-items:center;gap:4px}
+  .header .tag-free{
+    display:inline-block;padding:4px 12px;border-radius:20px;
+    background:rgba(52,199,89,.2);color:#34c759;font-size:12px;font-weight:600;margin-top:12px
+  }
+  .container{max-width:680px;margin:0 auto;padding:0 16px}
+  .step-nav{display:flex;gap:8px;padding:16px 0;overflow-x:auto;position:sticky;top:0;background:#f5f7fa;z-index:10;border-bottom:1px solid rgba(0,0,0,.06)}
+  .step-nav .sn-item{
+    flex:1;min-width:0;padding:8px 6px;border-radius:10px;border:1.5px solid #e5e5ea;
+    font-size:11px;text-align:center;transition:all .15s;white-space:nowrap;
+    background:rgba(255,255,255,.6);color:#636366
+  }
+  .step-nav .sn-item{cursor:pointer}
+  .step-nav .sn-item.active{border-color:#007aff;background:#e8f2ff;color:#007aff;font-weight:600}
+  .step-nav .sn-item .sn-icon{display:block;font-size:14px;margin-bottom:2px}
+  .section{margin:16px 0;background:rgba(255,255,255,.85);backdrop-filter:blur(20px);border-radius:20px;padding:20px;border:1px solid rgba(255,255,255,.6);box-shadow:0 2px 12px rgba(0,0,0,.04)}
+  .section-title{font-size:16px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .section-desc{font-size:13px;color:#636366;margin-bottom:10px;line-height:1.6}
+  .content{font-size:14px;line-height:1.8;color:#1d1d1f}
+  .content h3{font-size:15px;margin:16px 0 6px}
+  .content p{margin-bottom:8px}
+  .content ul,.content ol{padding-left:18px;margin-bottom:10px}
+  .content li{margin-bottom:4px}
+  .callout{
+    padding:12px 14px;border-radius:12px;margin:12px 0;
+    font-size:13px;line-height:1.6;
+    border-left:3px solid
+  }
+  .callout-tip{background:rgba(0,122,255,.06);border-color:#007aff;color:#1d1d1f}
+  .callout-warn{background:rgba(255,149,0,.08);border-color:#ff9500;color:#1d1d1f}
+  .callout-green{background:rgba(52,199,89,.08);border-color:#34c759;color:#1d1d1f}
+  .code-block{
+    background:#f0f2f5;border-radius:10px;padding:12px 14px;
+    font-family:'Courier New',monospace;font-size:13px;line-height:1.6;
+    white-space:pre-wrap;word-break:break-word;margin:8px 0
+  }
+  .cmp-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
+  .cmp-table th,.cmp-table td{padding:8px 10px;border:1px solid #e5e5ea;text-align:left}
+  .cmp-table th{background:rgba(0,0,0,.03);font-weight:600;font-size:12px;color:#636366}
+  .challenge{
+    background:rgba(255,255,255,.4);border:1px solid #e5e5ea;border-radius:12px;
+    padding:12px 14px;margin:8px 0
+  }
+  .challenge .ch-title{font-weight:600;font-size:13px;margin-bottom:4px}
+  .challenge .ch-desc{font-size:12px;color:#636366;line-height:1.5}
+  .step-box{
+    background:rgba(0,122,255,.04);border-radius:12px;padding:14px;margin:10px 0;border:1px solid rgba(0,122,255,.12)
+  }
+  .step-box .step-num{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:22px;height:22px;border-radius:50%;background:#007aff;color:#fff;
+    font-size:12px;font-weight:700;margin-right:6px;flex-shrink:0
+  }
+  .step-box .step-title{font-weight:600;font-size:14px;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+  .step-box .step-body{font-size:13px;line-height:1.7;color:#1d1d1f}
+  .goal-list{display:flex;flex-direction:column;gap:6px;margin:10px 0}
+  .goal-item{display:flex;align-items:center;gap:8px;font-size:13px;padding:4px 0}
+  .goal-check{width:18px;height:18px;border-radius:50%;background:#34c759;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+  .ex-pair{display:flex;flex-direction:column;gap:8px;margin:10px 0}
+  .ex-item{padding:10px 12px;border-radius:10px;font-size:13px;line-height:1.6;border:1px solid}
+  .ex-bad{background:rgba(255,59,48,.04);border-color:rgba(255,59,48,.15)}
+  .ex-bad .ex-label{color:#ff3b30;font-weight:600;margin-bottom:4px}
+  .ex-good{background:rgba(52,199,89,.06);border-color:rgba(52,199,89,.2)}
+  .ex-good .ex-label{color:#34c759;font-weight:600;margin-bottom:4px}
+  w{
+    cursor:pointer;border-bottom:1.5px dashed #007aff;
+    color:#007aff;font-weight:500;position:relative;
+    transition:background .15s
+  }
+  w:hover{background:rgba(0,122,255,.06)}
+  w.active{background:rgba(0,122,255,.12)}
+  .tip-box{
+    position:fixed;z-index:9999;display:none;
+    background:#1d1d1f;color:#fff;border-radius:10px;
+    padding:10px 14px;max-width:300px;
+    font-size:13px;line-height:1.6;
+    box-shadow:0 8px 24px rgba(0,0,0,.2);
+    animation:tipIn .2s ease
+  }
+  .tip-box .tip-title{font-weight:600;margin-bottom:3px;color:rgba(255,255,255,.6);font-size:11px}
+  .tip-box .tip-close{
+    position:absolute;top:6px;right:8px;
+    cursor:pointer;font-size:14px;color:rgba(255,255,255,.4);
+    line-height:1;border:none;background:none;padding:2px
+  }
+  .tip-box .tip-close:hover{color:#fff}
+  .tip-box::after{
+    content:'';position:absolute;left:50%;bottom:-6px;
+    margin-left:-6px;
+    border:6px solid transparent;border-top-color:#1d1d1f
+  }
+  @keyframes tipIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+<div class="header">
+<div class="badge">搞钱副业 · T1 基础免费</div>
+<h1>AI副业全景地图：从0到1的搞钱思路</h1>
+<p style="font-size:14px;color:rgba(255,255,255,.7);margin-bottom:8px">先看清全部玩法，再选最适合你的那条路</p>
+<div class="meta">
+<span>⏱ 约25分钟</span>
+<span>📄 图文课</span>
+<span>🛠 无需工具，纯认知</span>
+</div>
+<div class="tag-free">🆓 免费</div>
+</div>
+<div class="container">
+<div class="step-nav" id="stepNav">
+<div class="sn-item active" data-step="s-explain"><span class="sn-icon">📌</span>认知</div>
+<div class="sn-item" data-step="s-practice"><span class="sn-icon">🎯</span>实操</div>
+<div class="sn-item" data-step="s-insight"><span class="sn-icon">💡</span>原理</div>
+<div class="sn-item" data-step="s-consolidate"><span class="sn-icon">🔁</span>巩固</div>
+</div>
+
+<!-- 📌 Explain -->
+<div class="module section" data-tag="core:explain" id="s-explain">
+<div class="section-title">📌 AI副业的真实面貌</div>
+<div class="section-desc">3分钟 · 你以为的AI副业，和它真正能帮你做的，可能差得很远</div>
+<div class="content">
+<p>很多人以为<w d="把AI当作自动生成内容的工具，靠卖AI写的东西赚钱的模式">AI副业</w>就是"让AI写点东西然后卖钱"——</p>
+<ul>
+<li>让AI写一篇文章 → 发到公众号赚流量</li>
+<li>让AI画个图 → 挂到素材站卖</li>
+<li>让AI写个方案 → 拿去给客户交差</li>
+</ul>
+<p>然后发现：好像没那么简单。文章没人看、图卖不掉、方案被客户退货。</p>
+<p>问题出在哪？不是你用得不对，是你一上来就跑错了方向。</p>
+<p>AI可以赋能的副业，远不止"写稿卖钱"这一种。实际上至少有<strong>六种完全不同的模式</strong>：</p>
+<ul>
+<li><strong>内容变现</strong> — 公众号/小红书/头条/短视频，AI辅助写稿+配图</li>
+<li><strong>工具服务</strong> — 用AI帮别人做PPT、翻译、汇总报告</li>
+<li><strong>知识付费</strong> — 把AI教给别人，做教程/咨询服务</li>
+<li><strong>电商运营</strong> — AI写商品描述、客服回复、选品分析</li>
+<li><strong>流量运营</strong> — AI批量生成混剪/字幕/标题，提升曝光</li>
+<li><strong>效率外包</strong> — 用AI帮企业做数据整理、文档处理</li>
+</ul>
+<p>关键认知：<strong>AI副业 ≠ 躺着赚钱</strong>。AI是<strong>放大器</strong>不是<strong>印钞机</strong>。</p>
+<p>这节课的目标：了解AI副业的完整版图，找到适合自己的切入方向。</p>
+<h3>这节课学完你能做到</h3>
+<div class="goal-list">
+<div class="goal-item"><span class="goal-check">✓</span> 知道AI副业的六种主要模式</div>
+<div class="goal-item"><span class="goal-check">✓</span> 能根据自身情况选择最适合的切入点</div>
+<div class="goal-item"><span class="goal-check">✓</span> 拿到一份可执行的第一周行动计划</div>
+</div>
+</div>
+</div>
+
+<!-- 🎯 Practice -->
+<div class="module section" data-tag="P:practice" id="s-practice">
+<div class="section-title">🎯 动手实操</div>
+<div class="section-desc">15分钟 · 看懂地图，找到自己的路</div>
+<div class="content">
+
+<div class="module" data-tag="P:step1">
+<div class="step-box">
+<div class="step-title"><span class="step-num">1</span> AI副业六大方向总览</div>
+<div class="step-body">
+<p>每个方向都有不同的难度、启动成本、收入潜力和适合的人群。先看清楚再选。</p>
+<table class="cmp-table">
+<tr><th>方向</th><th>难度</th><th>启动成本</th><th>收入潜力</th><th>适合人群</th></tr>
+<tr>
+<td><strong>内容创作型</strong><br/><span style="font-size:11px;color:#636366">公众号/小红书/头条/短视频</span></td>
+<td>★★☆☆☆</td>
+<td>极低</td>
+<td>中等<br/><span style="font-size:11px;color:#636366">广告/带货/平台分成</span></td>
+<td>有表达欲、愿意写东西的人</td>
+</tr>
+<tr>
+<td><strong>工具服务型</strong><br/><span style="font-size:11px;color:#636366">AI代做PPT/翻译/报告</span></td>
+<td>★★★☆☆</td>
+<td>低</td>
+<td>中高<br/><span style="font-size:11px;color:#636366">按单收费</span></td>
+<td>有一定专业能力（设计/语言）</td>
+</tr>
+<tr>
+<td><strong>知识付费型</strong><br/><span style="font-size:11px;color:#636366">AI教程/咨询/培训</span></td>
+<td>★★★☆☆</td>
+<td>低</td>
+<td>高<br/><span style="font-size:11px;color:#636366">课程/会员/咨询费</span></td>
+<td>懂AI、会教人的"先行者"</td>
+</tr>
+<tr>
+<td><strong>电商运营型</strong><br/><span style="font-size:11px;color:#636366">商品描述/客服/选品</span></td>
+<td>★★☆☆☆</td>
+<td>低</td>
+<td>中等<br/><span style="font-size:11px;color:#636366">固定+提成</span></td>
+<td>了解电商、有淘宝闲鱼经验</td>
+</tr>
+<tr>
+<td><strong>流量运营型</strong><br/><span style="font-size:11px;color:#636366">混剪/字幕/标题</span></td>
+<td>★★★☆☆</td>
+<td>中等</td>
+<td>中高<br/><span style="font-size:11px;color:#636366">流量分佣/接单</span></td>
+<td>懂短视频、执行力强</td>
+</tr>
+<tr>
+<td><strong>效率外包型</strong><br/><span style="font-size:11px;color:#636366">数据整理/文档处理</span></td>
+<td>★★☆☆☆</td>
+<td>极低</td>
+<td>较低<br/><span style="font-size:11px;color:#636366">按量计费</span></td>
+<td>细心、有办公软件基础</td>
+</tr>
+</table>
+<div class="callout callout-tip">
+<strong>建议：</strong>不要一上来就想"哪个赚最多"，先想"哪个我最容易上手"。跑通第一个流程，比规划一个完美项目重要100倍。
+</div>
+</div>
+</div>
+</div>
+
+<div class="module" data-tag="P:step2">
+<div class="step-box">
+<div class="step-title"><span class="step-num">2</span> 选择你的副业方向</div>
+<div class="step-body">
+<p>三个筛选标准，帮你找到最适合的切入点：</p>
+<h3 style="margin:10px 0 4px">📌 标准1：你擅长什么？有什么资源？</h3>
+<ul>
+<li>会写作 → 内容创作型</li>
+<li>会设计/PPT/翻译 → 工具服务型</li>
+<li>已经先用上了AI → 知识付费型</li>
+<li>有电商经验/货源 → 电商运营型</li>
+<li>懂短视频运营 → 流量运营型</li>
+<li>办公软件用得溜 → 效率外包型</li>
+</ul>
+<h3 style="margin:10px 0 4px">⏰ 标准2：你愿意投入多少时间？</h3>
+<ul>
+<li>每天30分钟 → 内容创作型、效率外包型</li>
+<li>每天1-2小时 → 工具服务型、电商运营型</li>
+<li>每天3小时+ → 知识付费型、流量运营型</li>
+</ul>
+<h3 style="margin:10px 0 4px">💰 标准3：风险承受能力如何？</h3>
+<ul>
+<li>不想投一分钱 → 内容创作型、效率外包型</li>
+<li>愿意投几百 → 工具服务型、电商运营型</li>
+<li>愿意投时间和精力 → 知识付费型、流量运营型</li>
+</ul>
+<div class="callout callout-green">
+<strong>自评建议：</strong>从"最低风险"的方向起步，验证跑通再放大。比如先做内容创作试水，如果3周内接不到一单免费的单，换个方向也不亏。
+</div>
+</div>
+</div>
+</div>
+
+<div class="module" data-tag="P:step3">
+<div class="step-box">
+<div class="step-title"><span class="step-num">3</span> 从认知到行动：第一周计划</div>
+<div class="step-body">
+<p>不用想太多，直接抄这个时间表走一遍：</p>
+<div class="code-block">📋 第一周行动计划
+
+第1天：选1个方向（先不管对不对，选了再说）
+第2天：找3个对标账号/案例（小红书/闲鱼搜"AI代写""AI PPT"看看别人怎么报价）
+第3天：让AI帮你做竞品分析
+   → 把对标案例截图/链接发给AI，让它分析他们的
+      定价、服务内容、目标客户
+第4天：产出第一个作品（哪怕很烂）
+   → 比如写一篇小红书笔记、做一个PPT模板
+第5天：发出第一个作品（发出去比完美重要）
+   → 发到平台/发到闲鱼/发给朋友
+第6-7天：复盘+调整
+   → 哪里反应好？哪里没人看？下一步改什么？</div>
+<div class="callout callout-warn">
+<strong>提醒：</strong>第一周的目的是"跑通流程"，不是"赚到钱"。如果你第一周就赚到了钱，恭喜你——但这个概率相当于第一次打麻将就胡清一色。
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<!-- 💡 Insight -->
+<div class="module section" data-tag="core:insight" id="s-insight">
+<div class="section-title">💡 理解为什么</div>
+<div class="section-desc">5分钟 · AI副业的本质：不是"用AI赚钱"，而是"用AI提升你的单位时间价值"</div>
+<div class="content">
+<h3>AI副业的底层逻辑</h3>
+<p>很多人以为AI副业的核心是<strong>"怎么用AI"</strong>。错了。核心是<strong>"客户需要什么，AI能帮我把什么做得更快/更好"</strong>。</p>
+<p>你卖的是<strong>"<w d="客户真正需要的是解决一个具体问题，而不是AI生成的产物本身">解决方案</w>"</strong>，不是"AI输出"。</p>
+<p>举个例子：</p>
+<ul>
+<li>客户要的不是"一篇AI写的文章" → 他要的是"一篇能帮他账号涨粉的文章"</li>
+<li>客户要的不是"AI做的PPT" → 他要的是"一份明天上午10点汇报能用、老板看了会点头的PPT"</li>
+<li>客户要的不是"AI生成的教程" → 他要的是"三天内把AI用起来，不再觉得自己落后时代"</li>
+</ul>
+<h3>三个关键认知</h3>
+<div class="callout callout-tip">
+<strong>1. AI让"做出来"变简单了，但"卖出去"没变简单</strong><br/>
+你会用AI不等于你能赚钱。把服务卖出去——找客户、谈价格、交付、售后——这些能力AI帮不了你多少。
+</div>
+<div class="callout callout-warn">
+<strong>2. AI降低门槛 = 竞争变多，你的差异化来自"人"的部分</strong><br/>
+当每个人都能用AI写文章，为什么选你？因为你懂那个领域、懂那个客户、能判断什么内容真的有效。<w d="AI降低了技能门槛，导致大量人涌入同一赛道，但最终胜出的不是AI用得最好的，而是最懂客户需求的">同质化竞争</w>下，人的判断力才是护城河。
+</div>
+<div class="callout callout-green">
+<strong>3. 先帮别人省时间 = 别人愿意付钱</strong><br/>
+AI副业的本质是你用AI帮别人做他们不想做/没时间做/做不好的事情。你帮客户省了1小时，他愿意分你50块。你帮客户省了10小时，他愿意分你500块。方向要选对。
+</div>
+</div>
+</div>
+
+<!-- 🔁 Consolidate -->
+<div class="module section" data-tag="optional:consolidate" id="s-consolidate">
+<div class="section-title">🔁 巩固练习</div>
+<div class="section-desc">5分钟 · 别光看，动手试试</div>
+<div class="content">
+<div class="callout callout-tip">
+<strong>现在就做：</strong>打开手机备忘录，花3分钟回答下面三个问题——不用完美，写下来就行。
+</div>
+<h3>进阶挑战</h3>
+<div class="challenge">
+<div class="ch-title">✅ 挑战1：列出3个你觉得自己可以用AI做的小生意点子</div>
+<div class="ch-desc">不需要多靠谱，关键是"有人愿意为这个付费吗？"比如：帮大学生写论文大纲、帮小老板写朋友圈文案、帮宝妈做旅行攻略PPT。</div>
+</div>
+<div class="challenge">
+<div class="ch-title">✅ 挑战2：选一个方向，让AI帮你写一个"启动方案"</div>
+<div class="ch-desc">用这个话术：<w d="给AI提供完整背景信息，让它在你的约束条件下给出定制化建议">"我是一个[你的身份]，想用AI做[选择的方向]，请帮我写一份7天启动方案，包括：1）需要准备的 2）具体操作步骤 3）可能遇到的坑"</w></div>
+</div>
+<div class="challenge">
+<div class="ch-title">✅ 挑战3：去闲鱼/小红书搜一下"AI代写"看看别人怎么做的</div>
+<div class="ch-desc">重点看：定价多少、怎么写的文案、评论区问了什么、成交率高不高。这就是你的市场调研。</div>
+</div>
+</div>
+</div>
+
+<!-- 一劳永逸 -->
+<div class="module section" data-tag="core:summary" style="background:linear-gradient(135deg,#e8f5e9,#c8e6c9);border:none;text-align:center">
+<h3 style="font-size:18px;margin-bottom:8px;color:#2e7d32">⚡ 记住一句话</h3>
+<p style="font-size:13px;color:#2e7d32;margin-bottom:8px"><strong>AI副业的本质 = 用AI提升你的单位时间价值，你卖的是解决方案，不是AI输出</strong></p>
+<div class="code-block" style="background:#fff;text-align:left">AI副业三步走：
+
+1. 选方向 → 从六大方向中找出最适合你的
+2. 定策略 → 先跑通一个最小闭环再放大
+3. 坚持做 → 先帮别人省时间，别人自然愿意付钱
+
+关键：AI是放大器，你不是。所以你的判断力、你的服务意识、你的坚持，才是真正的赚钱密码。</div>
+<div style="margin-top:10px;font-size:15px;color:#2e7d32;font-weight:600">
+    🎉 现在你对AI副业的认知，已经超过90%只知道"让AI写文章"的人了
+  </div>
+</div>
+</div>
+
+<div class="tip-box" id="tipBox">
+<div class="tip-title">📖 术语</div>
+<button class="tip-close" id="tipClose">&times;</button>
+<div id="tipDesc"></div>
+</div>
+
+<script>
+(function(){
+  var tb=document.getElementById("tipBox"),td=document.getElementById("tipDesc"),tc=document.getElementById("tipClose");
+  if(tb&&td){
+    document.querySelectorAll("w").forEach(function(el){
+      el.addEventListener("click",function(e){
+        e.stopPropagation();
+        td.textContent=this.getAttribute("d")||"暂无释义";
+        tb.querySelector(".tip-title").textContent="📖 "+this.textContent.trim();
+        var r=this.getBoundingClientRect(),w=tb.offsetWidth||280,left=Math.max(10,Math.min(r.left+r.width/2-w/2,document.body.clientWidth-w-10)),top=r.top-8-tb.offsetHeight;
+        if(top<10)top=r.bottom+10;
+        tb.style.left=left+"px";tb.style.top=top+"px";tb.style.display="block";
+        document.querySelectorAll("w.active").forEach(function(w){w.classList.remove("active")});
+        this.classList.add("active");
+      });
+    });
+    function ht(){tb.style.display="none";document.querySelectorAll("w.active").forEach(function(w){w.classList.remove("active")})}
+    tc.addEventListener("click",ht);
+    document.addEventListener("click",function(e){if(!e.target.closest("w")&&!e.target.closest(".tip-box"))ht()});
+    document.addEventListener("keydown",function(e){if(e.key==="Escape")ht()});
+  }
+  var nav=document.getElementById("stepNav");
+  if(nav){
+    var S=["s-explain","s-practice","s-insight","s-consolidate"];
+    nav.addEventListener("click",function(e){
+      var it=e.target.closest(".sn-item");if(!it)return;
+      var id=it.getAttribute("data-step"),el=document.getElementById(id);
+      if(el)el.scrollIntoView({behavior:"smooth",block:"start"});
+      var idx=S.indexOf(id);
+      for(var i=0;i<nav.children.length;i++)nav.children[i].classList.toggle("active",i===idx);
+    });
+    var st;
+    function uas(){
+      var bi=0,bd=Infinity;
+      S.forEach(function(id,i){
+        var el=document.getElementById(id);
+        if(el){var t=Math.abs(el.getBoundingClientRect().top);if(t<bd){bd=t;bi=i}}
+      });
+      for(var i=0;i<nav.children.length;i++)nav.children[i].classList.toggle("active",i===bi);
+    }
+    document.addEventListener("scroll",function(){clearTimeout(st);st=setTimeout(uas,100)});
+    uas();
+  }
+})();
+</script>
+<script>
+(function(){
+  var p=new URLSearchParams(location.search),c=p.get("cut");
+  if(c){
+    var INFO={
+      "P:step1":{l:"第一步·六大方向总览",d:"AI副业六大方向的完整对比表"},
+      "P:step2":{l:"第二步·选择你的方向",d:"三个筛选标准帮你找到最适合的切入点"}
+    };
+    var MSGS=[
+      "看起来你对AI副业已经有了一些了解，帮你跳过基础的认知部分，直接看重点就好〜",
+      "看来你对这部分已经比较熟悉了，跳过基础内容，直奔核心！",
+      "你已经有不错的基础了，直接看后面的总结就好。点淡色区域可以展开查看完整内容"
+    ];
+    var E=[];
+    tags=c.split(",");
+    tags.forEach(function(t){t=t.trim();var n=INFO[t];if(n){var el=document.querySelector('[data-tag="'+t+'"]');if(el)E.push({el:el,info:n});}});
+    if(E.length>0){
+      E.forEach(function(x){
+        var el=x.el,info=x.info,bar=document.createElement("div");
+        bar.style.cssText="padding:10px 14px;margin:10px 0;border-radius:12px;background:rgba(255,149,0,.06);border:1.5px dashed rgba(255,149,0,.25);font-size:13px;cursor:pointer;transition:all .2s;user-select:none";
+        bar.innerHTML='<div style="display:flex;align-items:center;justify-content:space-between"><span style="font-weight:600;color:#e65100">&#x23ED; '+info.l+'<span style="font-size:11px;color:rgba(230,81,0,.5);margin-left:8px">已跳过</span></span><span style="font-size:11px;color:rgba(230,81,0,.4)">&#x25BC; 展开</span></div>'+(info.d?'<div style="font-size:11px;color:rgba(0,0,0,.3);margin-top:3px;padding-left:24px">'+info.d+'</div>':'');
+        var p=el.parentNode;
+        if(p){p.insertBefore(bar,el);el.style.display="none";bar.onclick=function(){var h=el.style.display==="none";el.style.display=h?"":"none";bar.style.borderStyle=h?"solid":"dashed";bar.style.background=h?"rgba(255,149,0,.15)":"rgba(255,149,0,.06)";bar.querySelector("span:last-child").innerHTML=h?"▲ 收起":"▼ 展开";};}
+      });
+      var midx=Math.min(E.length-1,MSGS.length-1),msg=MSGS[midx];
+      var ov=document.createElement("div");
+      ov.id="skip-overlay";
+      ov.style.cssText="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.25);z-index:10000;display:flex;align-items:center;justify-content:center;animation:fadeIn .3s ease";
+      ov.innerHTML='<div style="background:#fff;border-radius:20px;padding:28px 24px;max-width:340px;width:90%;box-shadow:0 8px 40px rgba(0,0,0,.12);text-align:center"><div style="font-size:36px;margin-bottom:10px">👏</div><div style="font-size:16px;font-weight:600;margin-bottom:8px;color:#1d1d1f">已帮你跳过基础步骤</div><div style="font-size:13px;color:#636366;line-height:1.7">'+msg+'</div><button onclick="document.body.removeChild(document.getElementById(\'skip-overlay\'))" style="margin-top:14px;padding:9px 28px;border:none;border-radius:12px;background:#007aff;color:#fff;font-size:14px;font-weight:600;cursor:pointer;box-shadow:0 4px 12px rgba(0,122,255,.25)">好的，开始学习</button><span onclick="document.body.removeChild(document.getElementById(\'skip-overlay\'))" style="position:absolute;top:10px;right:14px;cursor:pointer;font-size:18px;color:rgba(0,0,0,.2)">&times;</span></div>';
+      ov.onclick=function(e){if(e.target===ov)document.body.removeChild(ov);};
+      document.body.appendChild(ov);
+      var st=document.createElement("style");st.textContent="@keyframes fadeIn{from{opacity:0}to{opacity:1}}";document.head.appendChild(st);
+    }
+  }
+})();
+</script>
+</body>
+</html>

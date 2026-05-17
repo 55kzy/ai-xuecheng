@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>AI学程 — 一张图看懂AI能做什么</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;background:#f5f7fa;color:#1d1d1f;padding-bottom:60px}
+  .header{background:linear-gradient(135deg,#1d1d1f 0%,#3a3a3c 100%);color:#fff;padding:32px 20px 28px;text-align:center}
+  .header .badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(255,255,255,.12);margin-bottom:10px;color:rgba(255,255,255,.7)}
+  .header h1{font-size:22px;font-weight:700;margin-bottom:6px;letter-spacing:-.3px}
+  .header .meta{font-size:13px;color:rgba(255,255,255,.55);display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+  .header .tag-free{display:inline-block;padding:4px 12px;border-radius:20px;background:rgba(52,199,89,.2);color:#34c759;font-size:12px;font-weight:600;margin-top:12px}
+  .container{max-width:680px;margin:0 auto;padding:0 16px}
+  .step-nav{display:flex;gap:8px;padding:16px 0;overflow-x:auto;position:sticky;top:0;background:#f5f7fa;z-index:10;border-bottom:1px solid rgba(0,0,0,.06)}
+  .step-nav .sn-item{flex:1;min-width:0;padding:8px 6px;border-radius:10px;border:1.5px solid #e5e5ea;font-size:11px;text-align:center;transition:all .15s;white-space:nowrap;background:rgba(255,255,255,.6);color:#636366;cursor:pointer}
+  .step-nav .sn-item.active{border-color:#007aff;background:#e8f2ff;color:#007aff;font-weight:600}
+  .step-nav .sn-item .sn-icon{display:block;font-size:14px;margin-bottom:2px}
+  .section{margin:16px 0;background:rgba(255,255,255,.85);backdrop-filter:blur(20px);border-radius:20px;padding:20px;border:1px solid rgba(255,255,255,.6);box-shadow:0 2px 12px rgba(0,0,0,.04)}
+  .section-title{font-size:16px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .section-desc{font-size:13px;color:#636366;margin-bottom:10px;line-height:1.6}
+  .content{font-size:14px;line-height:1.8;color:#1d1d1f}
+  .content h3{font-size:15px;margin:16px 0 6px}
+  .content p{margin-bottom:8px}
+  .content ul,.content ol{padding-left:18px;margin-bottom:10px}
+  .content li{margin-bottom:4px}
+  .callout{padding:12px 14px;border-radius:12px;margin:12px 0;font-size:13px;line-height:1.6;border-left:3px solid}
+  .callout-tip{background:rgba(0,122,255,.06);border-color:#007aff;color:#1d1d1f}
+  .callout-warn{background:rgba(255,149,0,.08);border-color:#ff9500;color:#1d1d1f}
+  .callout-danger{background:rgba(255,59,48,.06);border-color:#ff3b30;color:#1d1d1f}
+  .callout-green{background:rgba(52,199,89,.08);border-color:#34c759;color:#1d1d1f}
+  .code-block{background:#f0f2f5;border-radius:10px;padding:12px 14px;font-family:'Courier New',monospace;font-size:13px;line-height:1.6;white-space:pre-wrap;word-break:break-word;margin:8px 0}
+  .cmp-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
+  .cmp-table th,.cmp-table td{padding:8px 10px;border:1px solid #e5e5ea;text-align:left}
+  .cmp-table th{background:rgba(0,0,0,.03);font-weight:600;font-size:12px;color:#636366}
+  .challenge{background:rgba(255,255,255,.4);border:1px solid #e5e5ea;border-radius:12px;padding:12px 14px;margin:8px 0}
+  .challenge .ch-title{font-weight:600;font-size:13px;margin-bottom:4px}
+  .challenge .ch-desc{font-size:12px;color:#636366;line-height:1.5}
+  .step-box{background:rgba(0,122,255,.04);border-radius:12px;padding:14px;margin:10px 0;border:1px solid rgba(0,122,255,.12)}
+  .step-box .step-num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:#007aff;color:#fff;font-size:12px;font-weight:700;margin-right:6px;flex-shrink:0}
+  .step-box .step-title{font-weight:600;font-size:14px;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+  .step-box .step-body{font-size:13px;line-height:1.7;color:#1d1d1f}
+  .goal-list{display:flex;flex-direction:column;gap:6px;margin:10px 0}
+  .goal-item{display:flex;align-items:center;gap:8px;font-size:13px;padding:4px 0}
+  .goal-check{width:18px;height:18px;border-radius:50%;background:#34c759;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+  w{cursor:pointer;border-bottom:1.5px dashed #007aff;color:#007aff;font-weight:500;position:relative;transition:background .15s}
+  w:hover{background:rgba(0,122,255,.06)}
+  w.active{background:rgba(0,122,255,.12)}
+  .tip-box{position:fixed;z-index:9999;display:none;background:#1d1d1f;color:#fff;border-radius:10px;padding:10px 14px;max-width:300px;font-size:13px;line-height:1.6;box-shadow:0 8px 24px rgba(0,0,0,.2);animation:tipIn .2s ease}
+  .tip-box .tip-title{font-weight:600;margin-bottom:3px;color:rgba(255,255,255,.6);font-size:11px}
+  .tip-box .tip-close{position:absolute;top:6px;right:8px;cursor:pointer;font-size:14px;color:rgba(255,255,255,.4);line-height:1;border:none;background:none;padding:2px}
+  .tip-box .tip-close:hover{color:#fff}
+  .tip-box::after{content:'';position:absolute;left:50%;bottom:-6px;margin-left:-6px;border:6px solid transparent;border-top-color:#1d1d1f}
+  @keyframes tipIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+  .myth-box{background:rgba(255,149,0,.06);border-radius:12px;padding:14px;margin:10px 0;border:1px solid rgba(255,149,0,.15)}
+  .myth-box .myth-q{font-weight:600;font-size:14px;margin-bottom:4px;color:#b06d00}
+  .myth-box .myth-a{font-size:13px;line-height:1.7;color:#1d1d1f}
+  .scope-chart{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}
+  .scope-card{border-radius:12px;padding:12px;border:1px solid #e5e5ea;background:rgba(255,255,255,.6)}
+  .scope-card.strong{background:rgba(52,199,89,.06);border-color:rgba(52,199,89,.25)}
+  .scope-card.weak{background:rgba(255,59,48,.04);border-color:rgba(255,59,48,.15)}
+  .scope-card .sc-title{font-weight:600;font-size:13px;margin-bottom:4px}
+  .scope-card .sc-list{font-size:12px;color:#636366;line-height:1.6}
+</style>
+</head>
+<body>
+<div class="header">
+<div class="badge">全面了解 · T1 基础免费</div>
+<h1>🗺️ 一张图看懂AI能做什么</h1>
+<p style="font-size:14px;color:rgba(255,255,255,.7);margin-bottom:8px">AI没你想的那么神，也没那么没用</p>
+<div class="meta">
+<span>⏱ 约25分钟</span>
+<span>📄 图文课</span>
+<span>📱 手机电脑都能看</span>
+</div>
+<div class="tag-free">🆓 免费</div>
+</div>
+<div class="container">
+<div class="step-nav" id="stepNav">
+<div class="sn-item active" data-step="s-explain"><span class="sn-icon">📌</span>为什么</div>
+<div class="sn-item" data-step="s-practice"><span class="sn-icon">🎯</span>实操</div>
+<div class="sn-item" data-step="s-insight"><span class="sn-icon">💡</span>原理</div>
+<div class="sn-item" data-step="s-consolidate"><span class="sn-icon">🔁</span>巩固</div>
+</div>
+
+<!-- 📌 Explain -->
+<div class="section module" data-tag="core:explain" id="s-explain">
+<div class="section-title">📌 你对AI的印象可能全错了</div>
+<div class="section-desc">3分钟 · 先清空一下脑子里的"我以为"</div>
+<div class="content">
+<p>你可能听过这些说法：</p>
+<ul>
+<li>"AI要取代人类工作了"</li>
+<li>"AI就是个高级搜索引擎"</li>
+<li>"AI什么都能做，只是你prompt写不对"</li>
+<li>"AI就是个大号概率模型，其实啥也不懂"</li>
+</ul>
+<p>这些说法<strong>都有道理，但都是片面的</strong>。就像盲人摸象——摸到腿的说AI是柱子，摸到尾巴的说AI是绳子，都没错，但都不完整。</p>
+
+<div class="callout callout-warn">
+<strong>先看一个对比：同样问AI，差距巨大</strong><br/><br/>
+<strong>❌ 差输入：</strong><br/>
+<div class="code-block">AI能帮我做什么？</div>
+<em style="font-size:12px;color:#8e8e93">AI反馈：给你列出了20个"AI可以写文章、画图、编程"之类的大类，看完还是不知道具体怎么用</em><br/><br/>
+<strong>✅ 好输入：</strong><br/>
+<div class="code-block">我是一名办公室文员，每天要写工作邮件、做会议纪要、还要帮领导查资料。
+请给我3个具体用法，每个用法写一个我直接能照着输入的指令。
+用我上面提到的三件事举例。</div>
+<em style="font-size:12px;color:#8e8e93">AI反馈：直接给了三条指令模板，当场就能用</em><br/><br/>
+<strong>差距在哪？</strong>差输入像问饿了吗的人"我该吃什么"，好输入像说"我在五道口，不想吃辣，预算30块"。AI的回答质量，90%取决于你把问题框得有多具体。
+</div>
+<p>这节的目标很简单：<strong>给你一张<w d="人工智能">AI</w>的能力地图</strong>——知道AI擅长什么、不擅长什么、什么时候能用它、什么时候别指望它。</p>
+<p>搞清楚了这些，你之后选工具、写prompt、判断AI输出的质量，都会有一个清晰的判断标准。</p>
+
+<h3>这节课学完你能做到</h3>
+<div class="goal-list">
+<div class="goal-item"><span class="goal-check">✓</span> 知道AI能帮你做什么、不能做什么，不再被吓到或被忽悠</div>
+<div class="goal-item"><span class="goal-check">✓</span> 遇到一个问题时，能判断"这事AI干得了吗"</div>
+<div class="goal-item"><span class="goal-check">✓</span> 不会被"AI万能论"或"AI没用论"牵着走</div>
+</div>
+</div>
+</div>
+
+<!-- 🎯 Practice -->
+<div class="section module" data-tag="P:practice" id="s-practice">
+<div class="section-title">🎯 动手实操</div>
+<div class="section-desc">10分钟 · 三张表理清AI的能力边界</div>
+<div class="content">
+
+<div class="module" data-tag="P:step1">
+<div class="step-box">
+<div class="step-title"><span class="step-num">1</span> AI擅长的事 vs AI不擅长的事</div>
+<div class="step-body">
+<p>这不是理论，是你每天都会面对的真实场景：</p>
+
+<div class="scope-chart">
+<div class="scope-card strong">
+<div class="sc-title">✅ AI真的很擅长</div>
+<div class="sc-list">
+• 翻译外语<br/>
+• 写工作邮件/文案<br/>
+• 总结长文章<br/>
+• 给你出主意思路<br/>
+• 把口语变正式<br/>
+• 写代码片段<br/>
+• 分析数据趋势<br/>
+• 解释复杂概念<br/>
+</div>
+</div>
+<div class="scope-card weak">
+<div class="sc-title">❌ AI真的不擅长</div>
+<div class="sc-list">
+• 算精确的数学<br/>
+• 记住你说过的话<br/>
+• 判断真假信息<br/>
+• 做有创意的原创内容<br/>
+• 理解表情和语气<br/>
+• 回答"现在几点"、"今天天气"<br/>
+• 时间敏感的信息<br/>
+• 做复杂的关键决策<br/>
+</div>
+</div>
+</div>
+
+<p>关键认知：AI在"提供初稿"上很强，在"做最终判断"上很弱。你的角色就是<strong>那个判断者</strong>。<w d="你给AI的指令">Prompt</w>写得好不好，直接决定了AI给你的初稿质量。</p>
+</div>
+</div>
+</div>
+
+<div class="module" data-tag="P:step2">
+<div class="step-box">
+<div class="step-title"><span class="step-num">2</span> 四个最常用的AI能力，每个花1分钟试</div>
+<div class="step-body">
+<p>现在打开一个AI聊天工具（ChatGPT、Kimi、DeepSeek、豆包都行），照下面四组prompt各试一次：</p>
+
+<div class="callout callout-tip" style="margin:8px 0">
+<strong>📝 能力①：总结</strong><br/>
+把一段你最近读过的文章/视频文案丢给AI，说："用三句话总结这篇文章的核心观点，每句话不超过20个字。"
+</div>
+
+<div class="callout callout-tip">
+<strong>✍️ 能力②：改写</strong><br/>
+找一段你自己写的话（不太满意的），告诉AI："帮我把这段话改成发朋友圈的语气，既要得体又要让人愿意看。"
+</div>
+
+<div class="callout callout-tip">
+<strong>💡 能力③：发散思路</strong><br/>
+说："我想学做菜，但完全零基础。给我列出5个最容易上手、失败率最低的菜，每个菜附一句为什么适合新手。"
+</div>
+
+<div class="callout callout-tip">
+<strong>🔍 能力④：解释概念</strong><br/>
+说："用最通俗的语言解释什么叫'<w d="让计算机自己从数据中学习规律">机器学习</w>'，假设你在跟一个初中生解释。"
+</div>
+
+<p>你发现没有？每个<w d="你给AI的指令">prompt</w>都把AI框在一个<strong>具体任务</strong>里。你把任务描述得越清楚，AI给你的越有用。这就是整个AI使用里最重要的一个技能。<w d="AI的回应方式">AI输出</w>的质量上限，就是你的<w d="写prompt的能力">提示词水平</w>。</p>
+</div>
+</div>
+</div>
+
+<div class="module" data-tag="P:step3">
+<div class="step-box">
+<div class="step-title"><span class="step-num">3</span> 识别AI的"胡说八道"</div>
+<div class="step-body">
+<p>AI有一个最大的坑：<strong>它会用极其自信的语气编造答案</strong>。</p>
+<p>试着问它一个你非常确定答案的事实性问题（比如你家小区的物业电话），看看它怎么回答。</p>
+<p>这不是AI"坏了"，而是它的工作机制决定了——它不是"查资料"，而是"猜最可能接什么词"。</p>
+<div class="callout callout-danger">
+<strong>记住这个铁律：</strong>AI不需要知道真相，只需要说出听起来合理的答案。所以<strong>凡事涉及到具体事实、数字、时间、地点，一定要自己核实</strong>。
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<!-- 💡 Insight -->
+<div class="section module" data-tag="core:insight" id="s-insight">
+<div class="section-title">💡 理解为什么</div>
+<div class="section-desc">5分钟 · AI的本质简单到一句话就能说清</div>
+<div class="content">
+<h3>核心原理：AI不是"会思考"，是"会接话"</h3>
+<p>现在的AI（<w d="像ChatGPT这种能理解文字和生成文字的技术">大语言模型</w>）本质是什么？用一个比喻你就懂了：</p>
+<p>想象你有一台能预测下一个词是什么的机器。你给它看"今天天气真"，它说"好"。你又给它看"今天天气真好"，它继续说"啊"。一直继续下去，它就写出了"今天天气真好啊，我们出去走走吧。"</p>
+<p><strong>这就是AI的工作原理</strong>——它看过海量的文本（整个互联网的公开内容），学会了"如果看到这个句子，下一个词最可能是什么"。它不是在"思考"，而是在<strong>做<w d="推算哪种回答最合理">概率预测</w></strong>。</p>
+
+<p>这个原理解释了AI的<strong>所有</strong>优点和缺点：</p>
+
+<h3>为什么AI擅长那些事</h3>
+<table class="cmp-table">
+<tr><th>能力</th><th>为什么AI擅长</th></tr>
+<tr><td>总结</td><td>互联网上有无数"xx总结"的例子，AI学会了这个模式</td></tr>
+<tr><td>改写</td><td>它见过无数种同义表达，能在一堆备选中找到最顺眼的</td></tr>
+<tr><td>发散</td><td>它能把自己见过的各种方案组合起来给你</td></tr>
+</table>
+
+<h3>为什么AI会出错</h3>
+<table class="cmp-table">
+<tr><th>问题</th><th>为什么AI会犯</th></tr>
+<tr><td>编造事实</td><td>它不在乎真假，只在乎"这样接最自然"</td></tr>
+<tr><td>算不对数</td><td>它本质上不是计算器，而是"猜这个算式的结果该是什么数"</td></tr>
+<tr><td>前后矛盾</td><td>对话中每一条它都"重新开始猜"，不记得刚才说了什么</td></tr>
+</table>
+
+<div class="callout callout-warn">
+<strong>一句话总结：</strong>AI是你见过最博学但最没主见的助手。它能给你一万个思路，但不能替你做决定。你的价值就在这个"决定"上。
+</div>
+</div>
+</div>
+
+<!-- 🔁 Consolidate -->
+<div class="section module" data-tag="optional:consolidate" id="s-consolidate">
+<div class="section-title">🔁 巩固练习</div>
+<div class="section-desc">5分钟 · 把今天学到的东西用起来</div>
+<div class="content">
+<div class="callout callout-tip">
+<strong>今天做一次：</strong>找一件你本来打算自己查资料解决的事（比如"周末去哪玩"、"怎么修漏水龙头"、"某个菜怎么做"），先问AI，看它给的答案如何。然后自己用搜索引擎验证一遍。体会一下"AI的思路+你的判断"的协作方式。
+</div>
+
+<h3>进阶挑战</h3>
+<div class="challenge">
+<div class="ch-title">✅ 挑战1：给AI"挑刺"</div>
+<div class="ch-desc">让AI写一段任意内容的说明文。然后用你对相关领域的了解，找出它里面至少三个不准确的地方。如果能找到，你就算真正理解了"AI会犯错"这件事。</div>
+</div>
+<div class="challenge">
+<div class="ch-title">✅ 挑战2：同一件事问两个AI</div>
+<div class="ch-desc">同一个问题，分别问ChatGPT（或DeepSeek）和Kimi。看它们的回答有什么差别。你会意识到不同AI的"性格"不一样。</div>
+</div>
+<div class="challenge">
+<div class="ch-title">✅ 挑战3：学会"追问"</div>
+<div class="ch-desc">问AI一个问题，看完回答后，再追问一句"你的依据是什么"或"能给我一个例子吗"。看AI怎么应对。这是判断AI可信度的好方法。</div>
+</div>
+
+<h3>同类型迁移</h3>
+<p style="font-size:13px;color:#636366;margin-top:4px">"把AI当思路提供者、自己做判断者"的思路还能用在：</p>
+<ul>
+<li><strong>学新东西</strong> — 让AI先给你一个学习地图，你自己坚持执行</li>
+<li><strong>做决策</strong> — 让AI列出利弊分析和备选方案，但决定权在你</li>
+<li><strong>创作</strong> — 让AI生初稿和框架，你负责修改和注入个人经验</li>
+</ul>
+
+<h3>这节课只是个开始</h3>
+<p style="font-size:13px;color:#636366;margin-top:4px">你看，仅仅搞清楚AI能做什么不能做什么，就已经打开了这么多使用场景。那AI到底<strong>怎么用才最有效</strong>？</p>
+<p>很多人卡在"知道AI能干很多事，但具体到自己身上就不知道从哪开始"——这是因为缺少两个关键能力：</p>
+<ul>
+<li><strong>任务拆解</strong> — 把一件复杂事拆成AI能干的步骤</li>
+<li><strong>精准描述</strong> — 用最少的字数让AI完全明白你要什么</li>
+</ul>
+<p>这两个能力不是一节课能讲完的——<strong>T2进阶课</strong>会针对不同场景（工作、学习、创作）系统训练这些技能。你现在打下的基础，下一层就是真正的飞跃。</p>
+</div>
+</div>
+
+<!-- 一劳永逸 -->
+<div class="section" data-tag="core:summary" style="background:linear-gradient(135deg,#e8f5e9,#c8e6c9);border:none;text-align:center">
+<h3 style="font-size:18px;margin-bottom:8px;color:#2e7d32">⚡ 一劳永逸</h3>
+<p style="font-size:13px;color:#2e7d32;margin-bottom:8px">以后每次用AI之前，先问自己：</p>
+<div class="code-block" style="background:#fff;text-align:left;color:#1d1d1f">1. 这件事它是"资料整理"还是"原创判断"？
+2. 如果是资料整理 → 可以信但需要核实
+3. 如果是原创判断 → 自己思考，别依赖它</div>
+<div style="margin-top:10px;font-size:15px;color:#2e7d32;font-weight:600">
+  🎉 你不是在用AI，是在跟AI搭档
+</div>
+</div>
+</div>
+
+<div class="tip-box" id="tipBox">
+<div class="tip-title">📖 术语</div>
+<span class="tip-close" id="tipClose">&times;</span>
+<div id="tipDesc">暂无释义</div>
+</div>
+<script>
+(function(){
+  var tb=document.getElementById("tipBox"),td=document.getElementById("tipDesc"),tc=document.getElementById("tipClose");
+  if(tb&&td){
+    document.querySelectorAll("w").forEach(function(el){
+      el.addEventListener("click",function(e){
+        e.stopPropagation();
+        td.textContent=this.getAttribute("d")||"暂无释义";
+        tb.querySelector(".tip-title").textContent="📖 "+this.textContent.trim();
+        var r=this.getBoundingClientRect(),w=tb.offsetWidth||280,left=Math.max(10,Math.min(r.left+r.width/2-w/2,document.body.clientWidth-w-10)),top=r.top-8-tb.offsetHeight;
+        if(top<10)top=r.bottom+10;
+        tb.style.left=left+"px";tb.style.top=top+"px";tb.style.display="block";
+        document.querySelectorAll("w.active").forEach(function(w){w.classList.remove("active")});
+        this.classList.add("active");
+      });
+    });
+    function ht(){tb.style.display="none";document.querySelectorAll("w.active").forEach(function(w){w.classList.remove("active")})}
+    tc.addEventListener("click",ht);
+    document.addEventListener("click",function(e){if(!e.target.closest("w")&&!e.target.closest(".tip-box"))ht()});
+    document.addEventListener("keydown",function(e){if(e.key==="Escape")ht()});
+  }
+  var nav=document.getElementById("stepNav");
+  if(nav){
+    var S=["s-explain","s-practice","s-insight","s-consolidate"];
+    nav.addEventListener("click",function(e){
+      var it=e.target.closest(".sn-item");if(!it)return;
+      var id=it.getAttribute("data-step"),el=document.getElementById(id);
+      if(el)el.scrollIntoView({behavior:"smooth",block:"start"});
+      var idx=S.indexOf(id);
+      for(var i=0;i<nav.children.length;i++)nav.children[i].classList.toggle("active",i===idx);
+    });
+    var st;
+    function uas(){
+      var bi=0,bd=Infinity;
+      S.forEach(function(id,i){
+        var el=document.getElementById(id);
+        if(el){var t=Math.abs(el.getBoundingClientRect().top);if(t<bd){bd=t;bi=i}}
+      });
+      for(var i=0;i<nav.children.length;i++)nav.children[i].classList.toggle("active",i===bi);
+    }
+    document.addEventListener("scroll",function(){clearTimeout(st);st=setTimeout(uas,100)});
+    uas();
+  }
+})();
+</script>
+</body>
+</html>

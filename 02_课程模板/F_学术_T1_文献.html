@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>AI学程 — 50篇文献，10分钟筛完</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;background:#f5f7fa;color:#1d1d1f;padding-bottom:60px}
+  .header{background:linear-gradient(135deg,#1d1d1f 0%,#3a3a3c 100%);color:#fff;padding:32px 20px 28px;text-align:center}
+  .header .badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(255,255,255,.12);margin-bottom:10px;color:rgba(255,255,255,.7)}
+  .header h1{font-size:22px;font-weight:700;margin-bottom:6px;letter-spacing:-.3px}
+  .header .meta{font-size:13px;color:rgba(255,255,255,.55);display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+  .header .tag-free{display:inline-block;padding:4px 12px;border-radius:20px;background:rgba(52,199,89,.2);color:#34c759;font-size:12px;font-weight:600;margin-top:12px}
+  .container{max-width:680px;margin:0 auto;padding:0 16px}
+  .step-nav{display:flex;gap:8px;padding:16px 0;overflow-x:auto;position:sticky;top:0;background:#f5f7fa;z-index:10;border-bottom:1px solid rgba(0,0,0,.06)}
+  .step-nav .sn-item{flex:1;min-width:0;padding:8px 6px;border-radius:10px;border:1.5px solid #e5e5ea;font-size:11px;text-align:center;transition:all .15s;white-space:nowrap;background:rgba(255,255,255,.6);color:#636366;cursor:pointer}
+  .step-nav .sn-item.active{border-color:#007aff;background:#e8f2ff;color:#007aff;font-weight:600}
+  .step-nav .sn-item .sn-icon{display:block;font-size:14px;margin-bottom:2px}
+  .section{margin:16px 0;background:rgba(255,255,255,.85);backdrop-filter:blur(20px);border-radius:20px;padding:20px;border:1px solid rgba(255,255,255,.6);box-shadow:0 2px 12px rgba(0,0,0,.04)}
+  .section-title{font-size:16px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .section-desc{font-size:13px;color:#636366;margin-bottom:10px;line-height:1.6}
+  .content{font-size:14px;line-height:1.8;color:#1d1d1f}
+  .content h3{font-size:15px;margin:16px 0 6px}
+  .content p{margin-bottom:8px}
+  .content ul,.content ol{padding-left:18px;margin-bottom:10px}
+  .content li{margin-bottom:4px}
+  .callout{padding:12px 14px;border-radius:12px;margin:12px 0;font-size:13px;line-height:1.6;border-left:3px solid}
+  .callout-tip{background:rgba(0,122,255,.06);border-color:#007aff;color:#1d1d1f}
+  .callout-warn{background:rgba(255,149,0,.08);border-color:#ff9500;color:#1d1d1f}
+  .callout-danger{background:rgba(255,59,48,.06);border-color:#ff3b30;color:#1d1d1f}
+  .callout-green{background:rgba(52,199,89,.08);border-color:#34c759;color:#1d1d1f}
+  .code-block{background:#f0f2f5;border-radius:10px;padding:12px 14px;font-family:'Courier New',monospace;font-size:13px;line-height:1.6;white-space:pre-wrap;word-break:break-word;margin:8px 0}
+  .cmp-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
+  .cmp-table th,.cmp-table td{padding:8px 10px;border:1px solid #e5e5ea;text-align:left}
+  .cmp-table th{background:rgba(0,0,0,.03);font-weight:600;font-size:12px;color:#636366}
+  .challenge{background:rgba(255,255,255,.4);border:1px solid #e5e5ea;border-radius:12px;padding:12px 14px;margin:8px 0}
+  .challenge .ch-title{font-weight:600;font-size:13px;margin-bottom:4px}
+  .challenge .ch-desc{font-size:12px;color:#636366;line-height:1.5}
+  .step-box{background:rgba(0,122,255,.04);border-radius:12px;padding:14px;margin:10px 0;border:1px solid rgba(0,122,255,.12)}
+  .step-box .step-num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:#007aff;color:#fff;font-size:12px;font-weight:700;margin-right:6px;flex-shrink:0}
+  .step-box .step-title{font-weight:600;font-size:14px;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+  .step-box .step-body{font-size:13px;line-height:1.7;color:#1d1d1f}
+  .goal-list{display:flex;flex-direction:column;gap:6px;margin:10px 0}
+  .goal-item{display:flex;align-items:center;gap:8px;font-size:13px;padding:4px 0}
+  .goal-check{width:18px;height:18px;border-radius:50%;background:#34c759;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+  .ex-pair{display:flex;flex-direction:column;gap:8px;margin:10px 0}
+  .ex-item{padding:10px 12px;border-radius:10px;font-size:13px;line-height:1.6;border:1px solid}
+  .ex-bad{background:rgba(255,59,48,.04);border-color:rgba(255,59,48,.15)}
+  .ex-bad .ex-label{color:#ff3b30;font-weight:600;margin-bottom:4px}
+  .ex-good{background:rgba(52,199,89,.06);border-color:rgba(52,199,89,.2)}
+  .ex-good .ex-label{color:#34c759;font-weight:600;margin-bottom:4px}
+  w{cursor:pointer;border-bottom:1.5px dashed #007aff;color:#007aff;font-weight:500;position:relative;transition:background .15s}
+  w:hover{background:rgba(0,122,255,.06)}
+  w.active{background:rgba(0,122,255,.12)}
+  .tip-box{position:fixed;z-index:9999;display:none;background:#1d1d1f;color:#fff;border-radius:10px;padding:10px 14px;max-width:300px;font-size:13px;line-height:1.6;box-shadow:0 8px 24px rgba(0,0,0,.2);animation:tipIn .2s ease}
+  .tip-box .tip-title{font-weight:600;margin-bottom:3px;color:rgba(255,255,255,.6);font-size:11px}
+  .tip-box .tip-close{position:absolute;top:6px;right:8px;cursor:pointer;font-size:14px;color:rgba(255,255,255,.4);line-height:1;border:none;background:none;padding:2px}
+  .tip-box .tip-close:hover{color:#fff}
+  .tip-box::after{content:'';position:absolute;left:50%;bottom:-6px;margin-left:-6px;border:6px solid transparent;border-top-color:#1d1d1f}
+  @keyframes tipIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+<div class="header">
+<div class="badge">学术研究 · T1 基础免费</div>
+<h1>📚 50篇文献，10分钟筛完</h1>
+<p style="font-size:14px;color:rgba(255,255,255,.7);margin-bottom:8px">让AI帮你筛、读、总结，你只需要做最关键的一步</p>
+<div class="meta">
+<span>⏱ 约25分钟</span>
+<span>📄 图文课</span>
+<span>🛠 需AI聊天工具</span>
+</div>
+<div class="tag-free">🆓 免费</div>
+</div>
+<div class="container">
+<div class="step-nav" id="stepNav">
+<div class="sn-item active" data-step="s-explain"><span class="sn-icon">📌</span>为什么</div>
+<div class="sn-item" data-step="s-practice"><span class="sn-icon">🎯</span>实操</div>
+<div class="sn-item" data-step="s-insight"><span class="sn-icon">💡</span>原理</div>
+<div class="sn-item" data-step="s-consolidate"><span class="sn-icon">🔁</span>巩固</div>
+</div>
+<!-- 📌 Explain -->
+<div class="section module" data-tag="core:explain" id="s-explain">
+<div class="section-title">📌 读文献最耗时的不是读，是筛选</div>
+<div class="section-desc">3分钟 · 搞清你的时间都花在哪了</div>
+<div class="content">
+<p>做综述最头大的不是写，是<strong>前期</strong>——几十上百篇文献，每篇都得扫标题、看摘要、判断有没有用。等你好不容易筛出20篇能用的，精力已经耗了大半。</p>
+<p><strong>问题出在：你把筛选和精读混在一起做了。</strong></p>
+<p>正确的顺序应该是：先粗筛 → 再精读。而AI在"粗筛"这一步是最擅长的——它读摘要的速度比你快100倍。</p>
+<div class="ex-pair">
+<div class="ex-item ex-bad">
+<div class="ex-label">❌ 大多数人这样</div>
+打开第一篇 → 从头读到尾 → 做完笔记 → 打开第二篇 → 读到一半累了
+</div>
+<div class="ex-item ex-good">
+<div class="ex-label">✅ 换种流程</div>
+把10篇摘要扔给AI → AI告诉你每篇的核心发现和方法 → 你从中挑出3篇最相关的精读
+</div>
+</div>
+<p>这节不教你"让AI帮你写论文"，而是教你<strong>用AI加速文献筛选和归纳</strong>——你仍然自己读核心文献、自己写综述的判断，但省掉大量的重复劳动。</p>
+<h3>这节课学完你能做到</h3>
+<div class="goal-list">
+<div class="goal-item"><span class="goal-check">✓</span> 用AI快速扫描文献摘要，判断是否值得精读</div>
+<div class="goal-item"><span class="goal-check">✓</span> 让AI帮你按主题归纳多篇文献的核心观点</div>
+<div class="goal-item"><span class="goal-check">✓</span> <w d='AI会编造看起来真实但不存在的引用信息'>识别AI编造的虚假引用</w></div>
+</div>
+</div>
+</div>
+<!-- 🎯 Practice -->
+<div class="section module" data-tag="P:practice" id="s-practice">
+<div class="section-title">🎯 动手实操</div>
+<div class="section-desc">15分钟 · 三步让AI帮你筛文献写综述</div>
+<div class="content">
+<div class="module" data-tag="P:step1">
+<div class="step-box">
+<div class="step-title"><span class="step-num">1</span> 批量让AI帮你筛文献</div>
+<div class="step-body">
+<p>从Google Scholar/知网/PubMed等地方搜到一摞文献后，直接把摘要批量发给AI：</p>
+<div class="code-block">以下是关于[你的研究主题]的10篇文献摘要。请帮我做两件事：
+1. 每篇用一句话概括核心发现
+2. 按[相关度从高到低]排序，标出最值得精读的3篇
+
+[粘贴摘要1]
+[粘贴摘要2]
+...</div>
+<p>AI不会真的去读原文，但基于摘要判断相关度它做得很好。AI帮你筛完，你只需要精读它推荐的那几篇。</p>
+<div class="callout callout-tip">
+<strong>批量小技巧：</strong>一次不要超过10篇。AI对超长文本的处理会变差。10篇一轮，做完一轮再做下一轮。
+</div>
+</div>
+</div>
+</div>
+<div class="module" data-tag="P:step2">
+<div class="step-box">
+<div class="step-title"><span class="step-num">2</span> 让AI帮你归纳观点</div>
+<div class="step-body">
+<p>筛出核心文献后，让AI帮你整理这些文献在各个维度上的观点差异：</p>
+<div class="code-block">以下是我筛选出的8篇文献（已附摘要），我想了解它们关于[你的具体研究问题]的不同观点。
+请帮我整理一个表格，含以下列：
+- 文献编号／作者年份
+- 核心观点
+- 研究方法
+- 结论倾向（支持/反对/中立）
+
+最后帮我归纳：这个领域目前存在哪些共识和争议。</div>
+<p>拿到AI的整理后，你就有了一张<strong>文献地图</strong>——哪篇说了什么、哪些观点互相矛盾、哪些达成了共识，一目了然。</p>
+</div>
+</div>
+</div>
+<div class="module" data-tag="P:step3">
+<div class="step-box">
+<div class="step-title"><span class="step-num">3</span> 防坑：AI会编造不存在的文献</div>
+<div class="step-body">
+<p>这是最重要的一步。很多人不知道，AI会<strong>生成看起来真实但实际不存在的引用</strong>——这叫 <w d='AI会自信地给出虚假信息，尤其是虚构引用'>AI幻觉</w>。</p>
+<p style="font-weight:600;margin:8px 0 4px">怎么防：</p>
+<ol>
+<li><strong>绝对不要直接引用AI推荐的文献</strong> — 它经常编造作者、标题、期刊</li>
+<li><strong>让AI帮你"整理"已有文献</strong>，而不是"推荐"文献 — 你给它文献，它分析。而不是让它凭空给你</li>
+<li>如果一定要用AI找文献，加上这句：<w d='让AI给你搜索结果的链接而不是凭空推荐'>"给出每篇文献的DOI或可查证的链接"</w></li>
+</ol>
+<div class="code-block">❌ 不要这样问：
+"帮我推荐5篇关于AI在教育领域应用的文献"
+→ AI会编造看起来真实但不存在的结果
+
+✅ 应该这样：
+"以下是我找到的8篇文献的摘要，请帮我分析它们的观点差异"
+→ AI基于你给的文献做分析，不虚构</div>
+<div class="callout callout-danger">
+<strong>这是红线：</strong>期刊编辑和导师一眼就能看出AI编造的引用，因为它会编出完全没发表过的论文。学术诚信是底线，用AI辅助可以，但别让它帮你"找"文献，让它帮你"分析"你找好的文献。
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- 💡 Insight -->
+<div class="section module" data-tag="core:insight" id="s-insight">
+<div class="section-title">💡 理解为什么</div>
+<div class="section-desc">5分钟 · AI不是来替代你读文献的，是帮你聚焦</div>
+<div class="content">
+<h3>核心原理：把重复劳动交给AI，把判断留给自己</h3>
+<table class="cmp-table">
+<tr><th></th><th>AI擅长的</th><th>你必须自己做的</th></tr>
+<tr><td>粗筛摘要</td><td>✅ 快速扫读和排序</td><td></td></tr>
+<tr><td>归纳观点</td><td>✅ 整理表格和对比</td><td></td></tr>
+<tr><td>核实文献存在</td><td></td><td>✅ 必须你自己做</td></tr>
+<tr><td>理解研究方法</td><td></td><td>✅ 需要学术判断力</td></tr>
+<tr><td>提出批判性意见</td><td></td><td>✅ 这是综述的价值所在</td></tr>
+<tr><td>撰写综述的判断</td><td></td><td>✅ 你的学术观点不可替代</td></tr>
+</table>
+<p><strong>AI不是"帮我写综述"的工具，是"帮我从文献堆里快速找到我该看什么"的工具。</strong></p>
+<h3>这个套路能迁移到哪</h3>
+<ul>
+<li><strong>写开题报告</strong> — 先让AI帮你梳理现有研究方向有哪些、哪些已经做过了</li>
+<li><strong>写实验方法部分</strong> — 让AI帮你对比不同方法的优缺点，你选最合适的</li>
+<li><strong>做文献汇报PPT</strong> — 让AI把多篇文献的观点整理成PPT大纲</li>
+<li><strong>写论文引言</strong> — 让AI总结研究背景和现状，你在此基础上提出你的研究缺口</li>
+</ul>
+<div class="callout callout-warn">
+<strong>一个提醒：</strong>AI对学术文献的理解深度有限。它擅长"归纳"但不擅长"批判"。一篇文献的方法论有什么漏洞、结论是否站得住，这些必须你自己判断。AI只是加速了你前期筛选的速度，你需要读的量其实没少。
+</div>
+</div>
+</div>
+<!-- 🔁 Consolidate -->
+<div class="section module" data-tag="optional:consolidate" id="s-consolidate">
+<div class="section-title">🔁 巩固练习</div>
+<div class="section-desc">5分钟 · 下一轮写文献综述就用这个流程</div>
+<div class="content">
+<div class="callout callout-tip">
+<strong>下次写综述时试试：</strong>打开你的文献管理工具，挑出10篇文献的摘要，按照三步操作（筛→归纳→核实），走完一轮。看看你原来要花多长时间筛选，现在用了多久。
+</div>
+<h3>进阶挑战</h3>
+<div class="challenge">
+<div class="ch-title">✅ 挑战1：交叉验证</div>
+<div class="ch-desc">把你的核心文献给两个不同的AI工具（比如DeepSeek和Kimi），让它们分别整理观点，对比结果。两家一致的结论可信度高，有分歧的地方你重点自己看原文。</div>
+</div>
+<div class="challenge">
+<div class="ch-title">✅ 挑战2：用AI做文献关系图</div>
+<div class="ch-desc">让AI帮你梳理文献的引用脉络："这8篇文献中，哪些引用了其他，哪些互为竞争关系？画一个简单的关系图说明。" 这能帮你找到领域的核心文献。</div>
+</div>
+<div class="challenge">
+<div class="ch-title">✅ 挑战3：反查AI分析</div>
+<div class="ch-desc">AI说某篇文献"提出了XXXX观点"，你找到那篇原文自己读一下，看AI的描述是否准确。这个习惯能帮你建立对AI输出质量的判断力。</div>
+</div>
+<h3>同类型迁移</h3>
+<p style="font-size:13px;color:#636366;margin-top:4px">"让AI做粗筛，自己做判断"的思路还能用在：</p>
+<ul>
+<li><strong>找学术期刊投稿</strong> — 给AI你的论文摘要和主题，让它推荐适合投稿的期刊</li>
+<li><strong>整理实验数据</strong> — 给AI原始数据，让它做初步分析，你判断分析合理性</li>
+<li><strong>写文献批评</strong> — 让AI列出文献的共同假设，你再思考这个假设本身是否成立</li>
+</ul>
+</div>
+</div>
+<!-- 一劳永逸 -->
+<div class="section" data-tag="core:summary" style="background:linear-gradient(135deg,#e8f5e9,#c8e6c9);border:none;text-align:center">
+<h3 style="font-size:18px;margin-bottom:8px;color:#2e7d32">⚡ 一劳永逸</h3>
+<p style="font-size:13px;color:#2e7d32;margin-bottom:8px">以后写文献综述的流程：</p>
+<div class="code-block" style="background:#fff;text-align:left">1. 搜文献 → 批量贴摘要给AI → 让AI筛出最相关篇
+2. 精读AI推荐的文献 → 再批量贴给AI做观点归纳
+3. 拿到AI的整理表 → 核实关键文献确认存在 → 开写</div>
+<div style="margin-top:10px;font-size:15px;color:#2e7d32;font-weight:600">
+  🎉 以后你的文献筛选时间，省至少一半
+</div>
+</div>
+</div>
+<div class="tip-box" id="tipBox">
+<div class="tip-title">📖 术语</div>
+<span class="tip-close" id="tipClose">&times;</span>
+<div id="tipDesc">暂无释义</div>
+</div>
+<script>
+(function(){
+  var tb=document.getElementById("tipBox"),td=document.getElementById("tipDesc"),tc=document.getElementById("tipClose");
+  if(tb&&td){
+    document.querySelectorAll("w").forEach(function(el){
+      el.addEventListener("click",function(e){
+        e.stopPropagation();
+        td.textContent=this.getAttribute("d")||"暂无释义";
+        tb.querySelector(".tip-title").textContent="📖 "+this.textContent.trim();
+        var r=this.getBoundingClientRect(),w=tb.offsetWidth||280,left=Math.max(10,Math.min(r.left+r.width/2-w/2,document.body.clientWidth-w-10)),top=r.top-8-tb.offsetHeight;
+        if(top<10)top=r.bottom+10;
+        tb.style.left=left+"px";tb.style.top=top+"px";tb.style.display="block";
+        document.querySelectorAll("w.active").forEach(function(w){w.classList.remove("active")});
+        this.classList.add("active");
+      });
+    });
+    function ht(){tb.style.display="none";document.querySelectorAll("w.active").forEach(function(w){w.classList.remove("active")})}
+    tc.addEventListener("click",ht);
+    document.addEventListener("click",function(e){if(!e.target.closest("w")&&!e.target.closest(".tip-box"))ht()});
+    document.addEventListener("keydown",function(e){if(e.key==="Escape")ht()});
+  }
+  var nav=document.getElementById("stepNav");
+  if(nav){
+    var S=["s-explain","s-practice","s-insight","s-consolidate"];
+    nav.addEventListener("click",function(e){
+      var it=e.target.closest(".sn-item");if(!it)return;
+      var id=it.getAttribute("data-step"),el=document.getElementById(id);
+      if(el)el.scrollIntoView({behavior:"smooth",block:"start"});
+      var idx=S.indexOf(id);
+      for(var i=0;i<nav.children.length;i++)nav.children[i].classList.toggle("active",i===idx);
+    });
+    var st;
+    function uas(){
+      var bi=0,bd=Infinity;
+      S.forEach(function(id,i){
+        var el=document.getElementById(id);
+        if(el){var t=Math.abs(el.getBoundingClientRect().top);if(t<bd){bd=t;bi=i}}
+      });
+      for(var i=0;i<nav.children.length;i++)nav.children[i].classList.toggle("active",i===bi);
+    }
+    document.addEventListener("scroll",function(){clearTimeout(st);st=setTimeout(uas,100)});
+    uas();
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+.env
+.DS_Store
+03_程序/__pycache__/

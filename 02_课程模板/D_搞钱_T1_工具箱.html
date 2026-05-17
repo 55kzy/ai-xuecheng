@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>AI学程 — 搞钱先搞工具</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;background:#f5f7fa;color:#1d1d1f;padding-bottom:60px}
+  .header{background:linear-gradient(135deg,#1d1d1f 0%,#3a3a3c 100%);color:#fff;padding:32px 20px 28px;text-align:center}
+  .header .badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(255,255,255,.12);margin-bottom:10px;color:rgba(255,255,255,.7)}
+  .header h1{font-size:22px;font-weight:700;margin-bottom:6px;letter-spacing:-.3px}
+  .header .meta{font-size:13px;color:rgba(255,255,255,.55);display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+  .header .tag-free{display:inline-block;padding:4px 12px;border-radius:20px;background:rgba(52,199,89,.2);color:#34c759;font-size:12px;font-weight:600;margin-top:12px}
+  .container{max-width:680px;margin:0 auto;padding:0 16px}
+  .step-nav{display:flex;gap:8px;padding:16px 0;overflow-x:auto;position:sticky;top:0;background:#f5f7fa;z-index:10;border-bottom:1px solid rgba(0,0,0,.06)}
+  .step-nav .sn-item{flex:1;min-width:0;padding:8px 6px;border-radius:10px;border:1.5px solid #e5e5ea;font-size:11px;text-align:center;transition:all .15s;white-space:nowrap;background:rgba(255,255,255,.6);color:#636366;cursor:pointer}
+  .step-nav .sn-item.active{border-color:#007aff;background:#e8f2ff;color:#007aff;font-weight:600}
+  .step-nav .sn-item .sn-icon{display:block;font-size:14px;margin-bottom:2px}
+  .section{margin:16px 0;background:rgba(255,255,255,.85);backdrop-filter:blur(20px);border-radius:20px;padding:20px;border:1px solid rgba(255,255,255,.6);box-shadow:0 2px 12px rgba(0,0,0,.04)}
+  .section-title{font-size:16px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .section-desc{font-size:13px;color:#636366;margin-bottom:10px;line-height:1.6}
+  .content{font-size:14px;line-height:1.8;color:#1d1d1f}
+  .content h3{font-size:15px;margin:16px 0 6px}
+  .content p{margin-bottom:8px}
+  .content ul,.content ol{padding-left:18px;margin-bottom:10px}
+  .content li{margin-bottom:4px}
+  .callout{padding:12px 14px;border-radius:12px;margin:12px 0;font-size:13px;line-height:1.6;border-left:3px solid}
+  .callout-tip{background:rgba(0,122,255,.06);border-color:#007aff;color:#1d1d1f}
+  .callout-warn{background:rgba(255,149,0,.08);border-color:#ff9500;color:#1d1d1f}
+  .callout-danger{background:rgba(255,59,48,.06);border-color:#ff3b30;color:#1d1d1f}
+  .callout-green{background:rgba(52,199,89,.08);border-color:#34c759;color:#1d1d1f}
+  .code-block{background:#f0f2f5;border-radius:10px;padding:12px 14px;font-family:'Courier New',monospace;font-size:13px;line-height:1.6;white-space:pre-wrap;word-break:break-word;margin:8px 0}
+  .cmp-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
+  .cmp-table th,.cmp-table td{padding:8px 10px;border:1px solid #e5e5ea;text-align:left}
+  .cmp-table th{background:rgba(0,0,0,.03);font-weight:600;font-size:12px;color:#636366}
+  .challenge{background:rgba(255,255,255,.4);border:1px solid #e5e5ea;border-radius:12px;padding:12px 14px;margin:8px 0}
+  .challenge .ch-title{font-weight:600;font-size:13px;margin-bottom:4px}
+  .challenge .ch-desc{font-size:12px;color:#636366;line-height:1.5}
+  .step-box{background:rgba(0,122,255,.04);border-radius:12px;padding:14px;margin:10px 0;border:1px solid rgba(0,122,255,.12)}
+  .step-box .step-num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:#007aff;color:#fff;font-size:12px;font-weight:700;margin-right:6px;flex-shrink:0}
+  .step-box .step-title{font-weight:600;font-size:14px;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+  .step-box .step-body{font-size:13px;line-height:1.7;color:#1d1d1f}
+  .goal-list{display:flex;flex-direction:column;gap:6px;margin:10px 0}
+  .goal-item{display:flex;align-items:center;gap:8px;font-size:13px;padding:4px 0}
+  .goal-check{width:18px;height:18px;border-radius:50%;background:#34c759;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+  w{cursor:pointer;border-bottom:1.5px dashed #007aff;color:#007aff;font-weight:500;position:relative;transition:background .15s}
+  w:hover{background:rgba(0,122,255,.06)}
+  w.active{background:rgba(0,122,255,.12)}
+  .tip-box{position:fixed;z-index:9999;display:none;background:#1d1d1f;color:#fff;border-radius:10px;padding:10px 14px;max-width:300px;font-size:13px;line-height:1.6;box-shadow:0 8px 24px rgba(0,0,0,.2);animation:tipIn .2s ease}
+  .tip-box .tip-title{font-weight:600;margin-bottom:3px;color:rgba(255,255,255,.6);font-size:11px}
+  .tip-box .tip-close{position:absolute;top:6px;right:8px;cursor:pointer;font-size:14px;color:rgba(255,255,255,.4);line-height:1;border:none;background:none;padding:2px}
+  .tip-box .tip-close:hover{color:#fff}
+  .tip-box::after{content:'';position:absolute;left:50%;bottom:-6px;margin-left:-6px;border:6px solid transparent;border-top-color:#1d1d1f}
+  @keyframes tipIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+  .tool-card{background:rgba(255,255,255,.6);border:1px solid #e5e5ea;border-radius:12px;padding:12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start}
+  .tool-card .tc-icon{font-size:18px;flex-shrink:0;width:28px;text-align:center;padding-top:2px}
+  .tool-card .tc-info{flex:1}
+  .tool-card .tc-name{font-weight:600;font-size:14px;margin-bottom:2px}
+  .tool-card .tc-desc{font-size:12px;color:#636366;line-height:1.5}
+  .tool-card .tc-tag{display:inline-block;padding:1px 8px;border-radius:10px;background:rgba(52,199,89,.12);color:#2e7d32;font-size:10px;font-weight:600;margin-top:4px}
+</style>
+</head>
+<body>
+<div class="header">
+<div class="badge">AI搞钱 · T1 基础免费</div>
+<h1>💰 搞钱先搞工具：AI副业工具箱</h1>
+<p style="font-size:14px;color:rgba(255,255,255,.7);margin-bottom:8px">不同类型的副业，用不同的AI工具</p>
+<div class="meta">
+<span>⏱ 约25分钟</span>
+<span>📄 图文课</span>
+<span>💻 需要能上网</span>
+</div>
+<div class="tag-free">🆓 免费</div>
+</div>
+<div class="container">
+<div class="step-nav" id="stepNav">
+<div class="sn-item active" data-step="s-explain"><span class="sn-icon">📌</span>为什么</div>
+<div class="sn-item" data-step="s-practice"><span class="sn-icon">🎯</span>实操</div>
+<div class="sn-item" data-step="s-insight"><span class="sn-icon">💡</span>原理</div>
+<div class="sn-item" data-step="s-consolidate"><span class="sn-icon">🔁</span>巩固</div>
+</div>
+
+<!-- 📌 Explain -->
+<div class="section module" data-tag="core:explain" id="s-explain">
+<div class="section-title">📌 你会用AI搞钱吗？</div>
+<div class="section-desc">3分钟 · 先看看你是不是"工具焦虑"</div>
+<div class="content">
+<p>你是不是这样：听说AI能搞副业，兴致勃勃打开小红书，发现推荐了30个AI工具。你下载了5个，每个都试了10分钟，要么觉得太难要么觉得效果一般，最后全删了。</p>
+<p><strong>问题不在工具，在你没有"按副业类型分类选工具"的思维。</strong></p>
+<p>你问"怎么用AI搞钱"，就像问"怎么用电脑赚钱"——太笼统了。关键是<strong>先决定搞什么类型的钱，再配什么AI工具</strong>。</p>
+
+<div class="callout callout-warn">
+<strong>看看你属于哪种？</strong><br/><br/>
+<strong>❌ 错误做法：</strong><br/>
+"我听说即梦能生成图片，我下载了，用了一下就关掉了——不知道用这个图赚什么钱。"<br/><br/>
+<strong>✅ 正确做法：</strong><br/>
+"我想做小红书带货，需要配图。搜了一下，即梦和通义万相都能生成商品展示图，通义免费的够我用。我先用通义做10张图试试效果。"<br/><br/>
+<strong>差别：</strong>前者是"工具驱动"（有什么工具做什么），后者是"需求驱动"（想做什么事才找工具）。<br/>这节课就是帮你建立<strong>需求→工具</strong>的映射，而不是掉进"工具太多不知道选哪个"的坑。
+</div>
+
+<h3>这节课学完你能做到</h3>
+<div class="goal-list">
+<div class="goal-item"><span class="goal-check">✓</span> 能根据自己选的副业类型，快速锁定该用哪类AI工具</div>
+<div class="goal-item"><span class="goal-check">✓</span> 知道每个副业领域最常用的免费工具有哪些</div>
+<div class="goal-item"><span class="goal-check">✓</span> 不再被"工具收割"——学会了才买，而不是买了才学</div>
+</div>
+</div>
+</div>
+
+<!-- 🎯 Practice -->
+<div class="section module" data-tag="P:practice" id="s-practice">
+<div class="section-title">🎯 动手实操</div>
+<div class="section-desc">15分钟 · 三步搭好你的AI副业工具箱</div>
+<div class="content">
+
+<div class="module" data-tag="P:step1">
+<div class="step-box">
+<div class="step-title"><span class="step-num">1</span> 选副业类型 → 对工具分类</div>
+<div class="step-body">
+<p>AI副业大致分四类，各自需要的AI工具链不同：</p>
+<table class="cmp-table">
+<tr><th>副业类型</th><th>主要用AI做什么</th><th>核心工具类别</th></tr>
+<tr><td>✍️ 内容创作（图文/短视频）</td><td>写文案、做封面、生成素材</td><td>聊天AI + 文生图 + 剪辑</td></tr>
+<tr><td>🎨 设计服务（头像/海报/PPT）</td><td>做图、做PPT、做Logo</td><td>文生图 + AI设计工具</td></tr>
+<tr><td>📊 数据/咨询（分析/调研）</td><td>整理数据、写报告、方案</td><td>聊天AI + AI搜索 + 数据分析</td></tr>
+<tr><td>💻 技术服务（写代码/自动化）</td><td>写脚本、做工具、搭网站</td><td>AI编程 + 聊天AI</td></tr>
+</table>
+<p>先选一个你感兴趣的方向，然后看它对应的工具类别。别贪多——<strong>一个方向试一个月</strong>，再决定换不换。</p>
+</div>
+</div>
+</div>
+
+<div class="module" data-tag="P:step2">
+<div class="step-box">
+<div class="step-title"><span class="step-num">2</span> 每个方向配一套免费工具组合</div>
+<div class="step-body">
+<p>选取你上一部选的方向，看看对应的免费工具链：</p>
+
+<div class="tool-card">
+<div class="tc-icon">✍️</div>
+<div class="tc-info">
+<div class="tc-name">内容创作组合</div>
+<div class="tc-desc"><strong>DeepSeek</strong>（写文案） + <strong>即梦</strong>（免费额度做封面图） + <strong>剪映</strong>（剪辑） = 零成本做图文/短视频</div>
+<div class="tc-tag">全免费</div>
+</div>
+</div>
+
+<div class="tool-card">
+<div class="tc-icon">🎨</div>
+<div class="tc-info">
+<div class="tc-name">设计服务组合</div>
+<div class="tc-desc"><strong>通义万相</strong>（免费做图） + <strong>AI PPT</strong>（Gamma/Gamma免费版） + <strong>Canva AI</strong>（免费版够入门）</div>
+<div class="tc-tag">全免费</div>
+</div>
+</div>
+
+<div class="tool-card">
+<div class="tc-icon">📊</div>
+<div class="tc-info">
+<div class="tc-name">数据咨询组合</div>
+<div class="tc-desc"><strong>秘塔AI搜索</strong>（带来源的研究） + <strong>ChatGPT/DeepSeek</strong>（整理分析） + <strong>通义千问</strong>的数据分析功能</div>
+<div class="tc-tag">全免费</div>
+</div>
+</div>
+
+<div class="tool-card">
+<div class="tc-icon">💻</div>
+<div class="tc-info">
+<div class="tc-name">技术服务组合</div>
+<div class="tc-desc"><strong>Continue插件</strong>（IDE内AI辅助） + <strong>DeepSeek API</strong>（极便宜） + <strong>Cloudflare Workers</strong>（免费部署）</div>
+<div class="tc-tag">几乎免费</div>
+</div>
+</div>
+
+<p>这四套组合<strong>一分钱不花</strong>就能开始接单。先不买任何付费工具，用免费版接3单，确认方向对了再考虑付费升级。</p>
+</div>
+</div>
+</div>
+
+<div class="module" data-tag="P:step3">
+<div class="step-box">
+<div class="step-title"><span class="step-num">3</span> 第一单之前先准备好"作品库"</div>
+<div class="step-body">
+<p>别等客户来了才做——<strong>先用AI给自己做一套作品</strong>：</p>
+<div class="code-block">1. 选一个你做的方向（比如"做小红书画册封面"）
+2. 用对应的AI工具（即梦）做出3-5个作品
+3. 发到朋友圈或小红书，看哪个反响好
+4. 反响最好的那个就是你的"样板单"
+5. 拿着样板单问朋友："你觉得这种值多少钱？"</div>
+<p>这一步不是为了赚钱，是为了<strong>验证你选的工具组合能不能出活</strong>。如果自己都做不出满意的作品，说明工具不对或方向不对。</p>
+<div class="callout callout-tip">
+<strong>小技巧：</strong>做样品的prompt存成一个文档，以后接单直接复用。一个AI副业者的核心竞争力，就是<strong>积累了什么样的prompt模板</strong>。
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<!-- 💡 Insight -->
+<div class="section module" data-tag="core:insight" id="s-insight">
+<div class="section-title">💡 理解为什么</div>
+<div class="section-desc">5分钟 · "工具"不是问题，"选工具的思维"才是</div>
+<div class="content">
+<h3>核心原理：需求驱动 vs 工具驱动</h3>
+<p>大多数人搞AI副业的死法：</p>
+<table class="cmp-table">
+<tr><th></th><th>注定失败</th><th>更容易成功</th></tr>
+<tr><td>第一步</td><td>下载了10个AI工具</td><td>确定一个副业方向</td></tr>
+<tr><td>第二步</td><td>每个工具都试了一遍</td><td>选了这个方向对应的1-2个工具</td></tr>
+<tr><td>第三步</td><td>觉得"工具都不行"</td><td>用这1-2个工具出了第一个作品</td></tr>
+<tr><td>结果</td><td>放弃</td><td>开始接单</td></tr>
+</table>
+<p><strong>工具本身不值钱，你知道用它干什么才值钱。</strong></p>
+<p>AI工具的变化速度极快，今年最火的工具明年可能就过时了。但<strong>你选方向的眼光、你积累的prompt模板、你接单的流程——这些不会过时</strong>。</p>
+
+<h3>这个能力能迁移到哪</h3>
+<ul>
+<li><strong>任何新AI工具出来</strong> — 你会先问"它对应我哪个副业场景"，而不是先下载</li>
+<li><strong>帮别人推荐工具</strong> — 你会先问"你想做什么"，而不是直接甩工具名</li>
+<li><strong>判断是否该付费</strong> — 免费版能不能出3单？能就不用升级，不能就说明方向可能错了</li>
+</ul>
+</div>
+</div>
+
+<!-- 🔁 Consolidate -->
+<div class="section module" data-tag="optional:consolidate" id="s-consolidate">
+<div class="section-title">🔁 巩固练习</div>
+<div class="section-desc">5分钟 · 开始动手</div>
+<div class="content">
+<div class="callout callout-tip">
+<strong>今天做一次：</strong>打开备忘录，选一个你想试的AI副业方向。然后找到这节课对应的工具组合，下载一个免费工具，今天出第一个作品——哪怕只是"用即梦生成了一张图"。
+</div>
+
+<h3>进阶挑战</h3>
+<div class="challenge">
+<div class="ch-title">✅ 挑战1：存一份个人prompt模板库</div>
+<div class="ch-desc">今天用AI工具出了第一个作品后，把你用的prompt存到一个文档里。以后每次出一个有用的prompt就存进去。一个月后你会有10-20个可直接复用的模板。</div>
+</div>
+<div class="challenge">
+<div class="ch-title">✅ 挑战2：在闲鱼上挂一个服务</div>
+<div class="ch-desc">拿你的"样板单"去闲鱼挂一个AI服务（比如AI做头像、AI文案改写）。标一个低价（9.9元起步）。不是为了赚钱，是为了体验从发单到交付的完整流程。</div>
+</div>
+<div class="challenge">
+<div class="ch-title">✅ 挑战3：3个工具各出一版</div>
+<div class="ch-desc">同一件事（比如"为咖啡店设计一张小红书封面图"），用三个不同的AI文生图工具各出一版。对比哪家的效果最适合你这个方向。建立你自己的工具评测库。</div>
+</div>
+
+<h3>这节课只是个开始</h3>
+<p style="font-size:13px;color:#636366;margin-top:4px">工具选对了，接下来更大的挑战是：</p>
+<ul>
+<li><strong>找到真正的需求</strong> — 不是"我会用AI"，而是"别人愿意为什么AI服务买单"</li>
+<li><strong>定价和沟通</strong> — 怎么跟客户沟通需求、定合理价格、管理预期</li>
+<li><strong>持续出单</strong> — 从一个月接1单到稳定接单</li>
+</ul>
+<p>这些在<strong>T2进阶课</strong>里会结合真实案例系统讲解——从"会用AI工具"到"用AI赚到第一笔钱"。你现在的工具箱，就是上路的第一个装备。</p>
+</div>
+</div>
+
+<!-- 一劳永逸 -->
+<div class="section" data-tag="core:summary" style="background:linear-gradient(135deg,#e8f5e9,#c8e6c9);border:none;text-align:center">
+<h3 style="font-size:18px;margin-bottom:8px;color:#2e7d32">⚡ 一劳永逸</h3>
+<p style="font-size:13px;color:#2e7d32;margin-bottom:8px">以后看到AI副业新工具：</p>
+<div class="code-block" style="background:#fff;text-align:left;color:#1d1d1f">停，先问自己：它属于我哪个副业场景？
+如果答不上来 → 别下载，记个笔记就好
+如果答得上来 → 用免费版出一份作品再决定</div>
+<div style="margin-top:10px;font-size:15px;color:#2e7d32;font-weight:600">
+  🎉 你不是在集工具，是在建自己的赚钱流水线
+</div>
+</div>
+</div>
+
+<div class="tip-box" id="tipBox">
+<div class="tip-title">📖 术语</div>
+<span class="tip-close" id="tipClose">&times;</span>
+<div id="tipDesc">暂无释义</div>
+</div>
+<script>
+(function(){
+  var tb=document.getElementById("tipBox"),td=document.getElementById("tipDesc"),tc=document.getElementById("tipClose");
+  if(tb&&td){
+    document.querySelectorAll("w").forEach(function(el){
+      el.addEventListener("click",function(e){
+        e.stopPropagation();
+        td.textContent=this.getAttribute("d")||"暂无释义";
+        tb.querySelector(".tip-title").textContent="📖 "+this.textContent.trim();
+        var r=this.getBoundingClientRect(),w=tb.offsetWidth||280,left=Math.max(10,Math.min(r.left+r.width/2-w/2,document.body.clientWidth-w-10)),top=r.top-8-tb.offsetHeight;
+        if(top<10)top=r.bottom+10;
+        tb.style.left=left+"px";tb.style.top=top+"px";tb.style.display="block";
+        document.querySelectorAll("w.active").forEach(function(w){w.classList.remove("active")});
+        this.classList.add("active");
+      });
+    });
+    function ht(){tb.style.display="none";document.querySelectorAll("w.active").forEach(function(w){w.classList.remove("active")})}
+    tc.addEventListener("click",ht);
+    document.addEventListener("click",function(e){if(!e.target.closest("w")&&!e.target.closest(".tip-box"))ht()});
+    document.addEventListener("keydown",function(e){if(e.key==="Escape")ht()});
+  }
+  var nav=document.getElementById("stepNav");
+  if(nav){
+    var S=["s-explain","s-practice","s-insight","s-consolidate"];
+    nav.addEventListener("click",function(e){
+      var it=e.target.closest(".sn-item");if(!it)return;
+      var id=it.getAttribute("data-step"),el=document.getElementById(id);
+      if(el)el.scrollIntoView({behavior:"smooth",block:"start"});
+      var idx=S.indexOf(id);
+      for(var i=0;i<nav.children.length;i++)nav.children[i].classList.toggle("active",i===idx);
+    });
+    var st;
+    function uas(){
+      var bi=0,bd=Infinity;
+      S.forEach(function(id,i){
+        var el=document.getElementById(id);
+        if(el){var t=Math.abs(el.getBoundingClientRect().top);if(t<bd){bd=t;bi=i}}
+      });
+      for(var i=0;i<nav.children.length;i++)nav.children[i].classList.toggle("active",i===bi);
+    }
+    document.addEventListener("scroll",function(){clearTimeout(st);st=setTimeout(uas,100)});
+    uas();
+  }
+})();
+</script>
+</body>
+</html>

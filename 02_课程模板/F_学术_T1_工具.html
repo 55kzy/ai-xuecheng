@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>AI学程 — 学术研究AI工具箱</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;background:#f5f7fa;color:#1d1d1f;padding-bottom:60px}
+  .header{background:linear-gradient(135deg,#1d1d1f 0%,#3a3a3c 100%);color:#fff;padding:32px 20px 28px;text-align:center}
+  .header .badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(255,255,255,.12);margin-bottom:10px;color:rgba(255,255,255,.7)}
+  .header h1{font-size:22px;font-weight:700;margin-bottom:6px;letter-spacing:-.3px}
+  .header .meta{font-size:13px;color:rgba(255,255,255,.55);display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+  .header .meta span{display:inline-flex;align-items:center;gap:4px}
+  .header .tag-free{display:inline-block;padding:4px 12px;border-radius:20px;background:rgba(52,199,89,.2);color:#34c759;font-size:12px;font-weight:600;margin-top:12px}
+  .container{max-width:680px;margin:0 auto;padding:0 16px}
+  .step-nav{display:flex;gap:8px;padding:16px 0;overflow-x:auto;position:sticky;top:0;background:#f5f7fa;z-index:10;border-bottom:1px solid rgba(0,0,0,.06)}
+  .step-nav .sn-item{flex:1;min-width:0;padding:8px 6px;border-radius:10px;border:1.5px solid #e5e5ea;font-size:11px;text-align:center;transition:all .15s;white-space:nowrap;background:rgba(255,255,255,.6);color:#636366;cursor:pointer}
+  .step-nav .sn-item.active{border-color:#007aff;background:#e8f2ff;color:#007aff;font-weight:600}
+  .step-nav .sn-item .sn-icon{display:block;font-size:14px;margin-bottom:2px}
+  .section{margin:16px 0;background:rgba(255,255,255,.85);backdrop-filter:blur(20px);border-radius:20px;padding:20px;border:1px solid rgba(255,255,255,.6);box-shadow:0 2px 12px rgba(0,0,0,.04)}
+  .section-title{font-size:16px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .section-desc{font-size:13px;color:#636366;margin-bottom:10px;line-height:1.6}
+  .content{font-size:14px;line-height:1.8;color:#1d1d1f}
+  .content h3{font-size:15px;margin:16px 0 6px}
+  .content p{margin-bottom:8px}
+  .content ul,.content ol{padding-left:18px;margin-bottom:10px}
+  .content li{margin-bottom:4px}
+  .callout{padding:12px 14px;border-radius:12px;margin:12px 0;font-size:13px;line-height:1.6;border-left:3px solid}
+  .callout-tip{background:rgba(0,122,255,.06);border-color:#007aff;color:#1d1d1f}
+  .callout-warn{background:rgba(255,149,0,.08);border-color:#ff9500;color:#1d1d1f}
+  .callout-green{background:rgba(52,199,89,.08);border-color:#34c759;color:#1d1d1f}
+  .code-block{background:#f0f2f5;border-radius:10px;padding:12px 14px;font-family:'Courier New',monospace;font-size:13px;line-height:1.6;white-space:pre-wrap;word-break:break-word;margin:8px 0}
+  .cmp-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
+  .cmp-table th,.cmp-table td{padding:8px 10px;border:1px solid #e5e5ea;text-align:left}
+  .cmp-table th{background:rgba(0,0,0,.03);font-weight:600;font-size:12px;color:#636366}
+  .challenge{background:rgba(255,255,255,.4);border:1px solid #e5e5ea;border-radius:12px;padding:12px 14px;margin:8px 0}
+  .challenge .ch-title{font-weight:600;font-size:13px;margin-bottom:4px}
+  .challenge .ch-desc{font-size:12px;color:#636366;line-height:1.5}
+  .step-box{background:rgba(0,122,255,.04);border-radius:12px;padding:14px;margin:10px 0;border:1px solid rgba(0,122,255,.12)}
+  .step-box .step-num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:#007aff;color:#fff;font-size:12px;font-weight:700;margin-right:6px;flex-shrink:0}
+  .step-box .step-title{font-weight:600;font-size:14px;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+  .step-box .step-body{font-size:13px;line-height:1.7;color:#1d1d1f}
+  .goal-list{display:flex;flex-direction:column;gap:6px;margin:10px 0}
+  .goal-item{display:flex;align-items:center;gap:8px;font-size:13px;padding:4px 0}
+  .goal-check{width:18px;height:18px;border-radius:50%;background:#34c759;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+  w{cursor:pointer;border-bottom:1.5px dashed #007aff;color:#007aff;font-weight:500;position:relative;transition:background .15s}
+  w:hover{background:rgba(0,122,255,.06)}
+  w.active{background:rgba(0,122,255,.12)}
+  .tip-box{position:fixed;z-index:9999;display:none;background:#1d1d1f;color:#fff;border-radius:10px;padding:10px 14px;max-width:300px;font-size:13px;line-height:1.6;box-shadow:0 8px 24px rgba(0,0,0,.2);animation:tipIn .2s ease}
+  .tip-box .tip-title{font-weight:600;margin-bottom:3px;color:rgba(255,255,255,.6);font-size:11px}
+  .tip-box .tip-close{position:absolute;top:6px;right:8px;cursor:pointer;font-size:14px;color:rgba(255,255,255,.4);line-height:1;border:none;background:none;padding:2px}
+  .tip-box .tip-close:hover{color:#fff}
+  .tip-box::after{content:'';position:absolute;left:50%;bottom:-6px;margin-left:-6px;border:6px solid transparent;border-top-color:#1d1d1f}
+  @keyframes tipIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+<div class="header">
+<div class="badge">学术应用 · T1 基础免费</div>
+<h1>学术研究AI工具箱</h1>
+<p style="font-size:14px;color:rgba(255,255,255,.7);margin-bottom:8px">从查文献到写论文，全流程AI工具搭配指南</p>
+<div class="meta">
+<span>⏱ 约25分钟</span>
+<span>📄 图文课</span>
+<span>🛠 需AI聊天工具</span>
+</div>
+<div class="tag-free">🆓 免费</div>
+</div>
+<div class="container">
+<div class="step-nav" id="stepNav"><div class="sn-item active" data-step="s-explain"><span class="sn-icon">📌</span>为什么</div><div class="sn-item" data-step="s-practice"><span class="sn-icon">🎯</span>实操</div><div class="sn-item" data-step="s-insight"><span class="sn-icon">💡</span>原理</div><div class="sn-item" data-step="s-consolidate"><span class="sn-icon">🔁</span>巩固</div></div>
+<div class="module section" data-tag="core:explain" id="s-explain">
+<div class="section-title">📌 学术研究不止"让AI写论文"</div>
+<div class="section-desc">3分钟 · 从开题到投稿，每个环节都有对应的AI工具</div>
+<div class="content">
+<p>很多学生用AI做学术，只做一件事——"帮我写一段论文"。然后被导师说"这段像AI写的"。</p>
+<p>问题不是AI不行，是你只用了一种用法。</p>
+<p>学术研究的完整流程至少包括：<strong>定题 → 文献检索 → 文献管理 → 文献阅读 → 框架搭建 → 初稿写作 → 数据/实验 → 润色修改 → 查重 → 投稿</strong>。</p>
+<p>每个环节都有对应的AI工具。这节课给你一张完整的工具地图。</p>
+<h3>这节课学完你能做到</h3>
+<div class="goal-list"><div class="goal-item"><span class="goal-check">✓</span> 知道学术全流程各环节有什么AI工具</div><div class="goal-item"><span class="goal-check">✓</span> 学会文献检索+阅读+管理的AI搭配用法</div><div class="goal-item"><span class="goal-check">✓</span> 建立自己的学术AI工作流</div></div>
+</div>
+</div>
+<div class="module section" data-tag="P:practice" id="s-practice">
+<div class="section-title">🎯 动手实操</div>
+<div class="section-desc">15分钟 · 走一遍学术研究AI流程</div>
+<div class="content">
+<div class="module" data-tag="P:step1"><div class="step-box">
+<div class="step-title"><span class="step-num">1</span> 文献检索 & 管理</div>
+<div class="step-body">
+<h3 style="margin:10px 0 4px">AI辅助文献检索</h3>
+<p>可以用AI帮你定位研究方向，找关键文献：</p>
+<div class="code-block">我正在研究[XX主题]，帮我：
+1. 列出这个领域的10篇关键文献（要真实存在的）
+2. 按引用量/影响力排序
+3. 每篇用一句话概括核心贡献
+4. 告诉我哪些是综述文章（review）</div>
+<p><strong>注意：</strong>AI列出的文献可能编造。把列出来的文献名去Google Scholar搜一遍确认存在。</p>
+<h3 style="margin:10px 0 4px">文献管理工具推荐</h3>
+<table class="cmp-table">
+<tr><th>工具</th><th>做什么</th><th>AI集成</th></tr>
+<tr><td><strong>Zotero</strong></td><td>免费文献管理</td><td>有插件可接入AI</td></tr>
+<tr><td><strong>Connected Papers</strong></td><td>可视化文献关联</td><td>直接输入论文名看关系图</td></tr>
+<tr><td><strong>Elicit</strong></td><td>AI文献分析</td><td>用AI提取论文方法/结果</td></tr>
+</table>
+</div>
+</div></div>
+<div class="module" data-tag="P:step2"><div class="step-box">
+<div class="step-title"><span class="step-num">2</span> 文献阅读 & 提炼</div>
+<div class="step-body">
+<p>拿到文献后，用AI加速阅读和理解：</p>
+<h3 style="margin:10px 0 4px">AI读文献三问法</h3>
+<div class="code-block">以下是一篇论文的摘要（粘贴内容）：
+请帮我：
+1. 用三句话概括这篇论文做了什么
+2. 核心创新点是什么
+3. 这篇论文的局限性有哪些（作者自己提到的）</div>
+<p>如果AI支持上传文档（如Kimi、通义千问），直接把PDF扔给它。</p>
+<h3 style="margin:10px 0 4px">横向对比多篇文献</h3>
+<div class="code-block">以下是3篇相关论文的摘要：
+[摘要1]
+[摘要2]
+[摘要3]
+请帮我：
+1. 这三篇的共同研究方向是什么？
+2. 各自的方法有什么不同？
+3. 哪篇的研究方法最严谨？为什么？</div>
+<div class="callout callout-tip"><strong>Kimi特别适合这个：</strong>它支持一次读20万字，把几篇文献全文贴进去让AI做对比分析。</div>
+</div>
+</div></div>
+<div class="module" data-tag="P:step3"><div class="step-box">
+<div class="step-title"><span class="step-num">3</span> 论文润色 & 查重</div>
+<div class="step-body">
+<p>写完初稿后的AI用法：</p>
+<h3 style="margin:10px 0 4px">学术润色prompt</h3>
+<div class="code-block">以下是我写的论文段落，请按学术论文标准帮我润色：
+- 保持学术语气但不要过度复杂
+- 修正语法错误
+- 检查逻辑是否通顺
+- 标注有疑问或需要补充引用之处
+
+[粘贴你的段落]</div>
+<h3 style="margin:10px 0 4px">降重/改写</h3>
+<p>如果需要降低重复率，不要用AI"换词改写"（那会被查重系统识别），而是：</p>
+<div class="code-block">这段话重复率可能偏高，请帮我用不同的逻辑结构重新表达，
+保持原意但改变句式顺序和表达方式：
+[粘贴内容]</div>
+<div class="callout callout-warn"><strong>重要提醒：</strong>学校要求"不得使用AI生成的内容"的情况下，AI只适合做"润色"和"整理"，不适合做"代写"。区别是：你自己写的内容让AI改语言，vs AI给你生成了你直接粘贴。前者通常允许，后者可能违规。</div>
+</div>
+</div></div>
+</div>
+</div>
+<div class="module section" data-tag="core:insight" id="s-insight">
+<div class="section-title">💡 理解为什么</div>
+<div class="section-desc">5分钟 · 学术AI工具的核心用法</div>
+<div class="content">
+<h3>AI是"学术加速器"，不是"学术替身"</h3>
+<p>正确的学术AI使用姿势：</p>
+<table class="cmp-table">
+<tr><th>环节</th><th>AI能做的</th><th>AI不能做的</th></tr>
+<tr><td>定题</td><td>帮你梳理领域脉络</td><td>替你决定研究方向</td></tr>
+<tr><td>文献检索</td><td>推荐关键词策略</td><td>保证列出的文献全部真实</td></tr>
+<tr><td>文献阅读</td><td>快速总结摘要</td><td>替代你精读核心文献</td></tr>
+<tr><td>论文写作</td><td>润色语言、组织逻辑</td><td>替你写需要你原创的部分</td></tr>
+<tr><td>数据分析</td><td>建议分析方法</td><td>替代你做实验</td></tr>
+</table>
+<h3>跟已有学术课的区别</h3>
+<ul>
+<li><strong>F·P文献课</strong> — 教prompt技巧筛文献（单点技巧）</li>
+<li><strong>F·L核实课</strong> — 教验证AI给出的学术信息（核验）</li>
+<li><strong>这节F·K工具课</strong> — 教全流程的工具搭配（全景地图）</li>
+</ul>
+<div class="callout callout-warn"><strong>红线：</strong>任何时候不要让AI替你生成论文的核心观点和创新点。那是学术不端。AI只辅助你"更快地做好研究"，不替代你"做研究本身"。</div>
+</div>
+</div>
+<div class="module section" data-tag="optional:consolidate" id="s-consolidate">
+<div class="section-title">🔁 巩固练习</div>
+<div class="section-desc">5分钟 · 跑通你的学术AI流程</div>
+<div class="content">
+<div class="callout callout-tip"><strong>明天做一次：</strong>挑一篇你最近要读的文献，用AI读文献三问法让AI帮你总结。然后自己去读一遍原文，对比AI总结和你理解的差距。</div>
+<h3>进阶挑战</h3>
+<div class="challenge"><div class="ch-title">✅ 挑战1：建一个文献分析工作台</div><div class="ch-desc">在AI的新建对话里，贴入你的研究方向背景，然后让AI扮演"你的研究助手"。每找到一篇新文献就丢进去让AI更新你的文献地图。</div></div>
+<div class="challenge"><div class="ch-title">✅ 挑战2：AI辅助润色实操</div><div class="ch-desc">把你写的一段论文发给AI润色，对比原文和润色版。接受AI的改法但不盲从——每处修改都要理解为什么这样改。</div></div>
+<div class="challenge"><div class="ch-title">✅ 挑战3：工具组合测试</div><div class="ch-desc">同一个研究问题，分别用Elicit / Kimi / 通义千问来辅助分析。对比三者的输出差异，找出最适合你的工具组合。</div></div>
+</div>
+</div>
+<div class="module section" data-tag="core:summary" style="background:linear-gradient(135deg,#e8f5e9,#c8e6c9);border:none;text-align:center">
+<h3 style="font-size:18px;margin-bottom:8px;color:#2e7d32">⚡ 记住一句话</h3>
+<p style="font-size:13px;color:#2e7d32;margin-bottom:8px">**AI加速你的研究，但研究本身还是你的。**</p>
+<div class="code-block" style="background:#fff;text-align:left">学术AI流程：
+文献检索（AI推荐+自己核实）
+→ 阅读（AI三问法总结）  
+→ 写作（AI润色不改核心）
+→ 交稿（你负全责）</div>
+<div style="margin-top:10px;font-size:15px;color:#2e7d32;font-weight:600">🎉 你的学术研究效率至少翻倍</div>
+</div>
+</div>
+<div class="tip-box" id="tipBox"><div class="tip-title">📖 术语</div><button class="tip-close" id="tipClose">&times;</button><div id="tipDesc"></div></div>
+<script>
+(function(){
+  var tb=document.getElementById("tipBox"),td=document.getElementById("tipDesc"),tc=document.getElementById("tipClose");
+  if(tb&&td){
+    document.querySelectorAll("w").forEach(function(el){
+      el.addEventListener("click",function(e){
+        e.stopPropagation();td.textContent=this.getAttribute("d")||"暂无释义";tb.querySelector(".tip-title").textContent="📖 "+this.textContent.trim();
+        var r=this.getBoundingClientRect(),w=tb.offsetWidth||280,left=Math.max(10,Math.min(r.left+r.width/2-w/2,document.body.clientWidth-w-10)),top=r.top-8-tb.offsetHeight;
+        if(top<10)top=r.bottom+10;tb.style.left=left+"px";tb.style.top=top+"px";tb.style.display="block";
+        document.querySelectorAll("w.active").forEach(function(w){w.classList.remove("active")});this.classList.add("active");
+      });
+    });
+    function ht(){tb.style.display="none";document.querySelectorAll("w.active").forEach(function(w){w.classList.remove("active")})}
+    tc.addEventListener("click",ht);document.addEventListener("click",function(e){if(!e.target.closest("w")&&!e.target.closest(".tip-box"))ht()});document.addEventListener("keydown",function(e){if(e.key==="Escape")ht()});
+  }
+  var nav=document.getElementById("stepNav");
+  if(nav){
+    var S=["s-explain","s-practice","s-insight","s-consolidate"];
+    nav.addEventListener("click",function(e){var it=e.target.closest(".sn-item");if(!it)return;var id=it.getAttribute("data-step"),el=document.getElementById(id);if(el)el.scrollIntoView({behavior:"smooth",block:"start"});var idx=S.indexOf(id);for(var i=0;i<nav.children.length;i++)nav.children[i].classList.toggle("active",i===idx);});
+    var st;function uas(){var bi=0,bd=Infinity;S.forEach(function(id,i){var el=document.getElementById(id);if(el){var t=Math.abs(el.getBoundingClientRect().top);if(t<bd){bd=t;bi=i}}});for(var i=0;i<nav.children.length;i++)nav.children[i].classList.toggle("active",i===bi);}
+    document.addEventListener("scroll",function(){clearTimeout(st);st=setTimeout(uas,100)});uas();
+  }
+})();
+</script>
+<script>
+(function(){
+  var p=new URLSearchParams(location.search),c=p.get("cut");
+  if(c){var INFO={"P:step1":{l:"第一步·文献检索与管理",d:"AI帮你定位文献+管理工具推荐"},"P:step2":{l:"第二步·文献阅读与提炼",d:"AI三问法快速理解文献"},"P:step3":{l:"第三步·论文润色与查重",d:"学术润色+降重但不学术不端"}};var MSGS=["看起来你已经有一定基础了，帮你跳过基础","看来你对这部分比较熟悉了，跳过基础内容","你已经有不错的基础了，直接看后面的总结就好"];var E=[];tags=c.split(",");tags.forEach(function(t){t=t.trim();var n=INFO[t];if(n){var el=document.querySelector('[data-tag="'+t+'"]');if(el)E.push({el:el,info:n});}});if(E.length>0){E.forEach(function(x){var el=x.el,info=x.info,bar=document.createElement("div");bar.style.cssText="padding:10px 14px;margin:10px 0;border-radius:12px;background:rgba(255,149,0,.06);border:1.5px dashed rgba(255,149,0,.25);font-size:13px;cursor:pointer;transition:all .2s;user-select:none";bar.innerHTML='<div style="display:flex;align-items:center;justify-content:space-between"><span style="font-weight:600;color:#e65100">⏭ '+info.l+'<span style="font-size:11px;color:rgba(230,81,0,.5);margin-left:8px">已跳过</span></span><span style="font-size:11px;color:rgba(230,81,0,.4)">▼ 展开</span></div>'+(info.d?'<div style="font-size:11px;color:rgba(0,0,0,.3);margin-top:3px;padding-left:24px">'+info.d+'</div>':'');var p=el.parentNode;if(p){p.insertBefore(bar,el);el.style.display="none";bar.onclick=function(){var h=el.style.display==="none";el.style.display=h?"":"none";bar.style.borderStyle=h?"solid":"dashed";bar.style.background=h?"rgba(255,149,0,.15)":"rgba(255,149,0,.06)";bar.querySelector("span:last-child").innerHTML=h?"▲ 收起":"▼ 展开";};}});var midx=Math.min(E.length-1,MSGS.length-1),msg=MSGS[midx];var ov=document.createElement("div");ov.id="skip-overlay";ov.style.cssText="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.25);z-index:10000;display:flex;align-items:center;justify-content:center;animation:fadeIn .3s ease";ov.innerHTML='<div style="background:#fff;border-radius:20px;padding:28px 24px;max-width:340px;width:90%;box-shadow:0 8px 40px rgba(0,0,0,.12);text-align:center"><div style="font-size:36px;margin-bottom:10px">👏</div><div style="font-size:16px;font-weight:600;margin-bottom:8px;color:#1d1d1f">已帮你跳过基础步骤</div><div style="font-size:13px;color:#636366;line-height:1.7">'+msg+'</div><button onclick="document.body.removeChild(document.getElementById(\'skip-overlay\'))" style="margin-top:14px;padding:9px 28px;border:none;border-radius:12px;background:#007aff;color:#fff;font-size:14px;font-weight:600;cursor:pointer;box-shadow:0 4px 12px rgba(0,122,255,.25)">好的，开始学习</button><span onclick="document.body.removeChild(document.getElementById(\'skip-overlay\'))" style="position:absolute;top:10px;right:14px;cursor:pointer;font-size:18px;color:rgba(0,0,0,.2)">&times;</span></div>';ov.onclick=function(e){if(e.target===ov)document.body.removeChild(ov);};document.body.appendChild(ov);var st=document.createElement("style");st.textContent="@keyframes fadeIn{from{opacity:0}to{opacity:1}}";document.head.appendChild(st);}
+  }
+})();
+</script>
+</body>
+</html>

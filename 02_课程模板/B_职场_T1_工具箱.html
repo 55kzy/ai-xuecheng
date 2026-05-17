@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>AI学程 — 三步锁定你要的AI工具</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;background:#f5f7fa;color:#1d1d1f;padding-bottom:60px}
+  .header{background:linear-gradient(135deg,#1d1d1f 0%,#3a3a3c 100%);color:#fff;padding:32px 20px 28px;text-align:center}
+  .header .badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(255,255,255,.12);margin-bottom:10px;color:rgba(255,255,255,.7)}
+  .header h1{font-size:22px;font-weight:700;margin-bottom:6px;letter-spacing:-.3px}
+  .header .meta{font-size:13px;color:rgba(255,255,255,.55);display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+  .header .tag-free{display:inline-block;padding:4px 12px;border-radius:20px;background:rgba(52,199,89,.2);color:#34c759;font-size:12px;font-weight:600;margin-top:12px}
+  .container{max-width:680px;margin:0 auto;padding:0 16px}
+  .step-nav{display:flex;gap:8px;padding:16px 0;overflow-x:auto;position:sticky;top:0;background:#f5f7fa;z-index:10;border-bottom:1px solid rgba(0,0,0,.06)}
+  .step-nav .sn-item{flex:1;min-width:0;padding:8px 6px;border-radius:10px;border:1.5px solid #e5e5ea;font-size:11px;text-align:center;transition:all .15s;white-space:nowrap;background:rgba(255,255,255,.6);color:#636366;cursor:pointer}
+  .step-nav .sn-item.active{border-color:#007aff;background:#e8f2ff;color:#007aff;font-weight:600}
+  .step-nav .sn-item .sn-icon{display:block;font-size:14px;margin-bottom:2px}
+  .section{margin:16px 0;background:rgba(255,255,255,.85);backdrop-filter:blur(20px);border-radius:20px;padding:20px;border:1px solid rgba(255,255,255,.6);box-shadow:0 2px 12px rgba(0,0,0,.04)}
+  .section-title{font-size:16px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .section-desc{font-size:13px;color:#636366;margin-bottom:10px;line-height:1.6}
+  .content{font-size:14px;line-height:1.8;color:#1d1d1f}
+  .content h3{font-size:15px;margin:16px 0 6px}
+  .content p{margin-bottom:8px}
+  .content ul,.content ol{padding-left:18px;margin-bottom:10px}
+  .content li{margin-bottom:4px}
+  .callout{padding:12px 14px;border-radius:12px;margin:12px 0;font-size:13px;line-height:1.6;border-left:3px solid}
+  .callout-tip{background:rgba(0,122,255,.06);border-color:#007aff;color:#1d1d1f}
+  .callout-warn{background:rgba(255,149,0,.08);border-color:#ff9500;color:#1d1d1f}
+  .callout-danger{background:rgba(255,59,48,.06);border-color:#ff3b30;color:#1d1d1f}
+  .callout-green{background:rgba(52,199,89,.08);border-color:#34c759;color:#1d1d1f}
+  .code-block{background:#f0f2f5;border-radius:10px;padding:12px 14px;font-family:'Courier New',monospace;font-size:13px;line-height:1.6;white-space:pre-wrap;word-break:break-word;margin:8px 0}
+  .cmp-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
+  .cmp-table th,.cmp-table td{padding:8px 10px;border:1px solid #e5e5ea;text-align:left}
+  .cmp-table th{background:rgba(0,0,0,.03);font-weight:600;font-size:12px;color:#636366}
+  .challenge{background:rgba(255,255,255,.4);border:1px solid #e5e5ea;border-radius:12px;padding:12px 14px;margin:8px 0}
+  .challenge .ch-title{font-weight:600;font-size:13px;margin-bottom:4px}
+  .challenge .ch-desc{font-size:12px;color:#636366;line-height:1.5}
+  .step-box{background:rgba(0,122,255,.04);border-radius:12px;padding:14px;margin:10px 0;border:1px solid rgba(0,122,255,.12)}
+  .step-box .step-num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:#007aff;color:#fff;font-size:12px;font-weight:700;margin-right:6px;flex-shrink:0}
+  .step-box .step-title{font-weight:600;font-size:14px;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+  .step-box .step-body{font-size:13px;line-height:1.7;color:#1d1d1f}
+  .goal-list{display:flex;flex-direction:column;gap:6px;margin:10px 0}
+  .goal-item{display:flex;align-items:center;gap:8px;font-size:13px;padding:4px 0}
+  .goal-check{width:18px;height:18px;border-radius:50%;background:#34c759;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+  w{cursor:pointer;border-bottom:1.5px dashed #007aff;color:#007aff;font-weight:500;position:relative;transition:background .15s}
+  w:hover{background:rgba(0,122,255,.06)}
+  w.active{background:rgba(0,122,255,.12)}
+  .tip-box{position:fixed;z-index:9999;display:none;background:#1d1d1f;color:#fff;border-radius:10px;padding:10px 14px;max-width:300px;font-size:13px;line-height:1.6;box-shadow:0 8px 24px rgba(0,0,0,.2);animation:tipIn .2s ease}
+  .tip-box .tip-title{font-weight:600;margin-bottom:3px;color:rgba(255,255,255,.6);font-size:11px}
+  .tip-box .tip-close{position:absolute;top:6px;right:8px;cursor:pointer;font-size:14px;color:rgba(255,255,255,.4);line-height:1;border:none;background:none;padding:2px}
+  .tip-box .tip-close:hover{color:#fff}
+  .tip-box::after{content:'';position:absolute;left:50%;bottom:-6px;margin-left:-6px;border:6px solid transparent;border-top-color:#1d1d1f}
+  @keyframes tipIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+<div class="header">
+<div class="badge">职场应用 · T1 基础免费</div>
+<h1>🧰 三步锁定你要的AI工具</h1>
+<p style="font-size:14px;color:rgba(255,255,255,.7);margin-bottom:8px">一张地图搞定AI工具选择</p>
+<div class="meta">
+<span>⏱ 约25分钟</span>
+<span>📄 图文课</span>
+<span>💻 需要能上网</span>
+</div>
+<div class="tag-free">🆓 免费</div>
+</div>
+<div class="container">
+<div class="step-nav" id="stepNav">
+<div class="sn-item active" data-step="s-explain"><span class="sn-icon">📌</span>为什么</div>
+<div class="sn-item" data-step="s-practice"><span class="sn-icon">🎯</span>实操</div>
+<div class="sn-item" data-step="s-insight"><span class="sn-icon">💡</span>原理</div>
+<div class="sn-item" data-step="s-consolidate"><span class="sn-icon">🔁</span>巩固</div>
+</div>
+<!-- 📌 Explain -->
+<div class="section module" data-tag="core:explain" id="s-explain">
+<div class="section-title">📌 为什么你感觉AI工具挑花了眼</div>
+<div class="section-desc">3分钟 · 先理清问题</div>
+<div class="content">
+<p>每天都有新的AI工具冒出来，今天说这个最牛，明天说那个更好。你试了一个又一个，结果每个都只用了两三次，没有一个坚持用下来的。</p>
+<p><strong>问题不在工具不够好，而是你没有一个判断标准。</strong></p>
+<p>这节不教你怎么用某个具体工具，而是教你——<strong>怎么根据你的需求选工具</strong>。</p>
+<p>AI工具五花八门，但按功能分其实就几大类：</p>
+<table class="cmp-table">
+<tr><th>能力</th><th>代表工具</th><th>最适合干嘛</th></tr>
+<tr><td>📝 文字聊天</td><td>ChatGPT / Claude / DeepSeek</td><td>写作、分析、头脑风暴、总结</td></tr>
+<tr><td>🎨 文生图</td><td>Midjourney / DALL-E / 即梦</td><td>配图、封面、插画、海报</td></tr>
+<tr><td>🎬 视频/音频</td><td>剪映AI / 可灵 / Sora</td><td>短视频素材、配音、剪辑</td></tr>
+<tr><td>📊 数据处理</td><td>ChatGPT数据分析 / 通义千问</td><td>分析表格、做图表、整理数据</td></tr>
+<tr><td>🔍 搜索/信息</td><td>Perplexity / 秘塔 / 天工</td><td>查资料、研究、写报告初稿</td></tr>
+</table>
+<p>关键不是哪个工具最强，而是<strong>你要做什么事，哪个工具最合适</strong>。</p>
+<h3>这节课学完你能做到</h3>
+<div class="goal-list">
+<div class="goal-item"><span class="goal-check">✓</span> 弄清AI工具的分类地图，知道各工具适合干吗</div>
+<div class="goal-item"><span class="goal-check">✓</span> 根据你的实际需求选对工具，不白花时间试错</div>
+<div class="goal-item"><span class="goal-check">✓</span> 判断一个AI工具值不值得学</div>
+</div>
+</div>
+</div>
+<!-- 🎯 Practice -->
+<div class="section module" data-tag="P:practice" id="s-practice">
+<div class="section-title">🎯 动手实操</div>
+<div class="section-desc">15分钟 · 三步理清你的工具选择逻辑</div>
+<div class="content">
+<div class="module" data-tag="P:step1">
+<div class="step-box">
+<div class="step-title"><span class="step-num">1</span> 列需求：你要AI帮你做什么</div>
+<div class="step-body">
+<p>别先看工具有什么功能。先问自己一个问题：<strong>"我最近最想用AI解决什么具体问题？"</strong></p>
+<p>打开备忘录，写下来。写不出来的话，看看有没有这些场景：</p>
+<div class="code-block">□ 写周报/邮件/方案（→ 聊天类工具就够了）
+□ 做PPT/做汇报（→ 聊天类 + 生成大纲能力）
+□ 给文章/视频配图（→ 文生图工具）
+□ 分析Excel数据（→ 支持数据分析的聊天工具）
+□ 查某个行业的资料（→ AI搜索工具）
+□ 做短视频（→ 视频生成/编辑工具）
+□ 做设计/修图（→ AI图片编辑工具）
+□ 整理大量文件/笔记（→ AI知识库工具）</div>
+<p>照着这张清单勾一下，你最迫切需要解决的就2-3个方向，不是全部。这就是你的<strong>入门路线图</strong>。</p>
+</div>
+</div>
+</div>
+<div class="module" data-tag="P:step2">
+<div class="step-box">
+<div class="step-title"><span class="step-num">2</span> 选一个工具，用够一星期</div>
+<div class="step-body">
+<p>很多人犯的错误：今天试A，明天试B，每个都刚摸到皮毛就换。结果哪个都没学会。</p>
+<p><strong>正确做法：</strong>从需求清单里选出最重要的那个方向，只挑一个工具，用满一周。</p>
+<p style="font-weight:600;margin:8px 0 4px">选工具的简易判断法：</p>
+<ol>
+<li><strong>你主要写东西</strong> → DeepSeek或Kimi（免费可用，中文支持好）</li>
+<li><strong>你主要做分析/查资料</strong> → 秘塔AI搜索（免费，带来源链接）</li>
+<li><strong>你主要做图</strong> → 即梦或通义万相（免费额度够入门）</li>
+<li><strong>你全都要</strong> → ChatGPT（功能全面，但需要付费订阅）</li>
+</ol>
+<p>选定一个以后，这一周里所有能用AI的场景都用它，不换。一周后你自然知道它够不够用、哪方面不足。</p>
+</div>
+</div>
+</div>
+<div class="module" data-tag="P:step3">
+<div class="step-box">
+<div class="step-title"><span class="step-num">3</span> 做判断：这个工具值不值得深入学</div>
+<div class="step-body">
+<p>用了一周后，用这几个标准判断值不值得继续学：</p>
+<div class="callout callout-green" style="margin:8px 0">
+<strong>值得继续的信号：</strong><br/>
+✅ 它帮我解决了特定场景的问题<br/>
+✅ 用了几天后，我自愿想用它而不是"应该用"<br/>
+✅ 就算有不足，也有办法绕过或用替代方案弥补
+</div>
+<div class="callout callout-warn">
+<strong>该换的信号：</strong><br/>
+⚠️ 用了一周，它要的功能总差一点点<br/>
+⚠️ 操作太复杂，每次用之前都犹豫<br/>
+⚠️ 它有替代品，免费的能做到90%
+</div>
+<p>别怕换。前面花的精力不是浪费，你建立的<strong>使用思路</strong>（prompt怎么写、工作流怎么搭）换工具照样能用。</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- 💡 Insight -->
+<div class="section module" data-tag="core:insight" id="s-insight">
+<div class="section-title">💡 理解为什么</div>
+<div class="section-desc">5分钟 · 你不是在学工具，是在学"选工具的思维"</div>
+<div class="content">
+<h3>核心原理：需求驱动，不是功能驱动</h3>
+<p>大多数人选AI工具的方向反了：</p>
+<table class="cmp-table">
+<tr><th></th><th>大多数人这样</th><th>你应该这样</th></tr>
+<tr><td>出发点</td><td>"哪个工具最牛？"</td><td>"我现在最烦什么事？"</td></tr>
+<tr><td>选法</td><td>看评测、看排名、下载一堆</td><td>列需求、挑一个、用一周</td></tr>
+<tr><td>结果</td><td>每个都浅尝辄止，没一个深入</td><td>有一个趁手工具，逐渐形成工作流</td></tr>
+</table>
+<p>AI工具更新极快，今天最强的不代表明天还是。但<strong>你判断需求的能力、用工具解决问题的思路，这些不会过时</strong>。</p>
+<h3>这个能力能迁移到哪</h3>
+<ul>
+<li><strong>换工具不慌</strong> — 学会"判断法"后，任何新工具出来，你都能快速判断值不值得学</li>
+<li><strong>不怕技术更新</strong> — AI工具半年一轮，但"我先想自己要什么再挑工具"这个习惯永远有用</li>
+<li><strong>省钱省时间</strong> — 不用看到推广就冲动付费，花一周时间验证再决定</li>
+</ul>
+<div class="callout callout-warn">
+<strong>一句话总结：</strong>工具是消耗品，选择能力才是你的。以后不管出什么新AI工具，你都知道该不该试、值不值得花时间学。
+</div>
+</div>
+</div>
+<!-- 🔁 Consolidate -->
+<div class="section module" data-tag="optional:consolidate" id="s-consolidate">
+<div class="section-title">🔁 巩固练习</div>
+<div class="section-desc">5分钟 · 建立自己的工具选择框架</div>
+<div class="content">
+<div class="callout callout-tip">
+<strong>今天做一次：</strong>打开备忘录，写下你最近最想用AI解决的三件事。然后对照上面的工具分类表，每个方向选一个工具，写在旁边。这个就是你的"AI工具采购清单"，按这个清单一个一个试。
+</div>
+<h3>进阶挑战</h3>
+<div class="challenge">
+<div class="ch-title">✅ 挑战1：退订那些不用的</div>
+<div class="ch-desc">检查一下你手机/电脑上装了但超过一周没打开的AI工具，卸载或取消订阅。聚焦精力。</div>
+</div>
+<div class="challenge">
+<div class="ch-title">✅ 挑战2：写一份"我的AI工具清单"</div>
+<div class="ch-desc">把你真正在用的AI工具（1-3个）列出来，每个写一条"我用它主要做什么"。这份清单就是你的工具箱，清晰知道自己用什么。</div>
+</div>
+<div class="challenge">
+<div class="ch-title">✅ 挑战3：当一个新工具出来时</div>
+<div class="ch-desc">下次看到AI新工具推广，先不下载。停下来想3个问题：它解决什么我已有的痛点？和我现在用的比优势在哪？免费额度够我验证吗？</div>
+</div>
+<h3>同类型迁移</h3>
+<p style="font-size:13px;color:#636366;margin-top:4px">"先列需求再选方案"的思路还能用在：</p>
+<ul>
+<li><strong>选AI课程</strong> — 先想清楚自己缺什么能力，再挑课，不跟风买课</li>
+<li><strong>选AI工具付费方案</strong> — 先用免费版用一周，确定真的需要再付费</li>
+<li><strong>向老板推荐AI工具</strong> — 按需求-方案的逻辑提建议，比说"这个很火"有说服力</li>
+</ul>
+</div>
+</div>
+<!-- 一劳永逸 -->
+<div class="section" data-tag="core:summary" style="background:linear-gradient(135deg,#e8f5e9,#c8e6c9);border:none;text-align:center">
+<h3 style="font-size:18px;margin-bottom:8px;color:#2e7d32">⚡ 一劳永逸</h3>
+<p style="font-size:13px;color:#2e7d32;margin-bottom:8px">存好这个选择流程，以后任何时候面对新AI工具：</p>
+<div class="code-block" style="background:#fff;text-align:left">1. 列需求 → 我最近最烦的事是什么？
+2. 对分类 → 这个工具属于哪一类？
+3. 试用一周 → 真的解决痛点了吗？
+4. 做决定 → 留下 or 换下一个</div>
+<div style="margin-top:10px;font-size:15px;color:#2e7d32;font-weight:600">
+  🎉 以后你再也不怕"工具太多不知道学哪个"了
+</div>
+</div>
+</div>
+<div class="tip-box" id="tipBox">
+<div class="tip-title">📖 术语</div>
+<span class="tip-close" id="tipClose">&times;</span>
+<div id="tipDesc">暂无释义</div>
+</div>
+<script>
+(function(){
+  var tb=document.getElementById("tipBox"),td=document.getElementById("tipDesc"),tc=document.getElementById("tipClose");
+  if(tb&&td){
+    document.querySelectorAll("w").forEach(function(el){
+      el.addEventListener("click",function(e){
+        e.stopPropagation();
+        td.textContent=this.getAttribute("d")||"暂无释义";
+        tb.querySelector(".tip-title").textContent="📖 "+this.textContent.trim();
+        var r=this.getBoundingClientRect(),w=tb.offsetWidth||280,left=Math.max(10,Math.min(r.left+r.width/2-w/2,document.body.clientWidth-w-10)),top=r.top-8-tb.offsetHeight;
+        if(top<10)top=r.bottom+10;
+        tb.style.left=left+"px";tb.style.top=top+"px";tb.style.display="block";
+        document.querySelectorAll("w.active").forEach(function(w){w.classList.remove("active")});
+        this.classList.add("active");
+      });
+    });
+    function ht(){tb.style.display="none";document.querySelectorAll("w.active").forEach(function(w){w.classList.remove("active")})}
+    tc.addEventListener("click",ht);
+    document.addEventListener("click",function(e){if(!e.target.closest("w")&&!e.target.closest(".tip-box"))ht()});
+    document.addEventListener("keydown",function(e){if(e.key==="Escape")ht()});
+  }
+  var nav=document.getElementById("stepNav");
+  if(nav){
+    var S=["s-explain","s-practice","s-insight","s-consolidate"];
+    nav.addEventListener("click",function(e){
+      var it=e.target.closest(".sn-item");if(!it)return;
+      var id=it.getAttribute("data-step"),el=document.getElementById(id);
+      if(el)el.scrollIntoView({behavior:"smooth",block:"start"});
+      var idx=S.indexOf(id);
+      for(var i=0;i<nav.children.length;i++)nav.children[i].classList.toggle("active",i===idx);
+    });
+    var st;
+    function uas(){
+      var bi=0,bd=Infinity;
+      S.forEach(function(id,i){
+        var el=document.getElementById(id);
+        if(el){var t=Math.abs(el.getBoundingClientRect().top);if(t<bd){bd=t;bi=i}}
+      });
+      for(var i=0;i<nav.children.length;i++)nav.children[i].classList.toggle("active",i===bi);
+    }
+    document.addEventListener("scroll",function(){clearTimeout(st);st=setTimeout(uas,100)});
+    uas();
+  }
+})();
+</script>
+</body>
+</html>

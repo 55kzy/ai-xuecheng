@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>AI学程 — 程序员的AI工具箱</title>
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:-apple-system,'PingFang SC','Microsoft YaHei',sans-serif;background:#f5f7fa;color:#1d1d1f;padding-bottom:60px}
+  .header{background:linear-gradient(135deg,#1a1a2e 0%,#16213e 100%);color:#fff;padding:32px 20px 28px;text-align:center}
+  .header .badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600;background:rgba(255,255,255,.12);margin-bottom:10px;color:rgba(255,255,255,.7)}
+  .header h1{font-size:22px;font-weight:700;margin-bottom:6px;letter-spacing:-.3px}
+  .header .meta{font-size:13px;color:rgba(255,255,255,.55);display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+  .header .tag-free{display:inline-block;padding:4px 12px;border-radius:20px;background:rgba(52,199,89,.2);color:#34c759;font-size:12px;font-weight:600;margin-top:12px}
+  .container{max-width:680px;margin:0 auto;padding:0 16px}
+  .step-nav{display:flex;gap:8px;padding:16px 0;overflow-x:auto;position:sticky;top:0;background:#f5f7fa;z-index:10;border-bottom:1px solid rgba(0,0,0,.06)}
+  .step-nav .sn-item{flex:1;min-width:0;padding:8px 6px;border-radius:10px;border:1.5px solid #e5e5ea;font-size:11px;text-align:center;transition:all .15s;white-space:nowrap;background:rgba(255,255,255,.6);color:#636366;cursor:pointer}
+  .step-nav .sn-item.active{border-color:#007aff;background:#e8f2ff;color:#007aff;font-weight:600}
+  .step-nav .sn-item .sn-icon{display:block;font-size:14px;margin-bottom:2px}
+  .section{margin:16px 0;background:rgba(255,255,255,.85);backdrop-filter:blur(20px);border-radius:20px;padding:20px;border:1px solid rgba(255,255,255,.6);box-shadow:0 2px 12px rgba(0,0,0,.04)}
+  .section-title{font-size:16px;font-weight:700;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .section-desc{font-size:13px;color:#636366;margin-bottom:10px;line-height:1.6}
+  .content{font-size:14px;line-height:1.8;color:#1d1d1f}
+  .content h3{font-size:15px;margin:16px 0 6px}
+  .content p{margin-bottom:8px}
+  .content ul,.content ol{padding-left:18px;margin-bottom:10px}
+  .content li{margin-bottom:4px}
+  .callout{padding:12px 14px;border-radius:12px;margin:12px 0;font-size:13px;line-height:1.6;border-left:3px solid}
+  .callout-tip{background:rgba(0,122,255,.06);border-color:#007aff;color:#1d1d1f}
+  .callout-warn{background:rgba(255,149,0,.08);border-color:#ff9500;color:#1d1d1f}
+  .callout-danger{background:rgba(255,59,48,.06);border-color:#ff3b30;color:#1d1d1f}
+  .callout-green{background:rgba(52,199,89,.08);border-color:#34c759;color:#1d1d1f}
+  .code-block{background:#1e1e2e;border-radius:10px;padding:12px 14px;font-family:'Cascadia Code','Fira Code','JetBrains Mono',monospace;font-size:13px;line-height:1.6;white-space:pre-wrap;word-break:break-word;margin:8px 0;color:#cdd6f4}
+  .code-block .kw{color:#89b4fa}.code-block .str{color:#a6e3a1}.code-block .cm{color:#6c7086}.code-block .fn{color:#fab387}.code-block .num{color:#f38ba8}
+  .cmp-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:13px}
+  .cmp-table th,.cmp-table td{padding:8px 10px;border:1px solid #e5e5ea;text-align:left}
+  .cmp-table th{background:rgba(0,0,0,.03);font-weight:600;font-size:12px;color:#636366}
+  .challenge{background:rgba(255,255,255,.4);border:1px solid #e5e5ea;border-radius:12px;padding:12px 14px;margin:8px 0}
+  .challenge .ch-title{font-weight:600;font-size:13px;margin-bottom:4px}
+  .challenge .ch-desc{font-size:12px;color:#636366;line-height:1.5}
+  .step-box{background:rgba(0,122,255,.04);border-radius:12px;padding:14px;margin:10px 0;border:1px solid rgba(0,122,255,.12)}
+  .step-box .step-num{display:inline-flex;align-items:center;justify-content:center;width:22px;height:22px;border-radius:50%;background:#007aff;color:#fff;font-size:12px;font-weight:700;margin-right:6px;flex-shrink:0}
+  .step-box .step-title{font-weight:600;font-size:14px;margin-bottom:6px;display:flex;align-items:center;gap:6px}
+  .step-box .step-body{font-size:13px;line-height:1.7;color:#1d1d1f}
+  .goal-list{display:flex;flex-direction:column;gap:6px;margin:10px 0}
+  .goal-item{display:flex;align-items:center;gap:8px;font-size:13px;padding:4px 0}
+  .goal-check{width:18px;height:18px;border-radius:50%;background:#34c759;color:#fff;display:inline-flex;align-items:center;justify-content:center;font-size:11px;flex-shrink:0}
+  w{cursor:pointer;border-bottom:1.5px dashed #007aff;color:#007aff;font-weight:500;position:relative;transition:background .15s}
+  w:hover{background:rgba(0,122,255,.06)}
+  w.active{background:rgba(0,122,255,.12)}
+  .tip-box{position:fixed;z-index:9999;display:none;background:#1d1d1f;color:#fff;border-radius:10px;padding:10px 14px;max-width:300px;font-size:13px;line-height:1.6;box-shadow:0 8px 24px rgba(0,0,0,.2);animation:tipIn .2s ease}
+  .tip-box .tip-title{font-weight:600;margin-bottom:3px;color:rgba(255,255,255,.6);font-size:11px}
+  .tip-box .tip-close{position:absolute;top:6px;right:8px;cursor:pointer;font-size:14px;color:rgba(255,255,255,.4);line-height:1;border:none;background:none;padding:2px}
+  .tip-box .tip-close:hover{color:#fff}
+  .tip-box::after{content:'';position:absolute;left:50%;bottom:-6px;margin-left:-6px;border:6px solid transparent;border-top-color:#1d1d1f}
+  @keyframes tipIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+  .tool-card{background:rgba(255,255,255,.6);border:1px solid #e5e5ea;border-radius:12px;padding:12px;margin:8px 0;display:flex;gap:10px;align-items:flex-start}
+  .tool-card .tc-icon{font-size:20px;flex-shrink:0;width:32px;text-align:center;padding-top:2px}
+  .tool-card .tc-info{flex:1}
+  .tool-card .tc-name{font-weight:600;font-size:14px;margin-bottom:2px}
+  .tool-card .tc-desc{font-size:12px;color:#636366;line-height:1.5}
+  .tool-card .tc-tag{display:inline-block;padding:1px 8px;border-radius:10px;background:rgba(0,122,255,.1);color:#007aff;font-size:10px;font-weight:600;margin-top:4px}
+</style>
+</head>
+<body>
+<div class="header">
+<div class="badge">技术应用 · T1 基础免费</div>
+<h1>⚙️ 程序员的AI工具箱</h1>
+<p style="font-size:14px;color:rgba(255,255,255,.7);margin-bottom:8px">哪些AI工具真的能帮你写代码</p>
+<div class="meta">
+<span>⏱ 约25分钟</span>
+<span>📄 图文课</span>
+<span>💻 需要能打开终端</span>
+</div>
+<div class="tag-free">🆓 免费</div>
+</div>
+<div class="container">
+<div class="step-nav" id="stepNav">
+<div class="sn-item active" data-step="s-explain"><span class="sn-icon">📌</span>为什么</div>
+<div class="sn-item" data-step="s-practice"><span class="sn-icon">🎯</span>实操</div>
+<div class="sn-item" data-step="s-insight"><span class="sn-icon">💡</span>原理</div>
+<div class="sn-item" data-step="s-consolidate"><span class="sn-icon">🔁</span>巩固</div>
+</div>
+
+<!-- 📌 Explain -->
+<div class="section module" data-tag="core:explain" id="s-explain">
+<div class="section-title">📌 为什么你用了AI写代码感觉也就那样</div>
+<div class="section-desc">3分钟 · 先搞清楚问题出在哪</div>
+<div class="content">
+<p>你试过用ChatGPT写代码——它生成了一个能跑的函数，你粘进去，调了两行，能用。然后你心想："就这？我又不是不会写。"</p>
+<p>你试过装插件——Copilot疯狂补全，补的又不太对；cursor刚出的时候觉得神了，用两周又觉得跟vscode加个插件也没差多少。</p>
+<p><strong>问题不是AI不够强，是你还没找到趁手的组合。</strong></p>
+<p>做技术的有个毛病：看到新工具就试，试一下觉得"还行但不够好"就丢一边。你真正缺的不是AI工具，而是<strong>一套适合自己的AI开发工作流</strong>。</p>
+
+<div class="callout callout-warn">
+<strong>先看一个对比，你属于哪种？</strong><br/><br/>
+<strong>❌ 差输入：</strong><br/>
+<div class="code-block" style="background:#fff;color:#1d1d1f">帮我优化这段代码</div>
+<em style="font-size:12px;color:#8e8e93">AI反馈：给了一个笼统的优化建议，不痛不痒，你看了更觉得AI没用</em><br/><br/>
+<strong>✅ 好输入：</strong><br/>
+<div class="code-block" style="background:#fff;color:#1d1d1f">我有一段Python代码，作用是解析日志文件提取错误信息。
+问题：当文件超过100MB时，处理时间超过30秒。
+要求：
+1. 改成逐行流式处理，不要一次读入内存
+2. 用正则而非字符串分割，兼容不同日志格式
+3. 给出修改后的代码和预期性能提升</div>
+<em style="font-size:12px;color:#8e8e93">AI反馈：给出了精确的优化方案，十几行代码替换，处理时间从30秒降到2秒</em><br/><br/>
+<strong>差别在哪？</strong>差输入像在问"怎么做菜"，好输入像在说"鸡肉切好了，烤箱预热了，告诉我200度烤多久"。AI给答案的精度完全取决于你描述的精确度。
+</div>
+<p>这节不吹什么工具最强，而是带你搭一套实用组合——<strong>写代码、查文档、调bug、做架构</strong>，每个环节用什么<w d="AI辅助编码的工具">AI</w>最顺手。</p>
+
+<h3>这节课学完你能做到</h3>
+<div class="goal-list">
+<div class="goal-item"><span class="goal-check">✓</span> 给自己的工作流配上最适合的AI工具组合</div>
+<div class="goal-item"><span class="goal-check">✓</span> 知道写代码、调bug、读源码分别用什么AI最省钱</div>
+<div class="goal-item"><span class="goal-check">✓</span> 判断一个AI开发工具值不值得装、值不值得付费</div>
+</div>
+</div>
+</div>
+
+<!-- 🎯 Practice -->
+<div class="section module" data-tag="P:practice" id="s-practice">
+<div class="section-title">🎯 动手实操</div>
+<div class="section-desc">15分钟 · 三步搭好你的AI开发工作流</div>
+<div class="content">
+
+<div class="module" data-tag="P:step1">
+<div class="step-box">
+<div class="step-title"><span class="step-num">1</span> 盘点你的开发场景，分别配AI</div>
+<div class="step-body">
+<p>先别管工具。把你的开发工作拆成几个场景，每个场景的需求不一样：</p>
+<table class="cmp-table">
+<tr><th>场景</th><th>需要的能力</th><th>最划算的选择</th></tr>
+<tr><td>📝 日常编码</td><td>补全、生成片段、重构</td><td>IDE插件（Copilot / Continue）</td></tr>
+<tr><td>🐛 调试排查</td><td>分析报错、读堆栈、提修复</td><td>通用对话（ChatGPT / Claude）</td></tr>
+<tr><td>📖 读源码</td><td>解释逻辑、画调用链路</td><td>带上下文的对话（Claude / Gemini）</td></tr>
+<tr><td>🧠 架构设计</td><td>方案对比、边界分析</td><td>能处理大量上下文的（Claude / DeepSeek）</td></tr>
+<tr><td>📚 查文档/API</td><td>精准、来源可靠</td><td>带搜索的（秘塔 / Perplexity / Devv）</td></tr>
+</table>
+<p>你不需要一个工具搞定所有场景。每个场景<strong>最节省精力</strong>的组合不一样。<w d="AI辅助写代码的插件">Copilot</w>适合边写边补，<w d="一个集成了AI对话的编辑器">Cursor</w>适合整个文件的修改，<w d="直接跟AI聊天">对话式AI</w>适合调试和查问题。</p>
+</div>
+</div>
+</div>
+
+<div class="module" data-tag="P:step2">
+<div class="step-box">
+<div class="step-title"><span class="step-num">2</span> 三种性价比最高的搭法</div>
+<div class="step-body">
+<p>根据你的预算和需求，选一种:</p>
+
+<div class="tool-card">
+<div class="tc-icon">🥇</div>
+<div class="tc-info">
+<div class="tc-name">方案A：零成本入门（终身免费）</div>
+<div class="tc-desc"><strong>Continue插件</strong> + <strong>DeepSeek V3</strong>（开源，本地或API调用）+ <strong>秘塔AI搜索</strong>查文档。全免费，适合预算有限但想体验AI编码的人。</div>
+<div class="tc-tag">🆓 免费</div>
+</div>
+</div>
+
+<div class="tool-card">
+<div class="tc-icon">🥈</div>
+<div class="tc-info">
+<div class="tc-name">方案B：日常够用（$10-20/月）</div>
+<div class="tc-desc"><strong>GitHub Copilot</strong>（IDE补全）+ <strong>Claude Sonnet</strong>或<strong>ChatGPT Plus</strong>（对话调试）。这是最多开发者用的组合，覆盖日常编码和排查需求。</div>
+<div class="tc-tag">💰 $10-20/月</div>
+</div>
+</div>
+
+<div class="tool-card">
+<div class="tc-icon">🥉</div>
+<div class="tc-info">
+<div class="tc-name">方案C：深度工作型（$20+/月）</div>
+<div class="tc-desc"><strong>Cursor</strong>或<strong>Windsurf</strong>（AI原生IDE）+ <strong>Claude Opus</strong>（复杂任务）。适合需要AI理解项目级上下文、重构、写大函数的人。</div>
+<div class="tc-tag">💰 $20+/月</div>
+</div>
+</div>
+
+<p>选了方案后，<strong>这个月就只用这套</strong>，别边用边换。用满一个月你很清楚知道哪块够用、哪块不够。</p>
+</div>
+</div>
+</div>
+
+<div class="module" data-tag="P:step3">
+<div class="step-box">
+<div class="step-title"><span class="step-num">3</span> 用一个真场景验证</div>
+<div class="step-body">
+<p>现在打开你的IDE，找一个你最近写过的、需要查文档或调bug的实际问题。别用Hello World，用真的生产代码。</p>
+<p>试试这个prompt模板：</p>
+<div class="code-block">你现在是我的结对编程搭档。我需要你帮我解决一个问题：
+
+项目背景：{一句话描述项目做了什么}
+技术栈：{你用的语言/框架}
+具体问题：{描述你遇到的具体问题}
+
+请先问我三个澄清问题，然后再给我建议。</div>
+<p>为什么要先问问题？因为<w d="AI不承认自己不知道，会自己编答案">AI最坑的地方</w>是——<strong>你描述不清楚时，它也会编一个看起来合理的回答</strong>。让它先问问题，逼它确认理解，能少走一半弯路。</p>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
+<!-- 💡 Insight -->
+<div class="section module" data-tag="core:insight" id="s-insight">
+<div class="section-title">💡 理解为什么</div>
+<div class="section-desc">5分钟 · 你需要的不是"更好的AI"，是更好的工作流</div>
+<div class="content">
+<h3>核心原理：AI编码工具的本质是"模式补全"，不是"替代人类"</h3>
+<p>很多技术人抵触AI的原因之一是："AI写的代码能用但不好，不适合<w d="真实运行的环境">生产环境</w>。"这句话对，但搞错重点了。</p>
+<p>AI的真正价值不在于替你写代码——而在于<strong>把那些重复、机械、低价值的环节外包出去</strong>：</p>
+<ul>
+<li>写单元测试？给AI一个函数签名就能生成80%的模板</li>
+<li>写正则表达式？告诉AI"匹配邮箱地址"比你自己手写快10倍</li>
+<li>看一段别人的代码逻辑？让AI读一遍再复述给你</li>
+<li>写README/文档？AI生成的框架你改改就能用</li>
+<li>做数据迁移脚本？写好规则让AI生成模板代码</li>
+</ul>
+<div class="callout callout-tip">
+<strong>你的核心价值没有变</strong>——架构决策、安全性判断、业务理解、代码审查，这些AI没法替你。只是重复劳动可以交给它了。
+</div>
+
+<h3>这个能力能迁移到哪</h3>
+<ul>
+<li><strong>技术调研</strong> — 用AI比较不同方案的优缺点，比自己翻文档快3倍</li>
+<li><strong><w d="代码审查">Code Review</w></strong> — 让AI先扫一遍低级问题，你只关注架构和逻辑</li>
+<li><strong>写技术方案</strong> — 给AI一个大纲和要点，它能生成80%的内容框架</li>
+</ul>
+
+<div class="callout callout-warn">
+<strong>一句话总结：</strong>不要纠结"AI能不能替代我"，要问"今天哪个环节我可以用AI省10分钟"。积少成多，一个月多出好几个下午。
+</div>
+</div>
+</div>
+
+<!-- 🔁 Consolidate -->
+<div class="section module" data-tag="optional:consolidate" id="s-consolidate">
+<div class="section-title">🔁 巩固练习</div>
+<div class="section-desc">5分钟 · 把你工作流里最耗时的环节找出来</div>
+<div class="content">
+<div class="callout callout-tip">
+<strong>今天做一次：</strong>打开你最近一周的git log或项目，数一数你花时间最多的三件事。然后对应上面的场景表，每件事配一个AI工具。明天开始每件事先让AI试一把再自己动手。
+</div>
+
+<h3>进阶挑战</h3>
+<div class="challenge">
+<div class="ch-title">✅ 挑战1：搭一条"bug排查AI流水线"</div>
+<div class="ch-desc">以后遇到bug，第一步不是搜StackOverflow——先把报错信息和相关代码贴给AI，让它生成排查方向。你只负责验证和选方向。</div>
+</div>
+<div class="challenge">
+<div class="ch-title">✅ 挑战2：让AI帮你写测试</div>
+<div class="ch-desc">找一个你最近写的函数，让AI生成完整的单元测试（包括边界情况和异常场景）。90%的模板代码AI能搞定，你只需要看逻辑。</div>
+</div>
+<div class="challenge">
+<div class="ch-title">✅ 挑战3：接手别人项目时先用AI读一遍</div>
+<div class="ch-desc">拿到不熟悉的项目，把目录结构和核心代码丢给Claude或Gemini（支持大上下文），让AI总结项目架构、模块职责、数据流。比你自己漫无目的读快得多。</div>
+</div>
+
+<h3>同类型迁移</h3>
+<p style="font-size:13px;color:#636366;margin-top:4px">"把重复环节外包给AI"的思路还能用在：</p>
+<ul>
+<li><strong>运维/DevOps</strong> — 写<w d="容器配置文件">Dockerfile</w>、<w d="容器编排配置文件">K8s配置</w>、<w d="自动构建发布流程">CI/CD pipeline</w>中重复的部分</li>
+<li><strong>数据处理</strong> — 写数据清洗脚本、ETL转换、SQL查询</li>
+<li><strong>团队文档</strong> — <w d="接口说明文档">API文档</w>、架构说明、接口变更通知，AI生成初稿你改</li>
+</ul>
+
+<h3>学完这节课，你觉得这只是开始？</h3>
+<p style="font-size:13px;color:#636366;margin-top:4px">这节课帮你搭好了AI开发工具的基础框架，但只覆盖了最常用的几个场景。真正的效率提升来自：</p>
+<ul>
+<li><strong>系统化prompt技巧</strong> — 不是只会"帮我写代码"，而是根据不同语言、不同框架写出针对性prompt</li>
+<li><strong>AI驱动的开发流程</strong> — 从需求分析到代码审查，每个环节都有AI参与的工作流</li>
+<li><strong>项目级AI集成</strong> — 不只是写单段代码，而是让AI理解整个项目，做全局重构和优化</li>
+</ul>
+<p>这些在<strong>T2进阶课</strong>里有完整体系讲解，涵盖前端、后端、数据工程等不同方向的实际案例。你现在学的这个基础，到下一层就是质的飞跃。</p>
+</ul>
+</div>
+</div>
+
+<!-- 一劳永逸 -->
+<div class="section" data-tag="core:summary" style="background:linear-gradient(135deg,#e8f5e9,#c8e6c9);border:none;text-align:center">
+<h3 style="font-size:18px;margin-bottom:8px;color:#2e7d32">⚡ 一劳永逸</h3>
+<p style="font-size:13px;color:#2e7d32;margin-bottom:8px">以后每次遇到新AI开发工具，问自己三个问题：</p>
+<div class="code-block" style="background:#fff;text-align:left;color:#1d1d1f">1. 它解决我工作中哪个具体场景的问题？
+2. 它比我现在用的好在哪？（不是好在功能多，是好在省时间）
+3. 免费版/试用期够我验证吗？</div>
+<div style="margin-top:10px;font-size:15px;color:#2e7d32;font-weight:600">
+  🎉 你不是在追工具，是在搭自己的开发栈
+</div>
+</div>
+</div>
+
+<div class="tip-box" id="tipBox">
+<div class="tip-title">📖 术语</div>
+<span class="tip-close" id="tipClose">&times;</span>
+<div id="tipDesc">暂无释义</div>
+</div>
+<script>
+(function(){
+  var tb=document.getElementById("tipBox"),td=document.getElementById("tipDesc"),tc=document.getElementById("tipClose");
+  if(tb&&td){
+    document.querySelectorAll("w").forEach(function(el){
+      el.addEventListener("click",function(e){
+        e.stopPropagation();
+        td.textContent=this.getAttribute("d")||"暂无释义";
+        tb.querySelector(".tip-title").textContent="📖 "+this.textContent.trim();
+        var r=this.getBoundingClientRect(),w=tb.offsetWidth||280,left=Math.max(10,Math.min(r.left+r.width/2-w/2,document.body.clientWidth-w-10)),top=r.top-8-tb.offsetHeight;
+        if(top<10)top=r.bottom+10;
+        tb.style.left=left+"px";tb.style.top=top+"px";tb.style.display="block";
+        document.querySelectorAll("w.active").forEach(function(w){w.classList.remove("active")});
+        this.classList.add("active");
+      });
+    });
+    function ht(){tb.style.display="none";document.querySelectorAll("w.active").forEach(function(w){w.classList.remove("active")})}
+    tc.addEventListener("click",ht);
+    document.addEventListener("click",function(e){if(!e.target.closest("w")&&!e.target.closest(".tip-box"))ht()});
+    document.addEventListener("keydown",function(e){if(e.key==="Escape")ht()});
+  }
+  var nav=document.getElementById("stepNav");
+  if(nav){
+    var S=["s-explain","s-practice","s-insight","s-consolidate"];
+    nav.addEventListener("click",function(e){
+      var it=e.target.closest(".sn-item");if(!it)return;
+      var id=it.getAttribute("data-step"),el=document.getElementById(id);
+      if(el)el.scrollIntoView({behavior:"smooth",block:"start"});
+      var idx=S.indexOf(id);
+      for(var i=0;i<nav.children.length;i++)nav.children[i].classList.toggle("active",i===idx);
+    });
+    var st;
+    function uas(){
+      var bi=0,bd=Infinity;
+      S.forEach(function(id,i){
+        var el=document.getElementById(id);
+        if(el){var t=Math.abs(el.getBoundingClientRect().top);if(t<bd){bd=t;bi=i}}
+      });
+      for(var i=0;i<nav.children.length;i++)nav.children[i].classList.toggle("active",i===bi);
+    }
+    document.addEventListener("scroll",function(){clearTimeout(st);st=setTimeout(uas,100)});
+    uas();
+  }
+})();
+</script>
+</body>
+</html>
