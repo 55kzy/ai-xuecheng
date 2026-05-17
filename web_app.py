@@ -809,7 +809,7 @@ def api_answer():
         results = sess.get_results()
         rec = results['recommendation']
         p = sess.profile
-        data_dir = r'D:\AI学程\04_客户数据'
+        data_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), '04_客户数据')
         os.makedirs(data_dir, exist_ok=True)
         with open(os.path.join(data_dir, f'{sid}.json'), 'w', encoding='utf-8') as f:
             json.dump(p.to_dict(), f, ensure_ascii=False, indent=2)
@@ -839,7 +839,7 @@ def api_answer():
 # ============================================================
 # 课程匹配
 # ============================================================
-COURSE_DIR = r'D:\AI学程\02_课程模板'
+COURSE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '02_课程模板')
 
 def gen_cut(dim, score):
     """根据维度分数生成课程裁剪参数
