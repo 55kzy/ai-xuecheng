@@ -537,9 +537,10 @@ function confirmAnswer(){
   else payload.option_index=selectedOption;
   fetch('/api/answer',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)})
     .then(r=>r.json()).then(d=>{
+      if(d.error){alert('出错了：'+d.error);document.getElementById('btn-confirm').disabled=false;document.getElementById('btn-back').disabled=false;return}
       if(d.done){document.getElementById('page-quiz').style.display='none';document.getElementById('page-result').style.display='block';showResult(d)}
       else showQuestion(d)
-    })
+    }).catch(function(e){alert('网络错误，请检查网络连接');document.getElementById('btn-confirm').disabled=false;document.getElementById('btn-back').disabled=false})
 }
 
 function onBack(){
@@ -808,10 +809,14 @@ def api_answer():
         results = sess.get_results()
         rec = results['recommendation']
         p = sess.profile
-        data_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), '04_客户数据')
-        os.makedirs(data_dir, exist_ok=True)
-        with open(os.path.join(data_dir, f'{sid}.json'), 'w', encoding='utf-8') as f:
-            json.dump(p.to_dict(), f, ensure_ascii=False, indent=2)
+        # 保存会话数据（Vercel只读环境跳过）
+        try:
+            data_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), '04_客户数据')
+            os.makedirs(data_dir, exist_ok=True)
+            with open(os.path.join(data_dir, f'{sid}.json'), 'w', encoding='utf-8') as f:
+                json.dump(p.to_dict(), f, ensure_ascii=False, indent=2)
+        except (OSError, PermissionError):
+            pass  # Vercel只读文件系统，不报错
         courses = match_courses(p)
         del sessions[sid]
         return jsonify({
