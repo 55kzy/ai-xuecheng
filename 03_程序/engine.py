@@ -7,7 +7,7 @@ import json, os, glob, copy, random
 from collections import defaultdict
 from pathlib import Path
 
-BASE_DIR = Path(r'D:\AI学程')
+BASE_DIR = Path(__file__).resolve().parent.parent
 QA_DIR = BASE_DIR / '01_题库'
 DATA_DIR = BASE_DIR / '04_客户数据'
 TEMPLATE_DIR = BASE_DIR / '02_课程模板'

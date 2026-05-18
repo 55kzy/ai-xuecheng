@@ -338,41 +338,5 @@
   }
 })();
 </script>
-<script>
-(function(){
-  var p=new URLSearchParams(location.search),c=p.get("cut");
-  if(c){
-    var INFO={
-      "P:step1":{l:"第一步·说清三要素",d:"对象/场景/偏好，让AI从读心变听人话"},
-      "P:step2":{l:"第二步·追加反馈",d:"不满意别重开，一条追加解决问题"},
-      "P:step3":{l:"第三步·万能问法",d:"填几个模板存备忘录，以后直接套"}
-    var MSGS=[
-      "看起来你对这部分已经有点基础了，帮你跳过基础的，直接看重点就好〜",
-      "看来你对这部分比较熟悉了，跳过基础内容，直奔核心！",
-      "你已经有不错的基础了，直接看后面的总结就好。点淡色区域可以展开查看完整内容"
-    ];
-    var E=[];
-    tags=c.split(",");
-    tags.forEach(function(t){t=t.trim();var n=INFO[t];if(n){var el=document.querySelector('[data-tag="'+t+'"]');if(el)E.push({el:el,info:n});}});
-    if(E.length>0){
-      E.forEach(function(x){
-        var el=x.el,info=x.info,bar=document.createElement("div");
-        bar.style.cssText="padding:10px 14px;margin:10px 0;border-radius:12px;background:rgba(255,149,0,.06);border:1.5px dashed rgba(255,149,0,.25);font-size:13px;cursor:pointer;transition:all .2s;user-select:none";
-        bar.innerHTML='<div style="display:flex;align-items:center;justify-content:space-between"><span style="font-weight:600;color:#e65100">⏭ '+info.l+'<span style="font-size:11px;color:rgba(230,81,0,.5);margin-left:8px">已跳过</span></span><span style="font-size:11px;color:rgba(230,81,0,.4)">▼ 展开</span></div>'+(info.d?'<div style="font-size:11px;color:rgba(0,0,0,.3);margin-top:3px;padding-left:24px">'+info.d+'</div>':'');
-        var p=el.parentNode;
-        if(p){p.insertBefore(bar,el);el.style.display="none";bar.onclick=function(){var h=el.style.display==="none";el.style.display=h?"":"none";bar.style.borderStyle=h?"solid":"dashed";bar.style.background=h?"rgba(255,149,0,.15)":"rgba(255,149,0,.06)";bar.querySelector("span:last-child").innerHTML=h?"▲ 收起":"▼ 展开";};}
-      });
-      var midx=Math.min(E.length-1,MSGS.length-1),msg=MSGS[midx];
-      var ov=document.createElement("div");
-      ov.id="skip-overlay";
-      ov.style.cssText="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.25);z-index:10000;display:flex;align-items:center;justify-content:center;animation:fadeIn .3s ease";
-      ov.innerHTML='<div style="background:#fff;border-radius:20px;padding:28px 24px;max-width:340px;width:90%;box-shadow:0 8px 40px rgba(0,0,0,.12);text-align:center"><div style="font-size:36px;margin-bottom:10px">👏</div><div style="font-size:16px;font-weight:600;margin-bottom:8px;color:#1d1d1f">已帮你跳过基础步骤</div><div style="font-size:13px;color:#636366;line-height:1.7">'+msg+'</div><button onclick="document.body.removeChild(document.getElementById(\'skip-overlay\'))" style="margin-top:14px;padding:9px 28px;border:none;border-radius:12px;background:#007aff;color:#fff;font-size:14px;font-weight:600;cursor:pointer;box-shadow:0 4px 12px rgba(0,122,255,.25)">好的，开始学习</button><span onclick="document.body.removeChild(document.getElementById(\'skip-overlay\'))" style="position:absolute;top:10px;right:14px;cursor:pointer;font-size:18px;color:rgba(0,0,0,.2)">&times;</span></div>';
-      ov.onclick=function(e){if(e.target===ov)document.body.removeChild(ov);};
-      document.body.appendChild(ov);
-      var st=document.createElement("style");st.textContent="@keyframes fadeIn{from{opacity:0}to{opacity:1}}";document.head.appendChild(st);
-    }
-  }
-})();
-</script>
 </body>
 </html>

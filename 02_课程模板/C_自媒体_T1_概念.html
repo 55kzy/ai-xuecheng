@@ -318,29 +318,6 @@ document.addEventListener('click',function(){
   window.addEventListener('scroll',updateNav);
   updateNav();
 })();
-
-// ===== cut参数支持 =====
-(function(){
-  var params = new URLSearchParams(window.location.search);
-  var cut = params.get('cut');
-  if(!cut) return;
-  var parts = cut.split(',').map(function(s){return s.trim()});
-  var sections = document.querySelectorAll('.section');
-  sections.forEach(function(sec){
-    var tags = (sec.getAttribute('data-tag')||'').split(';').map(function(s){return s.trim()});
-    var keep = false;
-    parts.forEach(function(p){
-      tags.forEach(function(t){
-        if(t.indexOf(p)===0) keep = true;
-      });
-    });
-    if(!keep) sec.style.display = 'none';
-  });
-  // hide step nav when cut used
-  document.getElementById('stepNav').style.display = 'none';
-  // also hide footer
-  document.querySelector('.footer').style.display = 'none';
-})();
 </script>
 
 </body>

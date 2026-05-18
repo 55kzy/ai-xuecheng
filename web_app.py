@@ -672,7 +672,6 @@ function renderTiers(scores,avg,dims,courses){
     courses.forEach(function(c){
       const ready=c.status==='ready';
       var courseUrl='/course/'+c.id;
-      if(c.cut){courseUrl+='?cut='+c.cut;}
       html+='<a href="'+courseUrl+'" class="course-card"'
         +(ready?'onclick="saveSessionBeforeLeave()"':'style="opacity:.5;pointer-events:none"')+'>'
         +'<div style="display:flex;align-items:center;gap:8px;padding:10px 12px;border-radius:10px;background:rgba(255,255,255,.5);border:1px solid rgba(0,0,0,.06)">'
@@ -841,27 +840,8 @@ def api_answer():
 # ============================================================
 COURSE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '02_课程模板')
 
-def gen_cut(dim, score):
-    """根据维度分数生成课程裁剪参数
-    返回: 裁剪字符串如 'P:step1,P:step2' 或 ''
-    
-    所有维度都支持裁剪，但实际课程不一定有对应的标签结构
-    """
-    s = score or 0
-    steps = ''
-    if s < 1.0:
-        return ''  # 新手：全部显示
-    elif s < 1.5:
-        steps = f'{dim}:step1'  # 跳过基础实操
-    elif s < 2.0:
-        steps = f'{dim}:step1,{dim}:step2'  # 跳过初中阶实操
-    else:
-        steps = f'{dim}:step1,{dim}:step2,{dim}:step3'  # 高手：仅保留核心
-    return steps
-
-
 def match_courses(profile):
-    """根据画像匹配推荐的课程，附带裁剪参数"""
+    """根据画像匹配推荐的课程"""
     scores = profile.get_all_scores()
     dirs = profile.directions
     dims = ['K','P','T','L','C']
@@ -881,12 +861,7 @@ def match_courses(profile):
             key = (d, dim)
             c = COURSE_MAP.get(key)
             if c and c['id'] not in used and c.get('status') == 'ready':
-                # 添加裁剪参数
-                c_with_cut = dict(c)
-                cut = gen_cut(dim, score_val)
-                if cut:
-                    c_with_cut['cut'] = cut
-                matched.append(c_with_cut)
+                matched.append(c)
                 used.add(c['id'])
                 break
     
