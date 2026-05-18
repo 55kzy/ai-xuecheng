@@ -1,0 +1,1665 @@
+[
+  {
+    "id": "D1",
+    "direction": [
+      "D",
+      "D1"
+    ],
+    "dimension": "K",
+    "type": "G",
+    "baseLevel": 1,
+    "text": "假如你现在用AI搞钱到了哪一步？",
+    "options": [
+      {
+        "text": "还没想过",
+        "score": {
+          "K": 0
+        }
+      },
+      {
+        "text": "听说过但没行动",
+        "score": {
+          "K": 1
+        }
+      },
+      {
+        "text": "正在尝试",
+        "score": {
+          "K": 2
+        }
+      },
+      {
+        "text": "已经有稳定收入了",
+        "score": {
+          "K": 3
+        }
+      }
+    ],
+    "tag": [
+      "变现",
+      "阶段"
+    ]
+  },
+  {
+    "id": "D10",
+    "direction": [
+      "D",
+      "D1"
+    ],
+    "dimension": "C",
+    "type": "S",
+    "baseLevel": 1,
+    "text": "同行用AI接单价格比你低你怎么应对？",
+    "options": [
+      {
+        "text": "也跟着降价",
+        "score": {
+          "C": 0
+        }
+      },
+      {
+        "text": "不管他",
+        "score": {
+          "C": 1
+        }
+      },
+      {
+        "text": "提升自己服务质量走差异化",
+        "score": {
+          "C": 2
+        }
+      },
+      {
+        "text": "优化流程降低成本但不降品质",
+        "score": {
+          "C": 3
+        }
+      }
+    ],
+    "tag": [
+      "竞争",
+      "策略"
+    ]
+  },
+  {
+    "id": "D11",
+    "direction": [
+      "D",
+      "D2"
+    ],
+    "dimension": "K",
+    "type": "P",
+    "baseLevel": 1,
+    "text": "你更倾向哪种AI搞钱方式？",
+    "options": [
+      {
+        "text": "接单做服务",
+        "score": {
+          "K": 0
+        }
+      },
+      {
+        "text": "做内容赚流量",
+        "score": {
+          "K": 1
+        }
+      },
+      {
+        "text": "卖课程或工具",
+        "score": {
+          "K": 2
+        }
+      },
+      {
+        "text": "多个赛道同时做",
+        "score": {
+          "K": 3
+        }
+      }
+    ],
+    "tag": [
+      "变现",
+      "偏好"
+    ],
+    "multiple": true
+  },
+  {
+    "id": "D12",
+    "direction": [
+      "D",
+      "D1"
+    ],
+    "dimension": "P",
+    "type": "P",
+    "baseLevel": 1,
+    "text": "投入时间学习AI接单技能你更看重什么？",
+    "options": [
+      {
+        "text": "学得越快越好",
+        "score": {
+          "P": 0
+        }
+      },
+      {
+        "text": "学得越精越好",
+        "score": {
+          "P": 1
+        }
+      },
+      {
+        "text": "够用就行快出单",
+        "score": {
+          "P": 2
+        }
+      }
+    ],
+    "tag": [
+      "学习",
+      "偏好"
+    ]
+  },
+  {
+    "id": "D13",
+    "direction": [
+      "D",
+      "D1"
+    ],
+    "dimension": "T",
+    "type": "P",
+    "baseLevel": 1,
+    "text": "做AI服务接单你更重视？",
+    "options": [
+      {
+        "text": "数量",
+        "score": {
+          "T": 0
+        }
+      },
+      {
+        "text": "质量",
+        "score": {
+          "T": 1
+        }
+      },
+      {
+        "text": "复购率",
+        "score": {
+          "T": 2
+        }
+      }
+    ],
+    "tag": [
+      "服务",
+      "定位"
+    ]
+  },
+  {
+    "id": "D14",
+    "direction": [
+      "D",
+      "D2"
+    ],
+    "dimension": "L",
+    "type": "P",
+    "baseLevel": 1,
+    "text": "你卖AI生成的数字作品时更担心什么？",
+    "options": [
+      {
+        "text": "卖不出去",
+        "score": {
+          "L": 0
+        }
+      },
+      {
+        "text": "被抄袭",
+        "score": {
+          "L": 1
+        }
+      },
+      {
+        "text": "版权纠纷",
+        "score": {
+          "L": 2
+        }
+      }
+    ],
+    "tag": [
+      "数字产品",
+      "风险"
+    ]
+  },
+  {
+    "id": "D15",
+    "direction": [
+      "D",
+      "D1"
+    ],
+    "dimension": "C",
+    "type": "P",
+    "baseLevel": 1,
+    "text": "你觉得AI搞钱这件事的本质是？",
+    "options": [
+      {
+        "text": "赚信息差的钱",
+        "score": {
+          "C": 0
+        }
+      },
+      {
+        "text": "用AI替代人工降本",
+        "score": {
+          "C": 1
+        }
+      },
+      {
+        "text": "AI放大你已有的能力",
+        "score": {
+          "C": 2
+        }
+      }
+    ],
+    "tag": [
+      "认知",
+      "本质"
+    ]
+  },
+  {
+    "id": "D16",
+    "direction": [
+      "D",
+      "D1"
+    ],
+    "dimension": "K",
+    "type": "T",
+    "baseLevel": 1,
+    "text": "同样的时间和学习成本你更愿意？",
+    "options": [
+      {
+        "text": "学一个AI新工具提升效率",
+        "score": {
+          "K": 0
+        }
+      },
+      {
+        "text": "直接开始接单先赚到钱",
+        "score": {
+          "K": 1
+        }
+      },
+      {
+        "text": "边接单边学",
+        "score": {
+          "K": 2
+        }
+      }
+    ],
+    "tag": [
+      "取舍",
+      "学习vs实践"
+    ]
+  },
+  {
+    "id": "D17",
+    "direction": [
+      "D",
+      "D1"
+    ],
+    "dimension": "P",
+    "type": "T",
+    "baseLevel": 1,
+    "text": "接代写单时你更看重？",
+    "options": [
+      {
+        "text": "单量越大越好",
+        "score": {
+          "P": 0
+        }
+      },
+      {
+        "text": "单价越高越好",
+        "score": {
+          "P": 1
+        }
+      },
+      {
+        "text": "稳定长期合作",
+        "score": {
+          "P": 2
+        }
+      }
+    ],
+    "tag": [
+      "接单",
+      "策略"
+    ]
+  },
+  {
+    "id": "D18",
+    "direction": [
+      "D",
+      "D2"
+    ],
+    "dimension": "T",
+    "type": "T",
+    "baseLevel": 1,
+    "text": "你想做AI培训但自己经验还不够怎么办？",
+    "options": [
+      {
+        "text": "先学好再教别人",
+        "score": {
+          "T": 0
+        }
+      },
+      {
+        "text": "边学边教现学现卖",
+        "score": {
+          "T": 1
+        }
+      },
+      {
+        "text": "专注自己能做的其他变现方式",
+        "score": {
+          "T": 2
+        }
+      }
+    ],
+    "tag": [
+      "培训",
+      "取舍"
+    ]
+  },
+  {
+    "id": "D19",
+    "direction": [
+      "D",
+      "D2"
+    ],
+    "dimension": "L",
+    "type": "T",
+    "baseLevel": 1,
+    "text": "AI搞钱风险和收益你更倾向？",
+    "options": [
+      {
+        "text": "先冲再说风险以后看",
+        "score": {
+          "L": 0
+        }
+      },
+      {
+        "text": "稳扎稳打不冒险",
+        "score": {
+          "L": 1
+        }
+      },
+      {
+        "text": "控制风险的同时找机会",
+        "score": {
+          "L": 2
+        }
+      }
+    ],
+    "tag": [
+      "风险",
+      "策略"
+    ]
+  },
+  {
+    "id": "D2",
+    "direction": [
+      "D",
+      "D1"
+    ],
+    "dimension": "P",
+    "type": "G",
+    "baseLevel": 1,
+    "text": "假如想让AI做接单作品，你一般会怎么描述要求？",
+    "options": [
+      {
+        "text": "帮我写一个东西",
+        "score": {
+          "P": 0
+        }
+      },
+      {
+        "text": "写一篇xxx主题xx字",
+        "score": {
+          "P": 1
+        }
+      },
+      {
+        "text": "客户要求+字数+语气+格式",
+        "score": {
+          "P": 2
+        }
+      },
+      {
+        "text": "客户需求+参考风格+修改要求+交付标准",
+        "score": {
+          "P": 3
+        }
+      }
+    ],
+    "tag": [
+      "接单",
+      "prompt"
+    ]
+  },
+  {
+    "id": "D20",
+    "direction": [
+      "D",
+      "D1"
+    ],
+    "dimension": "K",
+    "type": "H",
+    "baseLevel": 1,
+    "text": "你平时会关注AI搞钱的信息吗？",
+    "options": [
+      {
+        "text": "不关注",
+        "score": {
+          "K": 0
+        }
+      },
+      {
+        "text": "偶尔刷到",
+        "score": {
+          "K": 1
+        }
+      },
+      {
+        "text": "主动去找",
+        "score": {
+          "K": 2
+        }
+      },
+      {
+        "text": "有固定信息源",
+        "score": {
+          "K": 3
+        }
+      }
+    ],
+    "tag": [
+      "习惯",
+      "信息获取"
+    ]
+  },
+  {
+    "id": "D21",
+    "direction": [
+      "D",
+      "D1"
+    ],
+    "dimension": "P",
+    "type": "H",
+    "baseLevel": 1,
+    "text": "你接到单子第一件事是做什么？",
+    "options": [
+      {
+        "text": "直接开干",
+        "score": {
+          "P": 0
+        }
+      },
+      {
+        "text": "理清需求再干",
+        "score": {
+          "P": 1
+        }
+      },
+      {
+        "text": "先让AI理个框架再干",
+        "score": {
+          "P": 2
+        }
+      },
+      {
+        "text": "列计划+素材+流程再开始",
+        "score": {
+          "P": 3
+        }
+      }
+    ],
+    "tag": [
+      "习惯",
+      "流程"
+    ],
+    "multiple": true
+  },
+  {
+    "id": "D22",
+    "direction": [
+      "D",
+      "D2"
+    ],
+    "dimension": "T",
+    "type": "H",
+    "baseLevel": 1,
+    "text": "你做AI内容变现的渠道是？",
+    "options": [
+      {
+        "text": "小红书",
+        "score": {
+          "T": 0
+        }
+      },
+      {
+        "text": "咸鱼",
+        "score": {
+          "T": 1
+        }
+      },
+      {
+        "text": "公众号",
+        "score": {
+          "T": 2
+        }
+      },
+      {
+        "text": "多个渠道",
+        "score": {
+          "T": 3
+        }
+      }
+    ],
+    "tag": [
+      "渠道",
+      "习惯"
+    ]
+  },
+  {
+    "id": "D23",
+    "direction": [
+      "D",
+      "D1"
+    ],
+    "dimension": "L",
+    "type": "H",
+    "baseLevel": 1,
+    "text": "你一般怎么给AI搞钱的单子定价？",
+    "options": [
+      {
+        "text": "随便定",
+        "score": {
+          "L": 0
+        }
+      },
+      {
+        "text": "看同行价",
+        "score": {
+          "L": 1
+        }
+      },
+      {
+        "text": "根据难度和工作量",
+        "score": {
+          "L": 2
+        }
+      },
+      {
+        "text": "市场价+个人品牌溢价",
+        "score": {
+          "L": 3
+        }
+      }
+    ],
+    "tag": [
+      "定价",
+      "习惯"
+    ]
+  },
+  {
+    "id": "D24",
+    "direction": [
+      "D",
+      "D2"
+    ],
+    "dimension": "C",
+    "type": "H",
+    "baseLevel": 1,
+    "text": "假如你用AI赚到的钱会怎么分配？",
+    "options": [
+      {
+        "text": "花了",
+        "score": {
+          "C": 0
+        }
+      },
+      {
+        "text": "存起来",
+        "score": {
+          "C": 1
+        }
+      },
+      {
+        "text": "再投入扩大",
+        "score": {
+          "C": 2
+        }
+      },
+      {
+        "text": "系统规划投资",
+        "score": {
+          "C": 3
+        }
+      }
+    ],
+    "tag": [
+      "习惯",
+      "财务"
+    ]
+  },
+  {
+    "id": "D25",
+    "direction": [
+      "D",
+      "D1"
+    ],
+    "dimension": "K",
+    "type": "C",
+    "baseLevel": 1,
+    "text": "以下哪个是AI接单常用的平台？",
+    "options": [
+      {
+        "text": "咸鱼",
+        "score": {
+          "K": 1
+        }
+      },
+      {
+        "text": "Boss直聘",
+        "score": {
+          "K": 0
+        }
+      },
+      {
+        "text": "智联招聘",
+        "score": {
+          "K": 0
+        }
+      },
+      {
+        "text": "LinkedIn",
+        "score": {
+          "K": 0
+        }
+      }
+    ],
+    "tag": [
+      "接单",
+      "平台"
+    ]
+  },
+  {
+    "id": "D26",
+    "direction": [
+      "D",
+      "D1"
+    ],
+    "dimension": "P",
+    "type": "C",
+    "baseLevel": 1,
+    "text": "做代写服务你认为是？",
+    "options": [
+      {
+        "text": "简单体力活",
+        "score": {
+          "P": 0
+        }
+      },
+      {
+        "text": "需要一定技巧",
+        "score": {
+          "P": 1
+        }
+      },
+      {
+        "text": "需要专业能力和服务质量",
+        "score": {
+          "P": 2
+        }
+      }
+    ],
+    "tag": [
+      "代写",
+      "认知"
+    ]
+  },
+  {
+    "id": "D27",
+    "direction": [
+      "D",
+      "D2"
+    ],
+    "dimension": "L",
+    "type": "C",
+    "baseLevel": 1,
+    "text": "你觉得AI搞钱最需要注意的法律问题是？",
+    "options": [
+      {
+        "text": "没有需要注意的",
+        "score": {
+          "L": 0
+        }
+      },
+      {
+        "text": "别惹版权麻烦",
+        "score": {
+          "L": 1
+        }
+      },
+      {
+        "text": "合同+版权+税务都要注意",
+        "score": {
+          "L": 2
+        }
+      }
+    ],
+    "tag": [
+      "法律",
+      "风险"
+    ]
+  },
+  {
+    "id": "D28",
+    "direction": [
+      "D",
+      "D2"
+    ],
+    "dimension": "T",
+    "type": "C",
+    "baseLevel": 1,
+    "text": "做AI知识付费最重要的是？",
+    "options": [
+      {
+        "text": "内容干货",
+        "score": {
+          "T": 0
+        }
+      },
+      {
+        "text": "营销推广",
+        "score": {
+          "T": 1
+        }
+      },
+      {
+        "text": "内容和营销都得做好",
+        "score": {
+          "T": 2
+        }
+      }
+    ],
+    "tag": [
+      "知识付费",
+      "关键"
+    ]
+  },
+  {
+    "id": "D29",
+    "direction": [
+      "D",
+      "D1"
+    ],
+    "dimension": "C",
+    "type": "C",
+    "baseLevel": 1,
+    "text": "你觉得用AI搞钱能持续多久？",
+    "options": [
+      {
+        "text": "赚一波快钱",
+        "score": {
+          "C": 0
+        }
+      },
+      {
+        "text": "未来几年都有机会",
+        "score": {
+          "C": 1
+        }
+      },
+      {
+        "text": "会一直存在但玩法会变",
+        "score": {
+          "C": 2
+        }
+      }
+    ],
+    "tag": [
+      "认知",
+      "持续性"
+    ]
+  },
+  {
+    "id": "D3",
+    "direction": [
+      "D",
+      "D1"
+    ],
+    "dimension": "L",
+    "type": "G",
+    "baseLevel": 1,
+    "text": "AI代写的单子客户说质量不好你会怎么处理？",
+    "options": [
+      {
+        "text": "怪AI不行",
+        "score": {
+          "L": 0
+        }
+      },
+      {
+        "text": "自己改改再发",
+        "score": {
+          "L": 1
+        }
+      },
+      {
+        "text": "让AI按客户反馈重写",
+        "score": {
+          "L": 2
+        }
+      },
+      {
+        "text": "建立自己的品控流程减少返工",
+        "score": {
+          "L": 3
+        }
+      }
+    ],
+    "tag": [
+      "服务",
+      "质量"
+    ]
+  },
+  {
+    "id": "D4",
+    "direction": [
+      "D",
+      "D1"
+    ],
+    "dimension": "T",
+    "type": "G",
+    "baseLevel": 1,
+    "text": "你在搞钱这件事上用AI的程度？",
+    "options": [
+      {
+        "text": "纯人工",
+        "score": {
+          "T": 0
+        }
+      },
+      {
+        "text": "AI辅助部分工作",
+        "score": {
+          "T": 1
+        }
+      },
+      {
+        "text": "AI做大部分工作",
+        "score": {
+          "T": 2
+        }
+      },
+      {
+        "text": "搭建了自动化流程",
+        "score": {
+          "T": 3
+        }
+      }
+    ],
+    "tag": [
+      "自动化",
+      "程度"
+    ]
+  },
+  {
+    "id": "D5",
+    "direction": [
+      "D",
+      "D1"
+    ],
+    "dimension": "C",
+    "type": "G",
+    "baseLevel": 1,
+    "text": "你觉得用AI搞钱的核心竞争力是什么？",
+    "options": [
+      {
+        "text": "AI工具本身",
+        "score": {
+          "C": 0
+        }
+      },
+      {
+        "text": "prompt写得好",
+        "score": {
+          "C": 1
+        }
+      },
+      {
+        "text": "找到好赛道和需求",
+        "score": {
+          "C": 2
+        }
+      },
+      {
+        "text": "整合能力和服务质量",
+        "score": {
+          "C": 3
+        }
+      }
+    ],
+    "tag": [
+      "认知",
+      "竞争力"
+    ]
+  },
+  {
+    "id": "D6",
+    "direction": [
+      "D",
+      "D1"
+    ],
+    "dimension": "K",
+    "type": "S",
+    "baseLevel": 1,
+    "text": "你想用AI接代写的单但不知道怎么起步怎么办？",
+    "options": [
+      {
+        "text": "想想就算了",
+        "score": {
+          "K": 0
+        }
+      },
+      {
+        "text": "去咸鱼看看别人怎么做的",
+        "score": {
+          "K": 1
+        }
+      },
+      {
+        "text": "用AI先写几个样稿去接单",
+        "score": {
+          "K": 2
+        }
+      },
+      {
+        "text": "批量生成样稿+定价+投放渠道一起规划",
+        "score": {
+          "K": 3
+        }
+      }
+    ],
+    "tag": [
+      "代写",
+      "起步"
+    ]
+  },
+  {
+    "id": "D7",
+    "direction": [
+      "D",
+      "D1"
+    ],
+    "dimension": "P",
+    "type": "S",
+    "baseLevel": 1,
+    "text": "客户给的需求很模糊你怎么办？",
+    "options": [
+      {
+        "text": "凭感觉写",
+        "score": {
+          "P": 0
+        }
+      },
+      {
+        "text": "让AI猜着写",
+        "score": {
+          "P": 1
+        }
+      },
+      {
+        "text": "用AI帮我把模糊需求转化成清晰需求",
+        "score": {
+          "P": 2
+        }
+      },
+      {
+        "text": "用AI生成追问问题清单发给客户",
+        "score": {
+          "P": 3
+        }
+      }
+    ],
+    "tag": [
+      "接单",
+      "需求沟通"
+    ]
+  },
+  {
+    "id": "D8",
+    "direction": [
+      "D",
+      "D2"
+    ],
+    "dimension": "L",
+    "type": "S",
+    "baseLevel": 1,
+    "text": "假如你用AI生成的素材卖给别人版权问题怎么处理？",
+    "options": [
+      {
+        "text": "没想过",
+        "score": {
+          "L": 0
+        }
+      },
+      {
+        "text": "应该没问题吧",
+        "score": {
+          "L": 1
+        }
+      },
+      {
+        "text": "只用明确可商用的工具",
+        "score": {
+          "L": 2
+        }
+      },
+      {
+        "text": "查清楚工具条款+给客户说明",
+        "score": {
+          "L": 3
+        }
+      }
+    ],
+    "tag": [
+      "版权",
+      "AI创作"
+    ]
+  },
+  {
+    "id": "D9",
+    "direction": [
+      "D",
+      "D2"
+    ],
+    "dimension": "T",
+    "type": "S",
+    "baseLevel": 1,
+    "text": "假如你做了AI课程/教程但没人买怎么办，你会怎么处理？",
+    "options": [
+      {
+        "text": "不做了",
+        "score": {
+          "T": 0
+        }
+      },
+      {
+        "text": "降价",
+        "score": {
+          "T": 1
+        }
+      },
+      {
+        "text": "换个渠道推广",
+        "score": {
+          "T": 2
+        }
+      },
+      {
+        "text": "分析为什么没人买调整内容和投放",
+        "score": {
+          "T": 3
+        }
+      }
+    ],
+    "tag": [
+      "知识付费",
+      "运营"
+    ]
+  },
+  {
+    "dimension": "C",
+    "type": "C",
+    "baseLevel": 2,
+    "text": "你觉得「用AI搞钱」这件事，核心是什么？",
+    "options": [
+      {
+        "text": "用AI自动赚钱",
+        "score": {
+          "C": 0
+        }
+      },
+      {
+        "text": "用AI省成本",
+        "score": {
+          "C": 1
+        }
+      },
+      {
+        "text": "用AI做原来做不了的事",
+        "score": {
+          "C": 2
+        }
+      },
+      {
+        "text": "本事是本事，AI只是把本事放大",
+        "score": {
+          "C": 3
+        }
+      }
+    ],
+    "tag": [
+      "本质",
+      "认知",
+      "变现"
+    ],
+    "id": "D_30",
+    "direction": [
+      "D",
+      "D1"
+    ]
+  },
+  {
+    "dimension": "K",
+    "type": "S",
+    "baseLevel": 2,
+    "text": "看到有人招AI代写，月入过万那种，你有什么想法？",
+    "options": [
+      {
+        "text": "可以试试",
+        "score": {
+          "K": 0
+        }
+      },
+      {
+        "text": "先打听打听靠不靠谱",
+        "score": {
+          "K": 1
+        }
+      },
+      {
+        "text": "看看自己有没有这个时间和能力",
+        "score": {
+          "K": 2
+        }
+      },
+      {
+        "text": "这种广告大多有问题，先判断真假再说",
+        "score": {
+          "K": 3
+        }
+      }
+    ],
+    "tag": [
+      "工具认知",
+      "代写",
+      "判断"
+    ],
+    "id": "D_31",
+    "direction": [
+      "D",
+      "D1"
+    ]
+  },
+  {
+    "dimension": "L",
+    "type": "T",
+    "baseLevel": 2,
+    "text": "有人用AI批量做课卖得很好但内容一般，你会跟吗？",
+    "options": [
+      {
+        "text": "跟，有钱不赚白不赚",
+        "score": {
+          "L": 0
+        }
+      },
+      {
+        "text": "想跟但怕翻车",
+        "score": {
+          "L": 1
+        }
+      },
+      {
+        "text": "不太认可这种做法",
+        "score": {
+          "L": 2
+        }
+      },
+      {
+        "text": "短期能赚但长期不是这么做的",
+        "score": {
+          "L": 3
+        }
+      }
+    ],
+    "tag": [
+      "取舍",
+      "知识付费",
+      "质量"
+    ],
+    "id": "D_32",
+    "direction": [
+      "D",
+      "D2"
+    ]
+  },
+  {
+    "dimension": "C",
+    "type": "C",
+    "baseLevel": 2,
+    "text": "AI真的能帮你发现赚钱机会吗？",
+    "options": [
+      {
+        "text": "能啊，它什么都知道",
+        "score": {
+          "C": 0
+        }
+      },
+      {
+        "text": "能分析趋势和行情",
+        "score": {
+          "C": 1
+        }
+      },
+      {
+        "text": "能帮你整理信息，但机会得自己看出来",
+        "score": {
+          "C": 2
+        }
+      },
+      {
+        "text": "信息来源是一回事，能不能赚钱是另一回事",
+        "score": {
+          "C": 3
+        }
+      }
+    ],
+    "tag": [
+      "概念",
+      "认知",
+      "机会"
+    ],
+    "id": "D_33",
+    "direction": [
+      "D",
+      "D2"
+    ]
+  },
+  {
+    "dimension": "P",
+    "type": "G",
+    "baseLevel": 2,
+    "text": "你想卖AI设计的东西（头像/壁纸这些），一般怎么跟AI说？",
+    "options": [
+      {
+        "text": "帮我设计个好看的",
+        "score": {
+          "P": 0
+        }
+      },
+      {
+        "text": "想要什么风格和主题",
+        "score": {
+          "P": 1
+        }
+      },
+      {
+        "text": "风格+主题+大概用来干啥",
+        "score": {
+          "P": 2
+        }
+      },
+      {
+        "text": "根据卖给谁来说，不同的人喜欢的不一样",
+        "score": {
+          "P": 3
+        }
+      }
+    ],
+    "tag": [
+      "prompt",
+      "数字产品"
+    ],
+    "id": "D_34",
+    "direction": [
+      "D",
+      "D3"
+    ]
+  },
+  {
+    "dimension": "K",
+    "type": "H",
+    "baseLevel": 1,
+    "text": "你大概知道哪些用AI赚钱的路子？",
+    "options": [
+      {
+        "text": "基本不知道",
+        "score": {
+          "K": 0
+        }
+      },
+      {
+        "text": "知道代写、绘图这些",
+        "score": {
+          "K": 1
+        }
+      },
+      {
+        "text": "知道好几种常见的方式",
+        "score": {
+          "K": 2
+        }
+      },
+      {
+        "text": "了解几种并且大概知道它们的门槛",
+        "score": {
+          "K": 3
+        }
+      }
+    ],
+    "tag": [
+      "习惯",
+      "认知",
+      "渠道"
+    ],
+    "id": "D_35",
+    "direction": [
+      "D",
+      "D3"
+    ]
+  },
+  {
+    "dimension": "L",
+    "type": "S",
+    "baseLevel": 2,
+    "text": "客户让你用AI做擦边的事，你怎么处理？",
+    "options": [
+      {
+        "text": "看给多少钱",
+        "score": {
+          "L": 0
+        }
+      },
+      {
+        "text": "委婉拒绝",
+        "score": {
+          "L": 1
+        }
+      },
+      {
+        "text": "直接说不做",
+        "score": {
+          "L": 2
+        }
+      },
+      {
+        "text": "跟他说清楚为什么不合适，推荐合规方案",
+        "score": {
+          "L": 3
+        }
+      }
+    ],
+    "tag": [
+      "法律",
+      "取舍",
+      "合规"
+    ],
+    "id": "D_36",
+    "direction": [
+      "D",
+      "D4"
+    ]
+  },
+  {
+    "dimension": "T",
+    "type": "T",
+    "baseLevel": 2,
+    "text": "用AI批量发内容赚流量，但平台可能会限流，你怎么办？",
+    "options": [
+      {
+        "text": "先发了再说",
+        "score": {
+          "T": 0
+        }
+      },
+      {
+        "text": "那就在内容质量上花点功夫",
+        "score": {
+          "T": 1
+        }
+      },
+      {
+        "text": "了解平台的规则再调整",
+        "score": {
+          "T": 2
+        }
+      },
+      {
+        "text": "不把所有希望放一个平台上",
+        "score": {
+          "T": 3
+        }
+      }
+    ],
+    "tag": [
+      "取舍",
+      "风险",
+      "运营"
+    ],
+    "id": "D_37",
+    "direction": [
+      "D",
+      "D4"
+    ]
+  },
+  {
+    "dimension": "K",
+    "type": "P",
+    "baseLevel": 1,
+    "text": "让你选一种方式用AI变现，你更倾向哪种？",
+    "options": [
+      {
+        "text": "没认真想过",
+        "score": {
+          "K": 0
+        }
+      },
+      {
+        "text": "帮人写东西做东西收钱",
+        "score": {
+          "K": 1
+        }
+      },
+      {
+        "text": "卖模板、课程这些能复制的",
+        "score": {
+          "K": 2
+        }
+      },
+      {
+        "text": "做成能自动运转的，不用一直自己干",
+        "score": {
+          "K": 3
+        }
+      }
+    ],
+    "tag": [
+      "偏好",
+      "模式",
+      "变现"
+    ],
+    "id": "D_38",
+    "direction": [
+      "D",
+      "D5"
+    ]
+  },
+  {
+    "dimension": "C",
+    "type": "C",
+    "baseLevel": 2,
+    "text": "你觉得做AI副业最怕的是什么？",
+    "options": [
+      {
+        "text": "没什么好怕的",
+        "score": {
+          "C": 0
+        }
+      },
+      {
+        "text": "怕做不久",
+        "score": {
+          "C": 1
+        }
+      },
+      {
+        "text": "怕工具更新太快跟不上",
+        "score": {
+          "C": 2
+        }
+      },
+      {
+        "text": "怕把精力花在了不长久的事上",
+        "score": {
+          "C": 3
+        }
+      }
+    ],
+    "tag": [
+      "风险",
+      "认知"
+    ],
+    "id": "D_39",
+    "direction": [
+      "D",
+      "D5"
+    ]
+  },
+  {
+    "dimension": "P",
+    "type": "S",
+    "baseLevel": 2,
+    "text": "你想做一堂AI教学课，一般怎么设计内容？",
+    "options": [
+      {
+        "text": "把自己会的都放进去",
+        "score": {
+          "P": 0
+        }
+      },
+      {
+        "text": "按工具分类来讲",
+        "score": {
+          "P": 1
+        }
+      },
+      {
+        "text": "按使用场景来分章节",
+        "score": {
+          "P": 2
+        }
+      },
+      {
+        "text": "从学员的真实痛点出发，倒推课程内容",
+        "score": {
+          "P": 3
+        }
+      }
+    ],
+    "tag": [
+      "prompt",
+      "培训",
+      "课程"
+    ],
+    "id": "D_40",
+    "direction": [
+      "D",
+      "D6"
+    ]
+  },
+  {
+    "dimension": "L",
+    "type": "H",
+    "baseLevel": 1,
+    "text": "看到有人分享AI搞钱的经验帖，你一般先做什么？",
+    "options": [
+      {
+        "text": "先收藏",
+        "score": {
+          "L": 0
+        }
+      },
+      {
+        "text": "看完就试试",
+        "score": {
+          "L": 1
+        }
+      },
+      {
+        "text": "先想想适不适合自己",
+        "score": {
+          "L": 2
+        }
+      },
+      {
+        "text": "先判断可信度，再小范围试试",
+        "score": {
+          "L": 3
+        }
+      }
+    ],
+    "tag": [
+      "信息素养",
+      "学习",
+      "习惯"
+    ],
+    "id": "D_41",
+    "direction": [
+      "D",
+      "D6"
+    ]
+  },
+  {
+    "dimension": "T",
+    "type": "G",
+    "baseLevel": 1,
+    "text": "你觉得想靠AI搞钱，最需要什么本事？",
+    "options": [
+      {
+        "text": "会用AI就行",
+        "score": {
+          "T": 0
+        }
+      },
+      {
+        "text": "会用AI加上会卖",
+        "score": {
+          "T": 1
+        }
+      },
+      {
+        "text": "得懂行业也会用AI",
+        "score": {
+          "T": 2
+        }
+      },
+      {
+        "text": "发现需求、会工具、能执行、能坚持",
+        "score": {
+          "T": 3
+        }
+      }
+    ],
+    "tag": [
+      "关键",
+      "认知",
+      "起步"
+    ],
+    "id": "D_42",
+    "direction": [
+      "D",
+      "D6"
+    ]
+  }
+]

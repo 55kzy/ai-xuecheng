@@ -1,0 +1,3569 @@
+[
+  {
+    "id": "C1_G_K_01",
+    "direction": [
+      "C",
+      "C1"
+    ],
+    "dimension": "K",
+    "type": "G",
+    "baseLevel": 1,
+    "text": "假如你让AI写文案，一般怎么描述要求？",
+    "options": [
+      {
+        "text": "说个主题就行",
+        "score": {
+          "K": 0
+        }
+      },
+      {
+        "text": "主题+字数",
+        "score": {
+          "K": 1
+        }
+      },
+      {
+        "text": "主题+字数+语气",
+        "score": {
+          "K": 2
+        }
+      },
+      {
+        "text": "主题+字数+语气+参考风格+禁忌词",
+        "score": {
+          "K": 3
+        }
+      }
+    ],
+    "tag": [
+      "文案",
+      "prompt基础"
+    ]
+  },
+  {
+    "id": "C1_G_K_02",
+    "direction": [
+      "C",
+      "C1"
+    ],
+    "dimension": "K",
+    "type": "G",
+    "baseLevel": 2,
+    "text": "你同时让AI生成多篇内容时，用什么策略？",
+    "options": [
+      {
+        "text": "一篇篇扔进去让它写",
+        "score": {
+          "K": 0
+        }
+      },
+      {
+        "text": "用模板批量生成",
+        "score": {
+          "K": 1
+        }
+      },
+      {
+        "text": "写结构化prompt一次生成多篇",
+        "score": {
+          "K": 2
+        }
+      },
+      {
+        "text": "用API批量调用自动管理输出",
+        "score": {
+          "K": 3
+        }
+      }
+    ],
+    "tag": [
+      "文案",
+      "批量生产"
+    ]
+  },
+  {
+    "id": "C1_G_P_01",
+    "direction": [
+      "C",
+      "C1"
+    ],
+    "dimension": "P",
+    "type": "G",
+    "baseLevel": 1,
+    "text": "假如你让AI写完文案后，一般怎么改？",
+    "options": [
+      {
+        "text": "不改直接发",
+        "score": {
+          "P": 0
+        }
+      },
+      {
+        "text": "大概改几个词",
+        "score": {
+          "P": 1
+        }
+      },
+      {
+        "text": "换结构调语气重新组合",
+        "score": {
+          "P": 2
+        }
+      },
+      {
+        "text": "把AI当素材库自己重写框架",
+        "score": {
+          "P": 3
+        }
+      }
+    ],
+    "tag": [
+      "文案",
+      "后处理"
+    ]
+  },
+  {
+    "id": "C1_G_P_02",
+    "direction": [
+      "C",
+      "C1"
+    ],
+    "dimension": "P",
+    "type": "G",
+    "baseLevel": 2,
+    "text": "要求AI模仿你的写作风格时，你怎么做？",
+    "options": [
+      {
+        "text": "说一句写得像我一点",
+        "score": {
+          "P": 0
+        }
+      },
+      {
+        "text": "给几篇以前的文章当参考",
+        "score": {
+          "P": 1
+        }
+      },
+      {
+        "text": "总结风格特征写进prompt",
+        "score": {
+          "P": 2
+        }
+      },
+      {
+        "text": "建了专属风格库反复迭代优化",
+        "score": {
+          "P": 3
+        }
+      }
+    ],
+    "tag": [
+      "文案",
+      "风格化"
+    ]
+  },
+  {
+    "id": "C1_G_L_01",
+    "direction": [
+      "C",
+      "C1"
+    ],
+    "dimension": "L",
+    "type": "G",
+    "baseLevel": 1,
+    "text": "AI写的文案里有数据引用，你一般怎么处理？",
+    "options": [
+      {
+        "text": "AI写的应该没问题",
+        "score": {
+          "L": 0
+        }
+      },
+      {
+        "text": "看起来合理就用",
+        "score": {
+          "L": 1
+        }
+      },
+      {
+        "text": "关键数据会搜一下",
+        "score": {
+          "L": 2
+        }
+      },
+      {
+        "text": "所有数据都会核实替换",
+        "score": {
+          "L": 3
+        }
+      }
+    ],
+    "tag": [
+      "文案",
+      "信息素养"
+    ]
+  },
+  {
+    "id": "C1_G_T_01",
+    "direction": [
+      "C",
+      "C1"
+    ],
+    "dimension": "T",
+    "type": "G",
+    "baseLevel": 1,
+    "text": "你做内容时用到AI的程度是？",
+    "options": [
+      {
+        "text": "光用对话",
+        "score": {
+          "T": 0
+        }
+      },
+      {
+        "text": "用AI生成配图",
+        "score": {
+          "T": 1
+        }
+      },
+      {
+        "text": "用API自己调",
+        "score": {
+          "T": 2
+        }
+      },
+      {
+        "text": "搭建了自动化工作流",
+        "score": {
+          "T": 3
+        }
+      }
+    ],
+    "tag": [
+      "技术深度"
+    ]
+  },
+  {
+    "id": "C1_G_T_02",
+    "direction": [
+      "C",
+      "C1"
+    ],
+    "dimension": "T",
+    "type": "G",
+    "baseLevel": 2,
+    "text": "你发布内容前会利用AI做哪些优化？",
+    "options": [
+      {
+        "text": "写出来直接发",
+        "score": {
+          "T": 0
+        }
+      },
+      {
+        "text": "让AI检查错别字",
+        "score": {
+          "T": 1
+        }
+      },
+      {
+        "text": "让AI分析标题吸引力",
+        "score": {
+          "T": 2
+        }
+      },
+      {
+        "text": "用AI做A/B测试预测表现",
+        "score": {
+          "T": 3
+        }
+      }
+    ],
+    "tag": [
+      "文案",
+      "优化"
+    ],
+    "multiple": true
+  },
+  {
+    "id": "C1_G_C_01",
+    "direction": [
+      "C",
+      "C1"
+    ],
+    "dimension": "C",
+    "type": "G",
+    "baseLevel": 1,
+    "text": "你觉得AI写文案的能力建立在什么基础上？",
+    "options": [
+      {
+        "text": "它天生会写",
+        "score": {
+          "C": 0
+        }
+      },
+      {
+        "text": "训练了大量网上文本",
+        "score": {
+          "C": 1
+        }
+      },
+      {
+        "text": "通过海量文本学习语言规律",
+        "score": {
+          "C": 2
+        }
+      },
+      {
+        "text": "基于transformer结构的概率预测模型",
+        "score": {
+          "C": 3
+        }
+      }
+    ],
+    "tag": [
+      "概念理解"
+    ]
+  },
+  {
+    "id": "C1_G_C_02",
+    "direction": [
+      "C",
+      "C1"
+    ],
+    "dimension": "C",
+    "type": "G",
+    "baseLevel": 2,
+    "text": "你理解的prompt长短和效果的关系是？",
+    "options": [
+      {
+        "text": "越短越好AI理解简单",
+        "score": {
+          "C": 0
+        }
+      },
+      {
+        "text": "越长越好信息越多越准",
+        "score": {
+          "C": 1
+        }
+      },
+      {
+        "text": "关键信息给足就行不是越长越好",
+        "score": {
+          "C": 2
+        }
+      },
+      {
+        "text": "结构和信息密度比长度重要",
+        "score": {
+          "C": 3
+        }
+      }
+    ],
+    "tag": [
+      "概念理解",
+      "prompt"
+    ]
+  },
+  {
+    "id": "C2_G_K_01",
+    "direction": [
+      "C",
+      "C2"
+    ],
+    "dimension": "K",
+    "type": "G",
+    "baseLevel": 1,
+    "text": "你用过AI绘画工具吗？",
+    "options": [
+      {
+        "text": "没用过",
+        "score": {
+          "K": 0
+        }
+      },
+      {
+        "text": "试过但不太会用",
+        "score": {
+          "K": 1
+        }
+      },
+      {
+        "text": "经常用能生成想要的图",
+        "score": {
+          "K": 2
+        }
+      },
+      {
+        "text": "精通能控制构图风格细节",
+        "score": {
+          "K": 3
+        }
+      }
+    ],
+    "tag": [
+      "AI绘画"
+    ]
+  },
+  {
+    "id": "C2_G_P_01",
+    "direction": [
+      "C",
+      "C2"
+    ],
+    "dimension": "P",
+    "type": "G",
+    "baseLevel": 1,
+    "text": "你给AI绘画写提示词时一般多详细？",
+    "options": [
+      {
+        "text": "就写个物体名",
+        "score": {
+          "P": 0
+        }
+      },
+      {
+        "text": "物体+风格描述",
+        "score": {
+          "P": 1
+        }
+      },
+      {
+        "text": "物体+风格+构图+色彩+光照",
+        "score": {
+          "P": 2
+        }
+      },
+      {
+        "text": "会用反向提示词+权重+种子参数",
+        "score": {
+          "P": 3
+        }
+      }
+    ],
+    "tag": [
+      "AI绘画",
+      "prompt"
+    ]
+  },
+  {
+    "id": "C2_G_P_02",
+    "direction": [
+      "C",
+      "C2"
+    ],
+    "dimension": "P",
+    "type": "G",
+    "baseLevel": 2,
+    "text": "AI生成的图里人脸总崩，你怎么解决？",
+    "options": [
+      {
+        "text": "换工具试试",
+        "score": {
+          "P": 0
+        }
+      },
+      {
+        "text": "多生成几张挑好的",
+        "score": {
+          "P": 1
+        }
+      },
+      {
+        "text": "加特定prompt关键词",
+        "score": {
+          "P": 2
+        }
+      },
+      {
+        "text": "用局部重绘修脸或换脸插件",
+        "score": {
+          "P": 3
+        }
+      }
+    ],
+    "tag": [
+      "AI绘画",
+      "技巧"
+    ]
+  },
+  {
+    "id": "C2_G_L_01",
+    "direction": [
+      "C",
+      "C2"
+    ],
+    "dimension": "L",
+    "type": "G",
+    "baseLevel": 1,
+    "text": "假如你用AI图做封面时版权问题怎么处理？",
+    "options": [
+      {
+        "text": "没想过版权",
+        "score": {
+          "L": 0
+        }
+      },
+      {
+        "text": "知道可能有问题但先用",
+        "score": {
+          "L": 1
+        }
+      },
+      {
+        "text": "只用标注了可商用的模型",
+        "score": {
+          "L": 2
+        }
+      },
+      {
+        "text": "会查具体工具的使用条款",
+        "score": {
+          "L": 3
+        }
+      }
+    ],
+    "tag": [
+      "AI绘画",
+      "版权"
+    ]
+  },
+  {
+    "id": "C2_G_C_01",
+    "direction": [
+      "C",
+      "C2"
+    ],
+    "dimension": "C",
+    "type": "G",
+    "baseLevel": 2,
+    "text": "AI绘画生成的结果不稳定你认为原因是？",
+    "options": [
+      {
+        "text": "AI不行",
+        "score": {
+          "C": 0
+        }
+      },
+      {
+        "text": "种子是随机的",
+        "score": {
+          "C": 1
+        }
+      },
+      {
+        "text": "prompt不够精确",
+        "score": {
+          "C": 2
+        }
+      },
+      {
+        "text": "模型本质是概率输出同prompt不同结果正常",
+        "score": {
+          "C": 3
+        }
+      }
+    ],
+    "tag": [
+      "AI绘画",
+      "概念理解"
+    ]
+  },
+  {
+    "id": "C3_G_K_01",
+    "direction": [
+      "C",
+      "C3"
+    ],
+    "dimension": "K",
+    "type": "G",
+    "baseLevel": 1,
+    "text": "你用AI做过视频相关的内容吗？",
+    "options": [
+      {
+        "text": "没接触过",
+        "score": {
+          "K": 0
+        }
+      },
+      {
+        "text": "用过剪映AI功能",
+        "score": {
+          "K": 1
+        }
+      },
+      {
+        "text": "用过Sora/Runway等生成工具",
+        "score": {
+          "K": 2
+        }
+      },
+      {
+        "text": "自己搭了AI视频工作流",
+        "score": {
+          "K": 3
+        }
+      }
+    ],
+    "tag": [
+      "AI视频"
+    ]
+  },
+  {
+    "id": "C3_G_T_01",
+    "direction": [
+      "C",
+      "C3"
+    ],
+    "dimension": "T",
+    "type": "G",
+    "baseLevel": 1,
+    "text": "做视频时你的技术介入程度？",
+    "options": [
+      {
+        "text": "全手动自己剪",
+        "score": {
+          "T": 0
+        }
+      },
+      {
+        "text": "AI帮忙写脚本",
+        "score": {
+          "T": 1
+        }
+      },
+      {
+        "text": "AI生成素材自己剪辑",
+        "score": {
+          "T": 2
+        }
+      },
+      {
+        "text": "AI全自动生成加自动剪辑",
+        "score": {
+          "T": 3
+        }
+      }
+    ],
+    "tag": [
+      "AI视频",
+      "技术深度"
+    ]
+  },
+  {
+    "id": "C3_G_P_01",
+    "direction": [
+      "C",
+      "C3"
+    ],
+    "dimension": "P",
+    "type": "G",
+    "baseLevel": 1,
+    "text": "AI写视频脚本时你一般怎么提需求？",
+    "options": [
+      {
+        "text": "帮我写个视频脚本",
+        "score": {
+          "P": 0
+        }
+      },
+      {
+        "text": "1分钟口播脚本加分镜",
+        "score": {
+          "P": 1
+        }
+      },
+      {
+        "text": "1分钟口播加分镜加时长加画面提示",
+        "score": {
+          "P": 2
+        }
+      },
+      {
+        "text": "给参考视频结构加受众加情绪曲线加分镜",
+        "score": {
+          "P": 3
+        }
+      }
+    ],
+    "tag": [
+      "视频",
+      "脚本"
+    ]
+  },
+  {
+    "id": "C1_S_K_01",
+    "direction": [
+      "C",
+      "C1"
+    ],
+    "dimension": "K",
+    "type": "S",
+    "baseLevel": 1,
+    "text": "AI写了一大段但你只要200字你会怎么办？",
+    "options": [
+      {
+        "text": "把长的直接用了",
+        "score": {
+          "K": 0
+        }
+      },
+      {
+        "text": "手动删到200字",
+        "score": {
+          "K": 1
+        }
+      },
+      {
+        "text": "让它重新生成精简版",
+        "score": {
+          "K": 2
+        }
+      },
+      {
+        "text": "一开始就告诉它要200字",
+        "score": {
+          "K": 3
+        }
+      }
+    ],
+    "tag": [
+      "文案",
+      "字数控制"
+    ]
+  },
+  {
+    "id": "C1_S_P_01",
+    "direction": [
+      "C",
+      "C1"
+    ],
+    "dimension": "P",
+    "type": "S",
+    "baseLevel": 1,
+    "text": "AI写的笔记风格太正式了你怎么办？",
+    "options": [
+      {
+        "text": "凑合发",
+        "score": {
+          "P": 0
+        }
+      },
+      {
+        "text": "手动改成自己的语气",
+        "score": {
+          "P": 1
+        }
+      },
+      {
+        "text": "让它按朋友聊天的语气重写",
+        "score": {
+          "P": 2
+        }
+      },
+      {
+        "text": "重新描述目标读者语气加参考案例",
+        "score": {
+          "P": 3
+        }
+      }
+    ],
+    "tag": [
+      "文案",
+      "风格调整"
+    ]
+  },
+  {
+    "id": "C1_S_P_02",
+    "direction": [
+      "C",
+      "C1"
+    ],
+    "dimension": "P",
+    "type": "S",
+    "baseLevel": 2,
+    "text": "AI写的东西老用那几个流行词你怎么办？",
+    "options": [
+      {
+        "text": "无所谓",
+        "score": {
+          "P": 0
+        }
+      },
+      {
+        "text": "发之前手动替换掉",
+        "score": {
+          "P": 1
+        }
+      },
+      {
+        "text": "在prompt里加禁用词列表",
+        "score": {
+          "P": 2
+        }
+      },
+      {
+        "text": "写清楚用词偏好加举例说明",
+        "score": {
+          "P": 3
+        }
+      }
+    ],
+    "tag": [
+      "文案",
+      "prompt",
+      "词汇"
+    ]
+  },
+  {
+    "id": "C1_S_L_01",
+    "direction": [
+      "C",
+      "C1"
+    ],
+    "dimension": "L",
+    "type": "S",
+    "baseLevel": 1,
+    "text": "评论区有人质疑你内容里的数据不准你怎么办？",
+    "options": [
+      {
+        "text": "不理或删评",
+        "score": {
+          "L": 0
+        }
+      },
+      {
+        "text": "大概解释一下",
+        "score": {
+          "L": 1
+        }
+      },
+      {
+        "text": "查证后回复来源",
+        "score": {
+          "L": 2
+        }
+      },
+      {
+        "text": "以后发布前所有数据都标注来源",
+        "score": {
+          "L": 3
+        }
+      }
+    ],
+    "tag": [
+      "信息素养",
+      "互动"
+    ]
+  },
+  {
+    "id": "C1_S_L_02",
+    "direction": [
+      "C",
+      "C1"
+    ],
+    "dimension": "L",
+    "type": "S",
+    "baseLevel": 1,
+    "text": "假如你看到AI写的推荐语里有全网第一个你会？",
+    "options": [
+      {
+        "text": "直接用吸引眼球",
+        "score": {
+          "L": 0
+        }
+      },
+      {
+        "text": "改一下措辞再用",
+        "score": {
+          "L": 1
+        }
+      },
+      {
+        "text": "搜一下是不是真的",
+        "score": {
+          "L": 2
+        }
+      },
+      {
+        "text": "提醒AI不要用夸大表述并删掉",
+        "score": {
+          "L": 3
+        }
+      }
+    ],
+    "tag": [
+      "信息素养",
+      "合规"
+    ]
+  },
+  {
+    "id": "C1_S_T_01",
+    "direction": [
+      "C",
+      "C1"
+    ],
+    "dimension": "T",
+    "type": "S",
+    "baseLevel": 2,
+    "text": "假如你需要每天发3篇小红书但没那么多时间你怎么办？",
+    "options": [
+      {
+        "text": "减少到1天1篇",
+        "score": {
+          "T": 0
+        }
+      },
+      {
+        "text": "找人帮忙写",
+        "score": {
+          "T": 1
+        }
+      },
+      {
+        "text": "让AI写初稿自己改",
+        "score": {
+          "T": 2
+        }
+      },
+      {
+        "text": "搭批量生产流程一次生成一周的量",
+        "score": {
+          "T": 3
+        }
+      }
+    ],
+    "tag": [
+      "文案",
+      "效率"
+    ]
+  },
+  {
+    "id": "C1_S_C_01",
+    "direction": [
+      "C",
+      "C1"
+    ],
+    "dimension": "C",
+    "type": "S",
+    "baseLevel": 2,
+    "text": "AI写了一篇非常流畅的文案但核心观点错了你怎么看？",
+    "options": [
+      {
+        "text": "流畅就行观点不重要",
+        "score": {
+          "C": 0
+        }
+      },
+      {
+        "text": "错就错吧没用",
+        "score": {
+          "C": 1
+        }
+      },
+      {
+        "text": "AI的流畅性和准确性是两回事",
+        "score": {
+          "C": 2
+        }
+      },
+      {
+        "text": "这是典型的AI幻觉需要自己把控",
+        "score": {
+          "C": 3
+        }
+      }
+    ],
+    "tag": [
+      "概念理解",
+      "幻觉"
+    ]
+  },
+  {
+    "id": "C2_S_K_01",
+    "direction": [
+      "C",
+      "C2"
+    ],
+    "dimension": "K",
+    "type": "S",
+    "baseLevel": 1,
+    "text": "假如你需要一张比较写实的公众号封面图你会怎么做？",
+    "options": [
+      {
+        "text": "去图库找免费图",
+        "score": {
+          "K": 0
+        }
+      },
+      {
+        "text": "找朋友帮忙拍一张",
+        "score": {
+          "K": 1
+        }
+      },
+      {
+        "text": "用AI生成一张",
+        "score": {
+          "K": 2
+        }
+      },
+      {
+        "text": "AI生成加后期调色加字",
+        "score": {
+          "K": 3
+        }
+      }
+    ],
+    "tag": [
+      "AI绘画",
+      "封面"
+    ]
+  },
+  {
+    "id": "C2_S_L_01",
+    "direction": [
+      "C",
+      "C2"
+    ],
+    "dimension": "L",
+    "type": "S",
+    "baseLevel": 2,
+    "text": "AI画的图里出现了真实的人脸怎么处理？",
+    "options": [
+      {
+        "text": "直接用了",
+        "score": {
+          "L": 0
+        }
+      },
+      {
+        "text": "换个prompt重新生成",
+        "score": {
+          "L": 1
+        }
+      },
+      {
+        "text": "确认不是公众人物后决定是否用",
+        "score": {
+          "L": 2
+        }
+      },
+      {
+        "text": "不用任何可能涉及肖像权的图",
+        "score": {
+          "L": 3
+        }
+      }
+    ],
+    "tag": [
+      "AI绘画",
+      "版权",
+      "肖像权"
+    ]
+  },
+  {
+    "id": "C2_S_P_01",
+    "direction": [
+      "C",
+      "C2"
+    ],
+    "dimension": "P",
+    "type": "S",
+    "baseLevel": 2,
+    "text": "假如你想要一张非常有电影感的配图但AI出图太普通了怎么办？",
+    "options": [
+      {
+        "text": "将就用",
+        "score": {
+          "P": 0
+        }
+      },
+      {
+        "text": "换不同prompt多试几次",
+        "score": {
+          "P": 1
+        }
+      },
+      {
+        "text": "描述光影构图色彩像哪部电影",
+        "score": {
+          "P": 2
+        }
+      },
+      {
+        "text": "用电影截图做图生图加详细描述",
+        "score": {
+          "P": 3
+        }
+      }
+    ],
+    "tag": [
+      "AI绘画",
+      "风格"
+    ]
+  },
+  {
+    "id": "C2_S_T_01",
+    "direction": [
+      "C",
+      "C2"
+    ],
+    "dimension": "T",
+    "type": "S",
+    "baseLevel": 2,
+    "text": "AI生成的图有水印或者分辨率太低你怎么处理？",
+    "options": [
+      {
+        "text": "忽略水印直接用",
+        "score": {
+          "T": 0
+        }
+      },
+      {
+        "text": "裁剪掉或用PS盖掉",
+        "score": {
+          "T": 1
+        }
+      },
+      {
+        "text": "重写prompt再生成",
+        "score": {
+          "T": 2
+        }
+      },
+      {
+        "text": "用AI放大加去水印工具一条龙处理",
+        "score": {
+          "T": 3
+        }
+      }
+    ],
+    "tag": [
+      "AI绘画",
+      "后期"
+    ]
+  },
+  {
+    "id": "C3_S_K_01",
+    "direction": [
+      "C",
+      "C3"
+    ],
+    "dimension": "K",
+    "type": "S",
+    "baseLevel": 1,
+    "text": "假如你想做一个解说类的短视频但没有素材怎么办？",
+    "options": [
+      {
+        "text": "不做了",
+        "score": {
+          "K": 0
+        }
+      },
+      {
+        "text": "用网上的素材混剪",
+        "score": {
+          "K": 1
+        }
+      },
+      {
+        "text": "AI生成脚本加自己录口播",
+        "score": {
+          "K": 2
+        }
+      },
+      {
+        "text": "AI生成脚本加AI数字人加AI配音",
+        "score": {
+          "K": 3
+        }
+      }
+    ],
+    "tag": [
+      "视频",
+      "素材"
+    ]
+  },
+  {
+    "id": "C3_S_P_01",
+    "direction": [
+      "C",
+      "C3"
+    ],
+    "dimension": "P",
+    "type": "S",
+    "baseLevel": 1,
+    "text": "假如你让AI写视频标题给了好几个都不满意怎么办？",
+    "options": [
+      {
+        "text": "从给的里面挑一个",
+        "score": {
+          "P": 0
+        }
+      },
+      {
+        "text": "换种说法重新问",
+        "score": {
+          "P": 1
+        }
+      },
+      {
+        "text": "给它几个你喜欢的标题当参考再生成",
+        "score": {
+          "P": 2
+        }
+      },
+      {
+        "text": "分析爆款标题特征后写进prompt",
+        "score": {
+          "P": 3
+        }
+      }
+    ],
+    "tag": [
+      "视频",
+      "标题"
+    ]
+  },
+  {
+    "id": "C3_S_T_01",
+    "direction": [
+      "C",
+      "C3"
+    ],
+    "dimension": "T",
+    "type": "S",
+    "baseLevel": 2,
+    "text": "假如你收到一段AI做的短视频声音和口型对不上怎么办？",
+    "options": [
+      {
+        "text": "凑合发",
+        "score": {
+          "T": 0
+        }
+      },
+      {
+        "text": "手动剪辑对齐",
+        "score": {
+          "T": 1
+        }
+      },
+      {
+        "text": "换个AI工具重新生成",
+        "score": {
+          "T": 2
+        }
+      },
+      {
+        "text": "用对口型工具自动修复再导出",
+        "score": {
+          "T": 3
+        }
+      }
+    ],
+    "tag": [
+      "视频",
+      "后期"
+    ]
+  },
+  {
+    "id": "C1_P_K_01",
+    "direction": [
+      "C",
+      "C1"
+    ],
+    "dimension": "K",
+    "type": "P",
+    "baseLevel": 1,
+    "text": "你更习惯哪种方式写内容？",
+    "options": [
+      {
+        "text": "自己写好再让AI润色",
+        "score": {
+          "K": 0
+        }
+      },
+      {
+        "text": "让AI写初稿自己改",
+        "score": {
+          "K": 1
+        }
+      },
+      {
+        "text": "和AI一边聊一边写",
+        "score": {
+          "K": 2
+        }
+      }
+    ],
+    "tag": [
+      "文案",
+      "习惯"
+    ]
+  },
+  {
+    "id": "C1_P_K_02",
+    "direction": [
+      "C",
+      "C1"
+    ],
+    "dimension": "K",
+    "type": "P",
+    "baseLevel": 2,
+    "text": "写不同平台的内容你更习惯？",
+    "options": [
+      {
+        "text": "一个prompt生成所有平台",
+        "score": {
+          "K": 0
+        }
+      },
+      {
+        "text": "不同平台分别写prompt",
+        "score": {
+          "K": 1
+        }
+      },
+      {
+        "text": "有核心内容再分平台改写",
+        "score": {
+          "K": 2
+        }
+      }
+    ],
+    "tag": [
+      "文案",
+      "多平台"
+    ]
+  },
+  {
+    "id": "C1_P_P_01",
+    "direction": [
+      "C",
+      "C1"
+    ],
+    "dimension": "P",
+    "type": "P",
+    "baseLevel": 1,
+    "text": "写prompt的时候你更在意什么？",
+    "options": [
+      {
+        "text": "把要求说全",
+        "score": {
+          "P": 0
+        }
+      },
+      {
+        "text": "把要求说清楚",
+        "score": {
+          "P": 1
+        }
+      },
+      {
+        "text": "把要求说得有结构有条理",
+        "score": {
+          "P": 2
+        }
+      }
+    ],
+    "tag": [
+      "文案",
+      "prompt"
+    ]
+  },
+  {
+    "id": "C1_P_P_02",
+    "direction": [
+      "C",
+      "C1"
+    ],
+    "dimension": "P",
+    "type": "P",
+    "baseLevel": 2,
+    "text": "你更喜欢AI给几个版本让你选还是给一个最优化版本？",
+    "options": [
+      {
+        "text": "一个版本就够了",
+        "score": {
+          "P": 0
+        }
+      },
+      {
+        "text": "几个版本自己拼",
+        "score": {
+          "P": 1
+        }
+      },
+      {
+        "text": "多版本加选方向再优化",
+        "score": {
+          "P": 2
+        }
+      }
+    ],
+    "tag": [
+      "文案",
+      "输出方式"
+    ]
+  },
+  {
+    "id": "C1_P_T_01",
+    "direction": [
+      "C",
+      "C1"
+    ],
+    "dimension": "T",
+    "type": "P",
+    "baseLevel": 1,
+    "text": "你更倾向于怎么处理AI工具的付费问题？",
+    "options": [
+      {
+        "text": "只用免费的",
+        "score": {
+          "T": 0
+        }
+      },
+      {
+        "text": "少量付费就够了",
+        "score": {
+          "T": 1
+        }
+      },
+      {
+        "text": "愿意花钱买好工具",
+        "score": {
+          "T": 2
+        }
+      },
+      {
+        "text": "愿意买API自己定制",
+        "score": {
+          "T": 3
+        }
+      }
+    ],
+    "tag": [
+      "工具",
+      "付费"
+    ]
+  },
+  {
+    "id": "C1_P_L_01",
+    "direction": [
+      "C",
+      "C1"
+    ],
+    "dimension": "L",
+    "type": "P",
+    "baseLevel": 1,
+    "text": "有人问你AI写的和人类写的哪个好你更认同哪种说法？",
+    "options": [
+      {
+        "text": "AI写的更好",
+        "score": {
+          "L": 0
+        }
+      },
+      {
+        "text": "看用途和场景",
+        "score": {
+          "L": 1
+        }
+      },
+      {
+        "text": "人类写的更有灵魂",
+        "score": {
+          "L": 2
+        }
+      },
+      {
+        "text": "AI辅助人类写出来的最好",
+        "score": {
+          "L": 3
+        }
+      }
+    ],
+    "tag": [
+      "信息素养",
+      "人机对比"
+    ]
+  },
+  {
+    "id": "C1_P_C_01",
+    "direction": [
+      "C",
+      "C1"
+    ],
+    "dimension": "C",
+    "type": "P",
+    "baseLevel": 1,
+    "text": "你理解的Prompt最像什么？",
+    "options": [
+      {
+        "text": "像搜关键词",
+        "score": {
+          "C": 0
+        }
+      },
+      {
+        "text": "像给手下派活",
+        "score": {
+          "C": 1
+        }
+      },
+      {
+        "text": "像给写作搭档列要求清单",
+        "score": {
+          "C": 2
+        }
+      }
+    ],
+    "tag": [
+      "概念",
+      "prompt"
+    ]
+  },
+  {
+    "id": "C2_P_K_01",
+    "direction": [
+      "C",
+      "C2"
+    ],
+    "dimension": "K",
+    "type": "P",
+    "baseLevel": 1,
+    "text": "做配图时你更看重什么？",
+    "options": [
+      {
+        "text": "好看就行",
+        "score": {
+          "K": 0
+        }
+      },
+      {
+        "text": "配内容主题",
+        "score": {
+          "K": 1
+        }
+      },
+      {
+        "text": "有自己的固定视觉风格",
+        "score": {
+          "K": 2
+        }
+      }
+    ],
+    "tag": [
+      "AI绘画",
+      "配图"
+    ]
+  },
+  {
+    "id": "C2_P_P_01",
+    "direction": [
+      "C",
+      "C2"
+    ],
+    "dimension": "P",
+    "type": "P",
+    "baseLevel": 2,
+    "text": "控制AI生成的画面风格你倾向哪种方式？",
+    "options": [
+      {
+        "text": "打关键词描述风格",
+        "score": {
+          "P": 0
+        }
+      },
+      {
+        "text": "参考图叠加描述",
+        "score": {
+          "P": 1
+        }
+      },
+      {
+        "text": "LoRA或者风格模型",
+        "score": {
+          "P": 2
+        }
+      }
+    ],
+    "tag": [
+      "AI绘画",
+      "风格控制"
+    ]
+  },
+  {
+    "id": "C2_P_T_01",
+    "direction": [
+      "C",
+      "C2"
+    ],
+    "dimension": "T",
+    "type": "P",
+    "baseLevel": 2,
+    "text": "AI画的图总是某个部位变形你更倾向怎么解决？",
+    "options": [
+      {
+        "text": "继续抽卡多试几次",
+        "score": {
+          "T": 0
+        }
+      },
+      {
+        "text": "改prompt细节",
+        "score": {
+          "T": 1
+        }
+      },
+      {
+        "text": "换更专业的绘图工具",
+        "score": {
+          "T": 2
+        }
+      },
+      {
+        "text": "后期用PS修图插件修复",
+        "score": {
+          "T": 3
+        }
+      }
+    ],
+    "tag": [
+      "AI绘画",
+      "问题解决"
+    ]
+  },
+  {
+    "id": "C3_P_K_01",
+    "direction": [
+      "C",
+      "C3"
+    ],
+    "dimension": "K",
+    "type": "P",
+    "baseLevel": 1,
+    "text": "做短视频你更关注哪一环？",
+    "options": [
+      {
+        "text": "选题和脚本",
+        "score": {
+          "K": 0
+        }
+      },
+      {
+        "text": "画面和素材",
+        "score": {
+          "K": 1
+        }
+      },
+      {
+        "text": "剪辑和节奏",
+        "score": {
+          "K": 2
+        }
+      },
+      {
+        "text": "发布和数据",
+        "score": {
+          "K": 3
+        }
+      }
+    ],
+    "tag": [
+      "视频",
+      "关注点"
+    ]
+  },
+  {
+    "id": "C3_P_P_01",
+    "direction": [
+      "C",
+      "C3"
+    ],
+    "dimension": "P",
+    "type": "P",
+    "baseLevel": 2,
+    "text": "写视频脚本时你更倾向哪种方式？",
+    "options": [
+      {
+        "text": "自己列大纲让AI填充",
+        "score": {
+          "P": 0
+        }
+      },
+      {
+        "text": "让AI出大纲再自己调整",
+        "score": {
+          "P": 1
+        }
+      },
+      {
+        "text": "和AI来回讨论打磨",
+        "score": {
+          "P": 2
+        }
+      }
+    ],
+    "tag": [
+      "视频",
+      "脚本"
+    ]
+  },
+  {
+    "id": "C1_T_K_01",
+    "direction": [
+      "C",
+      "C1"
+    ],
+    "dimension": "K",
+    "type": "T",
+    "baseLevel": 1,
+    "text": "同样时间你更愿意？",
+    "options": [
+      {
+        "text": "学怎么让AI写得更快更好",
+        "score": {
+          "K": 0
+        }
+      },
+      {
+        "text": "自己慢慢磨一篇好内容",
+        "score": {
+          "K": 1
+        }
+      },
+      {
+        "text": "一半学AI一半打磨内容",
+        "score": {
+          "K": 2
+        }
+      }
+    ],
+    "tag": [
+      "文案",
+      "时间分配"
+    ]
+  },
+  {
+    "id": "C1_T_P_01",
+    "direction": [
+      "C",
+      "C1"
+    ],
+    "dimension": "P",
+    "type": "T",
+    "baseLevel": 2,
+    "text": "为了提升AI产出质量你更愿意投入？",
+    "options": [
+      {
+        "text": "花时间不断调prompt",
+        "score": {
+          "P": 0
+        }
+      },
+      {
+        "text": "花时间给AI提供更多参考素材",
+        "score": {
+          "P": 1
+        }
+      },
+      {
+        "text": "两方面都投入",
+        "score": {
+          "P": 2
+        }
+      }
+    ],
+    "tag": [
+      "文案",
+      "投入"
+    ]
+  },
+  {
+    "id": "C1_T_L_01",
+    "direction": [
+      "C",
+      "C1"
+    ],
+    "dimension": "L",
+    "type": "T",
+    "baseLevel": 1,
+    "text": "创作者用AI大量生产内容你觉得怎么样？",
+    "options": [
+      {
+        "text": "挺好的效率高",
+        "score": {
+          "L": 0
+        }
+      },
+      {
+        "text": "质量会下降",
+        "score": {
+          "L": 1
+        }
+      },
+      {
+        "text": "关键还是运营者的判断力",
+        "score": {
+          "L": 2
+        }
+      },
+      {
+        "text": "有利有弊看怎么用",
+        "score": {
+          "L": 3
+        }
+      }
+    ],
+    "tag": [
+      "信息素养",
+      "伦理"
+    ]
+  },
+  {
+    "id": "C1_T_L_02",
+    "direction": [
+      "C",
+      "C1"
+    ],
+    "dimension": "L",
+    "type": "T",
+    "baseLevel": 2,
+    "text": "AI帮你写的内容数据很好但里面有小错误你怎么办？",
+    "options": [
+      {
+        "text": "数据好就不改了",
+        "score": {
+          "L": 0
+        }
+      },
+      {
+        "text": "心里不舒服但保留了",
+        "score": {
+          "L": 1
+        }
+      },
+      {
+        "text": "下次让AI注意但这次算了",
+        "score": {
+          "L": 2
+        }
+      },
+      {
+        "text": "删了重写保证准确性",
+        "score": {
+          "L": 3
+        }
+      }
+    ],
+    "tag": [
+      "信息素养",
+      "取舍"
+    ]
+  },
+  {
+    "id": "C1_T_T_01",
+    "direction": [
+      "C",
+      "C1"
+    ],
+    "dimension": "T",
+    "type": "T",
+    "baseLevel": 2,
+    "text": "假如你遇到AI工具突然改版了你会？",
+    "options": [
+      {
+        "text": "等别人出教程",
+        "score": {
+          "T": 0
+        }
+      },
+      {
+        "text": "自己摸索一下",
+        "score": {
+          "T": 1
+        }
+      },
+      {
+        "text": "看更新文档后尝试",
+        "score": {
+          "T": 2
+        }
+      },
+      {
+        "text": "适应性很强随时调整",
+        "score": {
+          "T": 3
+        }
+      }
+    ],
+    "tag": [
+      "工具",
+      "适应能力"
+    ]
+  },
+  {
+    "id": "C1_T_C_01",
+    "direction": [
+      "C",
+      "C1"
+    ],
+    "dimension": "C",
+    "type": "T",
+    "baseLevel": 1,
+    "text": "你觉得用AI做内容最重要的是什么？",
+    "options": [
+      {
+        "text": "会用最新的AI工具",
+        "score": {
+          "C": 0
+        }
+      },
+      {
+        "text": "把AI融入自己的创作流程",
+        "score": {
+          "C": 1
+        }
+      },
+      {
+        "text": "理解AI的边界知道改什么留什么",
+        "score": {
+          "C": 2
+        }
+      },
+      {
+        "text": "有自己不可替代的核心价值",
+        "score": {
+          "C": 3
+        }
+      }
+    ],
+    "tag": [
+      "概念",
+      "AI定位"
+    ]
+  },
+  {
+    "id": "C2_T_K_01",
+    "direction": [
+      "C",
+      "C2"
+    ],
+    "dimension": "K",
+    "type": "T",
+    "baseLevel": 1,
+    "text": "做配图时你更看重？",
+    "options": [
+      {
+        "text": "生成速度",
+        "score": {
+          "K": 0
+        }
+      },
+      {
+        "text": "画面质量",
+        "score": {
+          "K": 1
+        }
+      },
+      {
+        "text": "风格一致性",
+        "score": {
+          "K": 2
+        }
+      }
+    ],
+    "tag": [
+      "AI绘画",
+      "权衡"
+    ]
+  },
+  {
+    "id": "C2_T_P_01",
+    "direction": [
+      "C",
+      "C2"
+    ],
+    "dimension": "P",
+    "type": "T",
+    "baseLevel": 2,
+    "text": "如果要提升AI图的质量你更缺什么？",
+    "options": [
+      {
+        "text": "不知道好的prompt怎么写",
+        "score": {
+          "P": 0
+        }
+      },
+      {
+        "text": "没有好的参考图",
+        "score": {
+          "P": 1
+        }
+      },
+      {
+        "text": "参数细节不知道怎么调",
+        "score": {
+          "P": 2
+        }
+      }
+    ],
+    "tag": [
+      "AI绘画",
+      "提升"
+    ]
+  },
+  {
+    "id": "C2_T_T_01",
+    "direction": [
+      "C",
+      "C2"
+    ],
+    "dimension": "T",
+    "type": "T",
+    "baseLevel": 2,
+    "text": "如果AI绘画需要学一些参数设置你的态度是？",
+    "options": [
+      {
+        "text": "太复杂了不想学",
+        "score": {
+          "T": 0
+        }
+      },
+      {
+        "text": "学基础的够用就行",
+        "score": {
+          "T": 1
+        }
+      },
+      {
+        "text": "花时间系统学一遍",
+        "score": {
+          "T": 2
+        }
+      },
+      {
+        "text": "研究透了再决定怎么用",
+        "score": {
+          "T": 3
+        }
+      }
+    ],
+    "tag": [
+      "AI绘画",
+      "学习意愿"
+    ]
+  },
+  {
+    "id": "C3_T_K_01",
+    "direction": [
+      "C",
+      "C3"
+    ],
+    "dimension": "K",
+    "type": "T",
+    "baseLevel": 2,
+    "text": "做视频时更担心哪个问题？",
+    "options": [
+      {
+        "text": "AI生成的不够自然",
+        "score": {
+          "K": 0
+        }
+      },
+      {
+        "text": "后期花的时间太多",
+        "score": {
+          "K": 1
+        }
+      },
+      {
+        "text": "流量不好白做了",
+        "score": {
+          "K": 2
+        }
+      }
+    ],
+    "tag": [
+      "视频",
+      "痛点"
+    ]
+  },
+  {
+    "id": "C3_T_P_01",
+    "direction": [
+      "C",
+      "C3"
+    ],
+    "dimension": "P",
+    "type": "T",
+    "baseLevel": 2,
+    "text": "做视频遇到最头疼的是？",
+    "options": [
+      {
+        "text": "AI脚本没网感",
+        "score": {
+          "P": 0
+        }
+      },
+      {
+        "text": "AI配音太机械",
+        "score": {
+          "P": 1
+        }
+      },
+      {
+        "text": "AI画面和脚本对不上",
+        "score": {
+          "P": 2
+        }
+      }
+    ],
+    "tag": [
+      "视频",
+      "痛点"
+    ]
+  },
+  {
+    "id": "C1_H_K_01",
+    "direction": [
+      "C",
+      "C1"
+    ],
+    "dimension": "K",
+    "type": "H",
+    "baseLevel": 1,
+    "text": "你平均打开AI工具的频率是？",
+    "options": [
+      {
+        "text": "偶尔用",
+        "score": {
+          "K": 0
+        }
+      },
+      {
+        "text": "每周几次",
+        "score": {
+          "K": 1
+        }
+      },
+      {
+        "text": "几乎每天",
+        "score": {
+          "K": 2
+        }
+      },
+      {
+        "text": "每天多次",
+        "score": {
+          "K": 3
+        }
+      }
+    ],
+    "tag": [
+      "工具",
+      "使用频率"
+    ]
+  },
+  {
+    "id": "C1_H_K_02",
+    "direction": [
+      "C",
+      "C1"
+    ],
+    "dimension": "K",
+    "type": "H",
+    "baseLevel": 2,
+    "text": "你同时在用几个AI工具？",
+    "options": [
+      {
+        "text": "1个",
+        "score": {
+          "K": 0
+        }
+      },
+      {
+        "text": "2到3个",
+        "score": {
+          "K": 1
+        }
+      },
+      {
+        "text": "4到6个",
+        "score": {
+          "K": 2
+        }
+      },
+      {
+        "text": "7个以上",
+        "score": {
+          "K": 3
+        }
+      }
+    ],
+    "tag": [
+      "工具",
+      "数量"
+    ]
+  },
+  {
+    "id": "C1_H_P_01",
+    "direction": [
+      "C",
+      "C1"
+    ],
+    "dimension": "P",
+    "type": "H",
+    "baseLevel": 1,
+    "text": "你写prompt之前会先做什么？",
+    "options": [
+      {
+        "text": "想好思路直接写",
+        "score": {
+          "P": 0
+        }
+      },
+      {
+        "text": "想好思路加组织语言再写",
+        "score": {
+          "P": 1
+        }
+      },
+      {
+        "text": "列一下关键信息再写",
+        "score": {
+          "P": 2
+        }
+      },
+      {
+        "text": "根据内容类型用对应模板",
+        "score": {
+          "P": 3
+        }
+      }
+    ],
+    "tag": [
+      "文案",
+      "习惯"
+    ]
+  },
+  {
+    "id": "C1_H_P_02",
+    "direction": [
+      "C",
+      "C1"
+    ],
+    "dimension": "P",
+    "type": "H",
+    "baseLevel": 2,
+    "text": "AI给的回复你觉得不好时你一般怎么调整？",
+    "options": [
+      {
+        "text": "换个方式再问一次",
+        "score": {
+          "P": 0
+        }
+      },
+      {
+        "text": "补充更多信息",
+        "score": {
+          "P": 1
+        }
+      },
+      {
+        "text": "指出它哪里不好让它重新来",
+        "score": {
+          "P": 2
+        }
+      },
+      {
+        "text": "给示例加明确要求加分步引导",
+        "score": {
+          "P": 3
+        }
+      }
+    ],
+    "tag": [
+      "习惯",
+      "迭代"
+    ]
+  },
+  {
+    "id": "C1_H_L_01",
+    "direction": [
+      "C",
+      "C1"
+    ],
+    "dimension": "L",
+    "type": "H",
+    "baseLevel": 1,
+    "text": "AI帮你写的内容你一般读几遍再发？",
+    "options": [
+      {
+        "text": "不读直接发",
+        "score": {
+          "L": 0
+        }
+      },
+      {
+        "text": "快速扫一遍",
+        "score": {
+          "L": 1
+        }
+      },
+      {
+        "text": "仔细读一遍",
+        "score": {
+          "L": 2
+        }
+      },
+      {
+        "text": "读两遍以上还对比原文",
+        "score": {
+          "L": 3
+        }
+      }
+    ],
+    "tag": [
+      "习惯",
+      "审核"
+    ]
+  },
+  {
+    "id": "C1_H_T_01",
+    "direction": [
+      "C",
+      "C1"
+    ],
+    "dimension": "T",
+    "type": "H",
+    "baseLevel": 1,
+    "text": "网上看到一个好用的AI工作流教程你会？",
+    "options": [
+      {
+        "text": "收藏吃灰",
+        "score": {
+          "T": 0
+        }
+      },
+      {
+        "text": "看完就算了",
+        "score": {
+          "T": 1
+        }
+      },
+      {
+        "text": "跟着试一遍",
+        "score": {
+          "T": 2
+        }
+      },
+      {
+        "text": "试完改成适合自己的",
+        "score": {
+          "T": 3
+        }
+      }
+    ],
+    "tag": [
+      "习惯",
+      "学习"
+    ]
+  },
+  {
+    "id": "C1_H_C_01",
+    "direction": [
+      "C",
+      "C1"
+    ],
+    "dimension": "C",
+    "type": "H",
+    "baseLevel": 1,
+    "text": "你关注AI行业动态的频率是？",
+    "options": [
+      {
+        "text": "不关注",
+        "score": {
+          "C": 0
+        }
+      },
+      {
+        "text": "偶尔刷到就看看",
+        "score": {
+          "C": 1
+        }
+      },
+      {
+        "text": "主动关注几个AI账号",
+        "score": {
+          "C": 2
+        }
+      },
+      {
+        "text": "定期看更新并试用新功能",
+        "score": {
+          "C": 3
+        }
+      }
+    ],
+    "tag": [
+      "习惯",
+      "关注度"
+    ]
+  },
+  {
+    "id": "C2_H_K_01",
+    "direction": [
+      "C",
+      "C2"
+    ],
+    "dimension": "K",
+    "type": "H",
+    "baseLevel": 1,
+    "text": "你平时怎么解决配图问题？",
+    "options": [
+      {
+        "text": "不配图",
+        "score": {
+          "K": 0
+        }
+      },
+      {
+        "text": "网上找图",
+        "score": {
+          "K": 1
+        }
+      },
+      {
+        "text": "自己做图",
+        "score": {
+          "K": 2
+        }
+      },
+      {
+        "text": "AI生成",
+        "score": {
+          "K": 3
+        }
+      }
+    ],
+    "tag": [
+      "AI绘画",
+      "习惯"
+    ]
+  },
+  {
+    "id": "C2_H_P_01",
+    "direction": [
+      "C",
+      "C2"
+    ],
+    "dimension": "P",
+    "type": "H",
+    "baseLevel": 2,
+    "text": "你生成AI图后一般会做哪些调整？",
+    "options": [
+      {
+        "text": "直接用了",
+        "score": {
+          "P": 0
+        }
+      },
+      {
+        "text": "调调大小裁切",
+        "score": {
+          "P": 1
+        }
+      },
+      {
+        "text": "改色加字加滤镜",
+        "score": {
+          "P": 2
+        }
+      },
+      {
+        "text": "多个工具组合后期",
+        "score": {
+          "P": 3
+        }
+      }
+    ],
+    "tag": [
+      "AI绘画",
+      "后期习惯"
+    ],
+    "multiple": true
+  },
+  {
+    "id": "C2_H_T_01",
+    "direction": [
+      "C",
+      "C2"
+    ],
+    "dimension": "T",
+    "type": "H",
+    "baseLevel": 2,
+    "text": "用AI做图时你一般用哪个平台？",
+    "options": [
+      {
+        "text": "没用过",
+        "score": {
+          "T": 0
+        }
+      },
+      {
+        "text": "Web端工具",
+        "score": {
+          "T": 1
+        }
+      },
+      {
+        "text": "手机App",
+        "score": {
+          "T": 2
+        }
+      },
+      {
+        "text": "本地部署的软件",
+        "score": {
+          "T": 3
+        }
+      }
+    ],
+    "tag": [
+      "AI绘画",
+      "平台"
+    ]
+  },
+  {
+    "id": "C3_H_K_01",
+    "direction": [
+      "C",
+      "C3"
+    ],
+    "dimension": "K",
+    "type": "H",
+    "baseLevel": 1,
+    "text": "你平时做视频的频率是？",
+    "options": [
+      {
+        "text": "很少做",
+        "score": {
+          "K": 0
+        }
+      },
+      {
+        "text": "偶尔做",
+        "score": {
+          "K": 1
+        }
+      },
+      {
+        "text": "定期更新",
+        "score": {
+          "K": 2
+        }
+      },
+      {
+        "text": "全职做内容",
+        "score": {
+          "K": 3
+        }
+      }
+    ],
+    "tag": [
+      "视频",
+      "频率"
+    ]
+  },
+  {
+    "id": "C3_H_P_01",
+    "direction": [
+      "C",
+      "C3"
+    ],
+    "dimension": "P",
+    "type": "H",
+    "baseLevel": 2,
+    "text": "你一般怎么处理视频素材不够的问题？",
+    "options": [
+      {
+        "text": "换选题",
+        "score": {
+          "P": 0
+        }
+      },
+      {
+        "text": "去素材站下载",
+        "score": {
+          "P": 1
+        }
+      },
+      {
+        "text": "AI生成素材",
+        "score": {
+          "P": 2
+        }
+      },
+      {
+        "text": "用存量素材混剪拼接",
+        "score": {
+          "P": 3
+        }
+      }
+    ],
+    "tag": [
+      "视频",
+      "素材习惯"
+    ]
+  },
+  {
+    "id": "C1_C_K_01",
+    "direction": [
+      "C",
+      "C1"
+    ],
+    "dimension": "K",
+    "type": "C",
+    "baseLevel": 1,
+    "text": "你觉得以下哪个不是AI写作工具？",
+    "options": [
+      {
+        "text": "ChatGPT",
+        "score": {
+          "K": 1
+        }
+      },
+      {
+        "text": "Claude",
+        "score": {
+          "K": 1
+        }
+      },
+      {
+        "text": "Photoshop",
+        "score": {
+          "K": 0
+        }
+      },
+      {
+        "text": "豆包",
+        "score": {
+          "K": 1
+        }
+      }
+    ],
+    "tag": [
+      "基础认知"
+    ]
+  },
+  {
+    "id": "C1_C_P_01",
+    "direction": [
+      "C",
+      "C1"
+    ],
+    "dimension": "P",
+    "type": "C",
+    "baseLevel": 1,
+    "text": "你觉得以下哪个prompt效果可能更好？",
+    "options": [
+      {
+        "text": "写一篇小红书",
+        "score": {
+          "P": 0
+        }
+      },
+      {
+        "text": "写一篇关于防晒霜的小红书笔记",
+        "score": {
+          "P": 1
+        }
+      },
+      {
+        "text": "小红书主题防晒霜语气活泼400字",
+        "score": {
+          "P": 2
+        }
+      },
+      {
+        "text": "小红书风格语气像好朋友推荐400字分三段结尾问互动",
+        "score": {
+          "P": 3
+        }
+      }
+    ],
+    "tag": [
+      "prompt",
+      "对比"
+    ]
+  },
+  {
+    "id": "C1_C_L_01",
+    "direction": [
+      "C",
+      "C1"
+    ],
+    "dimension": "L",
+    "type": "C",
+    "baseLevel": 1,
+    "text": "关于AI内容的准确性以下哪种说法你更认同？",
+    "options": [
+      {
+        "text": "AI很聪明很少犯错",
+        "score": {
+          "L": 0
+        }
+      },
+      {
+        "text": "AI会用很肯定的语气说错误的话",
+        "score": {
+          "L": 1
+        }
+      },
+      {
+        "text": "AI在瞎编时看起来和真的一样",
+        "score": {
+          "L": 2
+        }
+      },
+      {
+        "text": "AI的准确率取决于训练数据和任务类型",
+        "score": {
+          "L": 3
+        }
+      }
+    ],
+    "tag": [
+      "信息素养",
+      "准确性"
+    ]
+  },
+  {
+    "id": "C1_C_T_01",
+    "direction": [
+      "C",
+      "C1"
+    ],
+    "dimension": "T",
+    "type": "C",
+    "baseLevel": 2,
+    "text": "你觉得未来做内容的人最需要什么能力？",
+    "options": [
+      {
+        "text": "最新AI工具的操作技巧",
+        "score": {
+          "T": 0
+        }
+      },
+      {
+        "text": "分辨好内容的能力",
+        "score": {
+          "T": 1
+        }
+      },
+      {
+        "text": "搭建AI工作流的思维",
+        "score": {
+          "T": 2
+        }
+      },
+      {
+        "text": "把AI当协作伙伴而不是工具的意识",
+        "score": {
+          "T": 3
+        }
+      }
+    ],
+    "tag": [
+      "概念",
+      "进阶"
+    ]
+  },
+  {
+    "id": "C1_C_C_01",
+    "direction": [
+      "C",
+      "C1"
+    ],
+    "dimension": "C",
+    "type": "C",
+    "baseLevel": 1,
+    "text": "大语言模型最擅长做下面哪件事？",
+    "options": [
+      {
+        "text": "精确计算",
+        "score": {
+          "C": 0
+        }
+      },
+      {
+        "text": "语言理解和生成",
+        "score": {
+          "C": 1
+        }
+      },
+      {
+        "text": "逻辑推理",
+        "score": {
+          "C": 1
+        }
+      },
+      {
+        "text": "事实核查",
+        "score": {
+          "C": 0
+        }
+      }
+    ],
+    "tag": [
+      "概念",
+      "大模型"
+    ]
+  },
+  {
+    "id": "C1_C_C_02",
+    "direction": [
+      "C",
+      "C1"
+    ],
+    "dimension": "C",
+    "type": "C",
+    "baseLevel": 2,
+    "text": "以下哪个是对AI上下文窗口的正确理解？",
+    "options": [
+      {
+        "text": "AI一次能开几个对话",
+        "score": {
+          "C": 0
+        }
+      },
+      {
+        "text": "AI一次能记住多少内容",
+        "score": {
+          "C": 1
+        }
+      },
+      {
+        "text": "AI能参考多长的对话历史生成回复",
+        "score": {
+          "C": 2
+        }
+      },
+      {
+        "text": "AI输入输出总token数的上限",
+        "score": {
+          "C": 3
+        }
+      }
+    ],
+    "tag": [
+      "概念",
+      "上下文"
+    ]
+  },
+  {
+    "id": "C2_C_K_01",
+    "direction": [
+      "C",
+      "C2"
+    ],
+    "dimension": "K",
+    "type": "C",
+    "baseLevel": 1,
+    "text": "以下哪个是AI做图的提示词术语？",
+    "options": [
+      {
+        "text": "Prompt",
+        "score": {
+          "K": 1
+        }
+      },
+      {
+        "text": "Compiler",
+        "score": {
+          "K": 0
+        }
+      },
+      {
+        "text": "Syntax",
+        "score": {
+          "K": 0
+        }
+      },
+      {
+        "text": "Callback",
+        "score": {
+          "K": 0
+        }
+      }
+    ],
+    "tag": [
+      "AI绘画",
+      "术语"
+    ]
+  },
+  {
+    "id": "C2_C_P_01",
+    "direction": [
+      "C",
+      "C2"
+    ],
+    "dimension": "P",
+    "type": "C",
+    "baseLevel": 2,
+    "text": "AI绘画里文生图和图生图的区别是什么？",
+    "options": [
+      {
+        "text": "不知道区别",
+        "score": {
+          "P": 0
+        }
+      },
+      {
+        "text": "一个有文字一个有图片",
+        "score": {
+          "P": 1
+        }
+      },
+      {
+        "text": "一个用文字生成图片一个用图片参考生成",
+        "score": {
+          "P": 2
+        }
+      },
+      {
+        "text": "前者从噪声扩散生成后者用现有图引导",
+        "score": {
+          "P": 3
+        }
+      }
+    ],
+    "tag": [
+      "AI绘画",
+      "概念"
+    ]
+  },
+  {
+    "id": "C2_C_L_01",
+    "direction": [
+      "C",
+      "C2"
+    ],
+    "dimension": "L",
+    "type": "C",
+    "baseLevel": 2,
+    "text": "AI生成的图片素材商用需要注意什么？",
+    "options": [
+      {
+        "text": "不需要注意什么",
+        "score": {
+          "L": 0
+        }
+      },
+      {
+        "text": "看看平台规定",
+        "score": {
+          "L": 1
+        }
+      },
+      {
+        "text": "检查平台的最新版权条款",
+        "score": {
+          "L": 2
+        }
+      },
+      {
+        "text": "根据使用场景和平台政策分开评估",
+        "score": {
+          "L": 3
+        }
+      }
+    ],
+    "tag": [
+      "AI绘画",
+      "版权",
+      "商用"
+    ]
+  },
+  {
+    "id": "C2_C_T_01",
+    "direction": [
+      "C",
+      "C2"
+    ],
+    "dimension": "T",
+    "type": "C",
+    "baseLevel": 2,
+    "text": "你觉得提高AI绘画出片率最有效的方式是？",
+    "options": [
+      {
+        "text": "反复抽卡生成",
+        "score": {
+          "T": 0
+        }
+      },
+      {
+        "text": "学习更精准的prompt写法",
+        "score": {
+          "T": 1
+        }
+      },
+      {
+        "text": "掌握参数调优技巧",
+        "score": {
+          "T": 2
+        }
+      },
+      {
+        "text": "理解模型的运作逻辑再设计prompt",
+        "score": {
+          "T": 3
+        }
+      }
+    ],
+    "tag": [
+      "AI绘画",
+      "效率"
+    ]
+  },
+  {
+    "id": "C3_C_K_01",
+    "direction": [
+      "C",
+      "C3"
+    ],
+    "dimension": "K",
+    "type": "C",
+    "baseLevel": 1,
+    "text": "以下哪个和AI视频生成有关？",
+    "options": [
+      {
+        "text": "Sora",
+        "score": {
+          "K": 1
+        }
+      },
+      {
+        "text": "Notion",
+        "score": {
+          "K": 0
+        }
+      },
+      {
+        "text": "Figma",
+        "score": {
+          "K": 0
+        }
+      },
+      {
+        "text": "VSCode",
+        "score": {
+          "K": 0
+        }
+      }
+    ],
+    "tag": [
+      "视频",
+      "工具认知"
+    ]
+  },
+  {
+    "id": "C3_C_T_01",
+    "direction": [
+      "C",
+      "C3"
+    ],
+    "dimension": "T",
+    "type": "C",
+    "baseLevel": 2,
+    "text": "做AI短视频最关键的是？",
+    "options": [
+      {
+        "text": "换最新最好的AI工具",
+        "score": {
+          "C": 0
+        }
+      },
+      {
+        "text": "素材量越大越好",
+        "score": {
+          "C": 1
+        }
+      },
+      {
+        "text": "把AI融入从选题到发布的全流程",
+        "score": {
+          "C": 2
+        }
+      },
+      {
+        "text": "保持自己的内容风格AI只是辅助",
+        "score": {
+          "C": 3
+        }
+      }
+    ],
+    "tag": [
+      "视频",
+      "关键要素"
+    ]
+  },
+  {
+    "id": "C3_C_L_01",
+    "direction": [
+      "C",
+      "C3"
+    ],
+    "dimension": "L",
+    "type": "C",
+    "baseLevel": 2,
+    "text": "用AI做视频号你觉得可持续的关键是？",
+    "options": [
+      {
+        "text": "批量生产堆数量",
+        "score": {
+          "L": 0
+        }
+      },
+      {
+        "text": "找爆款模板复制",
+        "score": {
+          "L": 1
+        }
+      },
+      {
+        "text": "把控质量每一期都认真做",
+        "score": {
+          "L": 2
+        }
+      },
+      {
+        "text": "建立风格加批量效率加迭代体系",
+        "score": {
+          "L": 3
+        }
+      }
+    ],
+    "tag": [
+      "视频",
+      "可持续"
+    ]
+  },
+  {
+    "id": "C4_C_C_01",
+    "direction": [
+      "C",
+      "C3"
+    ],
+    "dimension": "C",
+    "type": "C",
+    "text": "你觉得AI生成的内容读者能看出来是AI写的吗？",
+    "options": [
+      {
+        "text": "看不出来，写得挺好的",
+        "score": {
+          "C": 0
+        }
+      },
+      {
+        "text": "有些能看出来有些看不出来",
+        "score": {
+          "C": 1
+        }
+      },
+      {
+        "text": "仔细看确实有AI味道",
+        "score": {
+          "C": 2
+        }
+      },
+      {
+        "text": "有经验的人能识别，但大众不一定",
+        "score": {
+          "C": 3
+        }
+      }
+    ],
+    "tag": [
+      "概念",
+      "人机对比",
+      "内容"
+    ]
+  },
+  {
+    "id": "C4_C_L_01",
+    "direction": [
+      "C",
+      "C3"
+    ],
+    "dimension": "L",
+    "type": "S",
+    "text": "假如你的AI辅助做的视频被人说像机器生成的，你怎么判断对方说得对不对？",
+    "options": [
+      {
+        "text": "就不该用AI做",
+        "score": {
+          "L": 0
+        }
+      },
+      {
+        "text": "看对方是不是同行在挑刺",
+        "score": {
+          "L": 1
+        }
+      },
+      {
+        "text": "对比自己之前纯手工做的看差距",
+        "score": {
+          "L": 2
+        }
+      },
+      {
+        "text": "找客观数据对比，比如完播率互动率",
+        "score": {
+          "L": 3
+        }
+      }
+    ],
+    "tag": [
+      "信息素养",
+      "质量",
+      "视频"
+    ]
+  },
+  {
+    "id": "C4_C_T_01",
+    "direction": [
+      "C",
+      "C3"
+    ],
+    "dimension": "T",
+    "type": "G",
+    "text": "假如你想批量生成100条短视频脚本，你会怎么做？",
+    "options": [
+      {
+        "text": "一条一条写",
+        "score": {
+          "T": 0
+        }
+      },
+      {
+        "text": "让AI一条一条生成",
+        "score": {
+          "T": 1
+        }
+      },
+      {
+        "text": "搭一个模板让AI批量生成再筛选",
+        "score": {
+          "T": 2
+        }
+      },
+      {
+        "text": "用AI分析爆款规律加生成模板加批量产出加自动测试标题",
+        "score": {
+          "T": 3
+        }
+      }
+    ],
+    "tag": [
+      "技术",
+      "批量生产",
+      "视频"
+    ]
+  },
+  {
+    "id": "C4_C_P_01",
+    "direction": [
+      "C",
+      "C3"
+    ],
+    "dimension": "P",
+    "type": "P",
+    "multiple": true,
+    "text": "你觉得自己做内容和AI辅助做内容最大的不同是什么？",
+    "options": [
+      {
+        "text": "风格不一样",
+        "score": {
+          "P": 0
+        }
+      },
+      {
+        "text": "效率差很多",
+        "score": {
+          "P": 1
+        }
+      },
+      {
+        "text": "深度和洞察不同",
+        "score": {
+          "P": 2
+        }
+      },
+      {
+        "text": "情感共鸣不一样",
+        "score": {
+          "P": 3
+        }
+      }
+    ],
+    "tag": [
+      "偏好",
+      "人机对比",
+      "内容"
+    ]
+  },
+  {
+    "id": "C4_C_K_01",
+    "direction": [
+      "C",
+      "C3"
+    ],
+    "dimension": "K",
+    "type": "H",
+    "text": "你发内容之前，一般会让AI帮你做哪些事？",
+    "options": [
+      {
+        "text": "基本不用AI",
+        "score": {
+          "K": 0
+        }
+      },
+      {
+        "text": "让AI帮忙想标题",
+        "score": {
+          "K": 1
+        }
+      },
+      {
+        "text": "让AI检查错别字和优化表达",
+        "score": {
+          "K": 2
+        }
+      },
+      {
+        "text": "编审内容加优化标题加配图建议加发布时机分析",
+        "score": {
+          "K": 3
+        }
+      }
+    ],
+    "tag": [
+      "习惯",
+      "工具",
+      "流程"
+    ]
+  },
+  {
+    "id": "C4_C_L_02",
+    "direction": [
+      "C",
+      "C3"
+    ],
+    "dimension": "L",
+    "type": "T",
+    "text": "AI说你的内容方向不错但数据差可能是发布时间问题，你会？",
+    "options": [
+      {
+        "text": "信了，换时间发",
+        "score": {
+          "L": 0
+        }
+      },
+      {
+        "text": "有点怀疑但试试看",
+        "score": {
+          "L": 1
+        }
+      },
+      {
+        "text": "看看自己数据再做判断",
+        "score": {
+          "L": 2
+        }
+      },
+      {
+        "text": "分析一下过去的数据规律再决定",
+        "score": {
+          "L": 3
+        }
+      }
+    ],
+    "tag": [
+      "信息素养",
+      "数据",
+      "策略"
+    ]
+  },
+  {
+    "id": "C4_C_T_02",
+    "direction": [
+      "C",
+      "C3"
+    ],
+    "dimension": "T",
+    "type": "H",
+    "text": "做内容配图时，你一般怎么解决图片问题？",
+    "options": [
+      {
+        "text": "网上随便找图",
+        "score": {
+          "T": 0
+        }
+      },
+      {
+        "text": "用免费的AI绘图工具生成",
+        "score": {
+          "T": 1
+        }
+      },
+      {
+        "text": "用付费AI工具做高质量配图",
+        "score": {
+          "T": 2
+        }
+      },
+      {
+        "text": "AI生图加人工调色排版加统一视觉风格",
+        "score": {
+          "T": 3
+        }
+      }
+    ],
+    "tag": [
+      "习惯",
+      "AI绘画",
+      "配图"
+    ]
+  },
+  {
+    "id": "C4_C_K_02",
+    "direction": [
+      "C",
+      "C3"
+    ],
+    "dimension": "K",
+    "type": "S",
+    "text": "假如你的内容被搬运了，你会怎么用AI来维权？",
+    "options": [
+      {
+        "text": "算了，没办法",
+        "score": {
+          "K": 0
+        }
+      },
+      {
+        "text": "让AI帮我写投诉文案",
+        "score": {
+          "K": 1
+        }
+      },
+      {
+        "text": "用AI检测类似内容",
+        "score": {
+          "K": 2
+        }
+      },
+      {
+        "text": "用AI工具做内容指纹方便跨平台追踪盗用",
+        "score": {
+          "K": 3
+        }
+      }
+    ],
+    "tag": [
+      "工具",
+      "版权",
+      "策略"
+    ]
+  },
+  {
+    "id": "C4_C_P_02",
+    "direction": [
+      "C",
+      "C3"
+    ],
+    "dimension": "P",
+    "type": "G",
+    "text": "你想让AI用你个人风格写一段产品推荐文案，你会怎么描述？",
+    "options": [
+      {
+        "text": "用我的风格写个推荐",
+        "score": {
+          "P": 0
+        }
+      },
+      {
+        "text": "模仿我以前的文章风格写",
+        "score": {
+          "P": 1
+        }
+      },
+      {
+        "text": "给你我上一篇爆款文学它的语言风格写",
+        "score": {
+          "P": 2
+        }
+      },
+      {
+        "text": "给你三篇我的代表作，提炼风格关键词，然后写推荐文案",
+        "score": {
+          "P": 3
+        }
+      }
+    ],
+    "tag": [
+      "prompt",
+      "风格化",
+      "文案"
+    ]
+  },
+  {
+    "id": "C4_C_L_03",
+    "direction": [
+      "C",
+      "C3"
+    ],
+    "dimension": "L",
+    "type": "P",
+    "multiple": true,
+    "text": "你觉得用AI做自媒体的最大风险是什么？",
+    "options": [
+      {
+        "text": "内容同质化",
+        "score": {
+          "L": 0
+        }
+      },
+      {
+        "text": "被平台限流",
+        "score": {
+          "L": 1
+        }
+      },
+      {
+        "text": "失去个人风格",
+        "score": {
+          "L": 2
+        }
+      },
+      {
+        "text": "过度依赖导致能力退化",
+        "score": {
+          "L": 3
+        }
+      }
+    ],
+    "tag": [
+      "信息素养",
+      "风险",
+      "自媒体"
+    ]
+  }
+]

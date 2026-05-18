@@ -1,0 +1,1578 @@
+[
+  {
+    "id": "E1",
+    "direction": [
+      "E",
+      "E1"
+    ],
+    "dimension": "K",
+    "type": "G",
+    "baseLevel": 1,
+    "text": "你现在的编程基础怎么样？",
+    "options": [
+      {
+        "text": "不会编程",
+        "score": {
+          "K": 0
+        }
+      },
+      {
+        "text": "会写简单脚本",
+        "score": {
+          "K": 1
+        }
+      },
+      {
+        "text": "能独立开发项目",
+        "score": {
+          "K": 2
+        }
+      },
+      {
+        "text": "熟练运用多语言",
+        "score": {
+          "K": 3
+        }
+      }
+    ],
+    "tag": [
+      "编程",
+      "基础"
+    ]
+  },
+  {
+    "id": "E10",
+    "direction": [
+      "E",
+      "E3"
+    ],
+    "dimension": "L",
+    "type": "S",
+    "baseLevel": 1,
+    "text": "你开发的AI应用上线后出了问题谁来负责？",
+    "options": [
+      {
+        "text": "怪AI模型",
+        "score": {
+          "L": 0
+        }
+      },
+      {
+        "text": "怪自己代码",
+        "score": {
+          "L": 1
+        }
+      },
+      {
+        "text": "开发者责任",
+        "score": {
+          "L": 2
+        }
+      },
+      {
+        "text": "需要建立完善的测试和监控机制",
+        "score": {
+          "L": 3
+        }
+      }
+    ],
+    "tag": [
+      "责任",
+      "上线"
+    ]
+  },
+  {
+    "id": "E11",
+    "direction": [
+      "E",
+      "E2"
+    ],
+    "dimension": "C",
+    "type": "S",
+    "baseLevel": 1,
+    "text": "你准备做一个AI项目但不知选哪个模型好怎么办？",
+    "options": [
+      {
+        "text": "随便选个最热的",
+        "score": {
+          "C": 0
+        }
+      },
+      {
+        "text": "选最便宜的",
+        "score": {
+          "C": 1
+        }
+      },
+      {
+        "text": "对比几款的主流参数看看",
+        "score": {
+          "C": 2
+        }
+      },
+      {
+        "text": "根据需求场景+成本+效果综合评估",
+        "score": {
+          "C": 3
+        }
+      }
+    ],
+    "tag": [
+      "选型",
+      "决策"
+    ]
+  },
+  {
+    "id": "E12",
+    "direction": [
+      "E",
+      "E1"
+    ],
+    "dimension": "K",
+    "type": "P",
+    "baseLevel": 1,
+    "text": "你更想学什么方向的AI技术？",
+    "options": [
+      {
+        "text": "Prompt Engineering",
+        "score": {
+          "K": 0
+        }
+      },
+      {
+        "text": "API调用和集成",
+        "score": {
+          "K": 1
+        }
+      },
+      {
+        "text": "RAG和知识库",
+        "score": {
+          "K": 2
+        }
+      },
+      {
+        "text": "Agent和多Agent系统",
+        "score": {
+          "K": 3
+        }
+      }
+    ],
+    "tag": [
+      "方向",
+      "偏好"
+    ]
+  },
+  {
+    "id": "E13",
+    "direction": [
+      "E",
+      "E1"
+    ],
+    "dimension": "P",
+    "type": "P",
+    "baseLevel": 1,
+    "text": "学习新技术你更习惯哪种方式？",
+    "options": [
+      {
+        "text": "看视频教程",
+        "score": {
+          "P": 0
+        }
+      },
+      {
+        "text": "看文档",
+        "score": {
+          "P": 1
+        }
+      },
+      {
+        "text": "直接上手做项目",
+        "score": {
+          "P": 2
+        }
+      },
+      {
+        "text": "做项目+不懂问AI",
+        "score": {
+          "P": 3
+        }
+      }
+    ],
+    "tag": [
+      "学习",
+      "偏好"
+    ]
+  },
+  {
+    "id": "E14",
+    "direction": [
+      "E",
+      "E2"
+    ],
+    "dimension": "T",
+    "type": "P",
+    "baseLevel": 1,
+    "text": "做AI应用开发你更在意哪方面？",
+    "options": [
+      {
+        "text": "效果",
+        "score": {
+          "T": 0
+        }
+      },
+      {
+        "text": "成本和速度",
+        "score": {
+          "T": 1
+        }
+      },
+      {
+        "text": "可维护性和扩展性",
+        "score": {
+          "T": 2
+        }
+      }
+    ],
+    "tag": [
+      "开发",
+      "偏好"
+    ]
+  },
+  {
+    "id": "E15",
+    "direction": [
+      "E",
+      "E2"
+    ],
+    "dimension": "L",
+    "type": "P",
+    "baseLevel": 1,
+    "text": "你觉得AI开发中最容易出问题的是？",
+    "options": [
+      {
+        "text": "代码有bug",
+        "score": {
+          "L": 0
+        }
+      },
+      {
+        "text": "模型输出不稳定",
+        "score": {
+          "L": 1
+        }
+      },
+      {
+        "text": "数据安全",
+        "score": {
+          "L": 2
+        }
+      },
+      {
+        "text": "用户预期管理",
+        "score": {
+          "L": 3
+        }
+      }
+    ],
+    "tag": [
+      "开发",
+      "风险"
+    ]
+  },
+  {
+    "id": "E16",
+    "direction": [
+      "E",
+      "E1"
+    ],
+    "dimension": "K",
+    "type": "T",
+    "baseLevel": 1,
+    "text": "学AI技术你更愿意投入？",
+    "options": [
+      {
+        "text": "时间",
+        "score": {
+          "K": 0
+        }
+      },
+      {
+        "text": "金钱(买课程/API)",
+        "score": {
+          "K": 1
+        }
+      },
+      {
+        "text": "时间和金钱都投入",
+        "score": {
+          "K": 2
+        }
+      }
+    ],
+    "tag": [
+      "投入",
+      "取舍"
+    ]
+  },
+  {
+    "id": "E17",
+    "direction": [
+      "E",
+      "E1"
+    ],
+    "dimension": "P",
+    "type": "T",
+    "baseLevel": 1,
+    "text": "做项目时你更倾向？",
+    "options": [
+      {
+        "text": "功能越多越好",
+        "score": {
+          "P": 0
+        }
+      },
+      {
+        "text": "代码越简单越好",
+        "score": {
+          "P": 1
+        }
+      },
+      {
+        "text": "功能和代码质量平衡",
+        "score": {
+          "P": 2
+        }
+      }
+    ],
+    "tag": [
+      "开发",
+      "取舍"
+    ]
+  },
+  {
+    "id": "E18",
+    "direction": [
+      "E",
+      "E2"
+    ],
+    "dimension": "T",
+    "type": "T",
+    "baseLevel": 1,
+    "text": "本地部署模型vs用云端API你更倾向？",
+    "options": [
+      {
+        "text": "本地部署",
+        "score": {
+          "T": 0
+        }
+      },
+      {
+        "text": "云端API",
+        "score": {
+          "T": 1
+        }
+      },
+      {
+        "text": "看场景",
+        "score": {
+          "T": 2
+        }
+      }
+    ],
+    "tag": [
+      "部署",
+      "取舍"
+    ]
+  },
+  {
+    "id": "E19",
+    "direction": [
+      "E",
+      "E1"
+    ],
+    "dimension": "K",
+    "type": "H",
+    "baseLevel": 1,
+    "text": "你平均每周花多少时间学AI技术？",
+    "options": [
+      {
+        "text": "几乎不",
+        "score": {
+          "K": 0
+        }
+      },
+      {
+        "text": "1-3小时",
+        "score": {
+          "K": 1
+        }
+      },
+      {
+        "text": "3-10小时",
+        "score": {
+          "K": 2
+        }
+      },
+      {
+        "text": "10小时以上",
+        "score": {
+          "K": 3
+        }
+      }
+    ],
+    "tag": [
+      "习惯",
+      "学习时间"
+    ]
+  },
+  {
+    "id": "E2",
+    "direction": [
+      "E",
+      "E1"
+    ],
+    "dimension": "P",
+    "type": "G",
+    "baseLevel": 1,
+    "text": "假如你用AI辅助编程时会怎么描述需求？",
+    "options": [
+      {
+        "text": "帮我写个代码",
+        "score": {
+          "P": 0
+        }
+      },
+      {
+        "text": "用Python写一个爬虫",
+        "score": {
+          "P": 1
+        }
+      },
+      {
+        "text": "写一个爬取xxx网站的Python脚本带错误处理",
+        "score": {
+          "P": 2
+        }
+      },
+      {
+        "text": "写一个爬虫要求+输入格式+输出格式+异常处理+注释",
+        "score": {
+          "P": 3
+        }
+      }
+    ],
+    "tag": [
+      "编程",
+      "prompt"
+    ]
+  },
+  {
+    "id": "E20",
+    "direction": [
+      "E",
+      "E1"
+    ],
+    "dimension": "P",
+    "type": "H",
+    "baseLevel": 1,
+    "text": "假如你遇到技术问题第一反应是，你会怎么处理？",
+    "options": [
+      {
+        "text": "自己查文档",
+        "score": {
+          "P": 0
+        }
+      },
+      {
+        "text": "问AI",
+        "score": {
+          "P": 1
+        }
+      },
+      {
+        "text": "搜Stack Overflow",
+        "score": {
+          "P": 2
+        }
+      },
+      {
+        "text": "问身边的技术朋友",
+        "score": {
+          "P": 3
+        }
+      }
+    ],
+    "tag": [
+      "习惯",
+      "解决问题"
+    ]
+  },
+  {
+    "id": "E21",
+    "direction": [
+      "E",
+      "E2"
+    ],
+    "dimension": "T",
+    "type": "H",
+    "baseLevel": 1,
+    "text": "你一般把AI项目部署在哪里？",
+    "options": [
+      {
+        "text": "没部署过",
+        "score": {
+          "T": 0
+        }
+      },
+      {
+        "text": "本地跑",
+        "score": {
+          "T": 1
+        }
+      },
+      {
+        "text": "服务器/VPS",
+        "score": {
+          "T": 2
+        }
+      },
+      {
+        "text": "云服务",
+        "score": {
+          "T": 3
+        }
+      }
+    ],
+    "tag": [
+      "部署",
+      "习惯"
+    ]
+  },
+  {
+    "id": "E22",
+    "direction": [
+      "E",
+      "E1"
+    ],
+    "dimension": "L",
+    "type": "H",
+    "baseLevel": 1,
+    "text": "你写代码时会考虑安全问题吗？",
+    "options": [
+      {
+        "text": "不考虑",
+        "score": {
+          "L": 0
+        }
+      },
+      {
+        "text": "想但不知道怎么弄",
+        "score": {
+          "L": 1
+        }
+      },
+      {
+        "text": "注意基本的安全",
+        "score": {
+          "L": 2
+        }
+      },
+      {
+        "text": "会系统性地考虑安全设计",
+        "score": {
+          "L": 3
+        }
+      }
+    ],
+    "tag": [
+      "安全",
+      "习惯"
+    ]
+  },
+  {
+    "id": "E23",
+    "direction": [
+      "E",
+      "E1"
+    ],
+    "dimension": "K",
+    "type": "C",
+    "baseLevel": 1,
+    "text": "以下哪个不是AI模型？",
+    "options": [
+      {
+        "text": "GPT-4",
+        "score": {
+          "K": 1
+        }
+      },
+      {
+        "text": "Claude",
+        "score": {
+          "K": 1
+        }
+      },
+      {
+        "text": "TensorFlow",
+        "score": {
+          "K": 0
+        }
+      },
+      {
+        "text": "Gemini",
+        "score": {
+          "K": 1
+        }
+      }
+    ],
+    "tag": [
+      "模型",
+      "认知"
+    ]
+  },
+  {
+    "id": "E24",
+    "direction": [
+      "E",
+      "E2"
+    ],
+    "dimension": "P",
+    "type": "C",
+    "baseLevel": 1,
+    "text": "RAG的中文意思是什么？",
+    "options": [
+      {
+        "text": "不知道",
+        "score": {
+          "P": 0
+        }
+      },
+      {
+        "text": "检索增强生成",
+        "score": {
+          "P": 1
+        }
+      },
+      {
+        "text": "一种模型训练方法",
+        "score": {
+          "P": 2
+        }
+      }
+    ],
+    "tag": [
+      "RAG",
+      "概念"
+    ]
+  },
+  {
+    "id": "E25",
+    "direction": [
+      "E",
+      "E3"
+    ],
+    "dimension": "T",
+    "type": "C",
+    "baseLevel": 1,
+    "text": "你觉得AI Agent和普通API调用的最大区别是？",
+    "options": [
+      {
+        "text": "没什么不同",
+        "score": {
+          "T": 0
+        }
+      },
+      {
+        "text": "Agent能自主决策",
+        "score": {
+          "T": 1
+        }
+      },
+      {
+        "text": "Agent能调用工具和规划",
+        "score": {
+          "T": 2
+        }
+      },
+      {
+        "text": "Agent有自主任务拆解和执行能力",
+        "score": {
+          "T": 3
+        }
+      }
+    ],
+    "tag": [
+      "Agent",
+      "区别"
+    ]
+  },
+  {
+    "id": "E26",
+    "direction": [
+      "E",
+      "E2"
+    ],
+    "dimension": "L",
+    "type": "C",
+    "baseLevel": 1,
+    "text": "你觉得把企业知识做RAG最重要的一步是？",
+    "options": [
+      {
+        "text": "选最好的AI模型",
+        "score": {
+          "L": 0
+        }
+      },
+      {
+        "text": "数据清洗和分块策略",
+        "score": {
+          "L": 1
+        }
+      },
+      {
+        "text": "选择向量数据库",
+        "score": {
+          "L": 2
+        }
+      },
+      {
+        "text": "数据质量决定RAG效果",
+        "score": {
+          "L": 3
+        }
+      }
+    ],
+    "tag": [
+      "RAG",
+      "关键"
+    ]
+  },
+  {
+    "id": "E3",
+    "direction": [
+      "E",
+      "E1"
+    ],
+    "dimension": "L",
+    "type": "G",
+    "baseLevel": 1,
+    "text": "AI写的代码你敢直接上线吗？",
+    "options": [
+      {
+        "text": "敢",
+        "score": {
+          "L": 0
+        }
+      },
+      {
+        "text": "简单任务敢",
+        "score": {
+          "L": 1
+        }
+      },
+      {
+        "text": "需要自己review一遍",
+        "score": {
+          "L": 2
+        }
+      },
+      {
+        "text": "逐行检查加测试才上线",
+        "score": {
+          "L": 3
+        }
+      }
+    ],
+    "tag": [
+      "代码",
+      "质量"
+    ]
+  },
+  {
+    "id": "E4",
+    "direction": [
+      "E",
+      "E2"
+    ],
+    "dimension": "T",
+    "type": "G",
+    "baseLevel": 1,
+    "text": "假如你了解AI Agent的概念吗？",
+    "options": [
+      {
+        "text": "没听说过",
+        "score": {
+          "T": 0
+        }
+      },
+      {
+        "text": "听说过但不了解",
+        "score": {
+          "T": 1
+        }
+      },
+      {
+        "text": "了解基本概念",
+        "score": {
+          "T": 2
+        }
+      },
+      {
+        "text": "自己搭建过Agent",
+        "score": {
+          "T": 3
+        }
+      }
+    ],
+    "tag": [
+      "Agent",
+      "概念"
+    ]
+  },
+  {
+    "id": "E5",
+    "direction": [
+      "E",
+      "E1"
+    ],
+    "dimension": "C",
+    "type": "G",
+    "baseLevel": 1,
+    "text": "你觉得API是什么？",
+    "options": [
+      {
+        "text": "一个软件",
+        "score": {
+          "C": 0
+        }
+      },
+      {
+        "text": "让程序之间通信的接口",
+        "score": {
+          "C": 1
+        }
+      },
+      {
+        "text": "调用AI服务的编程接口",
+        "score": {
+          "C": 2
+        }
+      },
+      {
+        "text": "远程函数调用的一种接口",
+        "score": {
+          "C": 3
+        }
+      }
+    ],
+    "tag": [
+      "API",
+      "概念"
+    ]
+  },
+  {
+    "id": "E6",
+    "direction": [
+      "E",
+      "E2"
+    ],
+    "dimension": "K",
+    "type": "G",
+    "baseLevel": 1,
+    "text": "你用过AI模型的API吗？",
+    "options": [
+      {
+        "text": "没用过",
+        "score": {
+          "K": 0
+        }
+      },
+      {
+        "text": "注册过但没用",
+        "score": {
+          "K": 1
+        }
+      },
+      {
+        "text": "调过简单的",
+        "score": {
+          "K": 2
+        }
+      },
+      {
+        "text": "深度集成到项目里了",
+        "score": {
+          "K": 3
+        }
+      }
+    ],
+    "tag": [
+      "API",
+      "经验"
+    ]
+  },
+  {
+    "id": "E7",
+    "direction": [
+      "E",
+      "E1"
+    ],
+    "dimension": "K",
+    "type": "S",
+    "baseLevel": 1,
+    "text": "你想自动整理每天的文件但不知道怎么搞怎么办？",
+    "options": [
+      {
+        "text": "手动整理",
+        "score": {
+          "K": 0
+        }
+      },
+      {
+        "text": "搜现成工具",
+        "score": {
+          "K": 1
+        }
+      },
+      {
+        "text": "问AI怎么写自动化脚本",
+        "score": {
+          "K": 2
+        }
+      },
+      {
+        "text": "让AI设计自动化方案并生成代码",
+        "score": {
+          "K": 3
+        }
+      }
+    ],
+    "tag": [
+      "自动化",
+      "文件"
+    ]
+  },
+  {
+    "id": "E8",
+    "direction": [
+      "E",
+      "E1"
+    ],
+    "dimension": "P",
+    "type": "S",
+    "baseLevel": 1,
+    "text": "AI给的代码跑不起来报错了你怎么办？",
+    "options": [
+      {
+        "text": "放弃了",
+        "score": {
+          "P": 0
+        }
+      },
+      {
+        "text": "自己看错误信息改",
+        "score": {
+          "P": 1
+        }
+      },
+      {
+        "text": "把报错扔给AI让它修",
+        "score": {
+          "P": 2
+        }
+      },
+      {
+        "text": "理解错误原因后让AI重写这段",
+        "score": {
+          "P": 3
+        }
+      }
+    ],
+    "tag": [
+      "编程",
+      "调试"
+    ]
+  },
+  {
+    "id": "E9",
+    "direction": [
+      "E",
+      "E2"
+    ],
+    "dimension": "T",
+    "type": "S",
+    "baseLevel": 1,
+    "text": "你想做一个能自动回复评论的机器人怎么做？",
+    "options": [
+      {
+        "text": "不会做",
+        "score": {
+          "T": 0
+        }
+      },
+      {
+        "text": "搜现成的插件",
+        "score": {
+          "T": 1
+        }
+      },
+      {
+        "text": "用AI写代码实现",
+        "score": {
+          "T": 2
+        }
+      },
+      {
+        "text": "设计架构调API搭Agent一条龙",
+        "score": {
+          "T": 3
+        }
+      }
+    ],
+    "tag": [
+      "Agent",
+      "自动化"
+    ]
+  },
+  {
+    "dimension": "C",
+    "type": "C",
+    "baseLevel": 2,
+    "text": "你理解的RAG大概是什么样的？",
+    "options": [
+      {
+        "text": "一种让AI联网的技术",
+        "score": {
+          "C": 0
+        }
+      },
+      {
+        "text": "让AI从资料库里找答案再回答",
+        "score": {
+          "C": 1
+        }
+      },
+      {
+        "text": "AI先查资料再回答，不是全靠自己瞎编",
+        "score": {
+          "C": 2
+        }
+      },
+      {
+        "text": "相当于给AI配了个图书馆，回答前先翻书",
+        "score": {
+          "C": 3
+        }
+      }
+    ],
+    "tag": [
+      "概念",
+      "RAG"
+    ],
+    "id": "E_27",
+    "direction": [
+      "E",
+      "E1"
+    ]
+  },
+  {
+    "dimension": "C",
+    "type": "C",
+    "baseLevel": 2,
+    "text": "你理解的AI Agent是啥？",
+    "options": [
+      {
+        "text": "就是聪明点的AI",
+        "score": {
+          "C": 0
+        }
+      },
+      {
+        "text": "能自己干活不用人管的AI",
+        "score": {
+          "C": 1
+        }
+      },
+      {
+        "text": "能自己判断、调用工具、做事的AI",
+        "score": {
+          "C": 2
+        }
+      },
+      {
+        "text": "能感知环境、自己规划、调用工具完成任务",
+        "score": {
+          "C": 3
+        }
+      }
+    ],
+    "tag": [
+      "概念",
+      "Agent"
+    ],
+    "id": "E_28",
+    "direction": [
+      "E",
+      "E1"
+    ]
+  },
+  {
+    "dimension": "K",
+    "type": "S",
+    "baseLevel": 2,
+    "text": "自己部署的AI效果不如在线API，你怎么选？",
+    "options": [
+      {
+        "text": "那就用在线的",
+        "score": {
+          "K": 0
+        }
+      },
+      {
+        "text": "换个更大的模型试试",
+        "score": {
+          "K": 1
+        }
+      },
+      {
+        "text": "看看哪个性价比高",
+        "score": {
+          "K": 2
+        }
+      },
+      {
+        "text": "看场景，要隐私的本地，要效果的用API",
+        "score": {
+          "K": 3
+        }
+      }
+    ],
+    "tag": [
+      "部署",
+      "选型",
+      "工具"
+    ],
+    "id": "E_29",
+    "direction": [
+      "E",
+      "E2"
+    ]
+  },
+  {
+    "dimension": "L",
+    "type": "T",
+    "baseLevel": 2,
+    "text": "AI写的代码能跑，但你担心有坑，你会？",
+    "options": [
+      {
+        "text": "先上线再说",
+        "score": {
+          "L": 0
+        }
+      },
+      {
+        "text": "自己大概看看",
+        "score": {
+          "L": 1
+        }
+      },
+      {
+        "text": "让AI解释一下每段干啥的再判断",
+        "score": {
+          "L": 2
+        }
+      },
+      {
+        "text": "走一遍检查流程再上线",
+        "score": {
+          "L": 3
+        }
+      }
+    ],
+    "tag": [
+      "安全",
+      "质量",
+      "取舍"
+    ],
+    "id": "E_30",
+    "direction": [
+      "E",
+      "E2"
+    ]
+  },
+  {
+    "dimension": "P",
+    "type": "G",
+    "baseLevel": 2,
+    "text": "要调一个AI API来用，你会怎么写prompt？",
+    "options": [
+      {
+        "text": "随便写一个看看效果",
+        "score": {
+          "P": 0
+        }
+      },
+      {
+        "text": "参考官方文档改",
+        "score": {
+          "P": 1
+        }
+      },
+      {
+        "text": "写好格式和案例再让它跑",
+        "score": {
+          "P": 2
+        }
+      },
+      {
+        "text": "写好几版，对比哪个稳定用哪个",
+        "score": {
+          "P": 3
+        }
+      }
+    ],
+    "tag": [
+      "prompt",
+      "API",
+      "开发"
+    ],
+    "id": "E_31",
+    "direction": [
+      "E",
+      "E3"
+    ]
+  },
+  {
+    "dimension": "L",
+    "type": "P",
+    "baseLevel": 1,
+    "text": "选AI工具的时候，你最看重什么？",
+    "options": [
+      {
+        "text": "最新的",
+        "score": {
+          "L": 0
+        }
+      },
+      {
+        "text": "效果最好的",
+        "score": {
+          "L": 1
+        }
+      },
+      {
+        "text": "文档好、社区活跃的",
+        "score": {
+          "L": 2
+        }
+      },
+      {
+        "text": "适合自己场景的",
+        "score": {
+          "L": 3
+        }
+      }
+    ],
+    "tag": [
+      "偏好",
+      "选型"
+    ],
+    "id": "E_32",
+    "direction": [
+      "E",
+      "E3"
+    ]
+  },
+  {
+    "dimension": "K",
+    "type": "S",
+    "baseLevel": 2,
+    "text": "用户上传了敏感文件到你的AI应用里，你怎么处理？",
+    "options": [
+      {
+        "text": "直接传给AI处理",
+        "score": {
+          "K": 0
+        }
+      },
+      {
+        "text": "在本地处理",
+        "score": {
+          "K": 1
+        }
+      },
+      {
+        "text": "脱敏之后再交给AI",
+        "score": {
+          "K": 2
+        }
+      },
+      {
+        "text": "能不传就不传，非传不可就加密",
+        "score": {
+          "K": 3
+        }
+      }
+    ],
+    "tag": [
+      "安全",
+      "隐私",
+      "设计"
+    ],
+    "id": "E_33",
+    "direction": [
+      "E",
+      "E4"
+    ]
+  },
+  {
+    "dimension": "P",
+    "type": "H",
+    "baseLevel": 1,
+    "text": "让AI帮你debug的时候，你一般给多少信息？",
+    "options": [
+      {
+        "text": "直接贴报错",
+        "score": {
+          "P": 0
+        }
+      },
+      {
+        "text": "报错加上相关代码",
+        "score": {
+          "P": 1
+        }
+      },
+      {
+        "text": "报错+代码+我做了什么",
+        "score": {
+          "P": 2
+        }
+      },
+      {
+        "text": "把场景说清楚，包括我试了哪些方法",
+        "score": {
+          "P": 3
+        }
+      }
+    ],
+    "tag": [
+      "习惯",
+      "调试",
+      "prompt"
+    ],
+    "id": "E_34",
+    "direction": [
+      "E",
+      "E4"
+    ]
+  },
+  {
+    "dimension": "K",
+    "type": "G",
+    "baseLevel": 1,
+    "text": "你听说过MCP这个东西吗？",
+    "options": [
+      {
+        "text": "没听说过",
+        "score": {
+          "K": 0
+        }
+      },
+      {
+        "text": "好像是个新的AI协议",
+        "score": {
+          "K": 1
+        }
+      },
+      {
+        "text": "让AI可以使用外部工具和数据的",
+        "score": {
+          "K": 2
+        }
+      },
+      {
+        "text": "一个开放协议，让AI能连外部工具",
+        "score": {
+          "K": 3
+        }
+      }
+    ],
+    "tag": [
+      "工具认知",
+      "MCP"
+    ],
+    "id": "E_35",
+    "direction": [
+      "E",
+      "E1"
+    ]
+  },
+  {
+    "dimension": "T",
+    "type": "G",
+    "baseLevel": 1,
+    "text": "做AI应用的时候，你最头疼的是什么？",
+    "options": [
+      {
+        "text": "还没做过不知道",
+        "score": {
+          "T": 0
+        }
+      },
+      {
+        "text": "不知道用什么模型好",
+        "score": {
+          "T": 1
+        }
+      },
+      {
+        "text": "效果时好时坏不稳定",
+        "score": {
+          "T": 2
+        }
+      },
+      {
+        "text": "成本、速度、效果和安全要一起考虑",
+        "score": {
+          "T": 3
+        }
+      }
+    ],
+    "tag": [
+      "经验",
+      "痛点"
+    ],
+    "id": "E_36",
+    "direction": [
+      "E",
+      "E2"
+    ]
+  },
+  {
+    "dimension": "C",
+    "type": "T",
+    "baseLevel": 2,
+    "text": "AI给出的结果时好时坏，你觉得问题在哪？",
+    "options": [
+      {
+        "text": "模型不行",
+        "score": {
+          "C": 0
+        }
+      },
+      {
+        "text": "用法不对",
+        "score": {
+          "C": 1
+        }
+      },
+      {
+        "text": "这模型就是概率性的，不可能每次都准",
+        "score": {
+          "C": 2
+        }
+      },
+      {
+        "text": "AI本来就不保证100%准确，好的产品得考虑到这点",
+        "score": {
+          "C": 3
+        }
+      }
+    ],
+    "tag": [
+      "概念",
+      "取舍",
+      "质量"
+    ],
+    "id": "E_37",
+    "direction": [
+      "E",
+      "E3"
+    ]
+  },
+  {
+    "dimension": "L",
+    "type": "S",
+    "baseLevel": 2,
+    "text": "要给公司做个AI客服，你怎么判断它答得好不好？",
+    "options": [
+      {
+        "text": "跑几个例子看看",
+        "score": {
+          "L": 0
+        }
+      },
+      {
+        "text": "让同事们体验打分",
+        "score": {
+          "L": 1
+        }
+      },
+      {
+        "text": "定几个标准，抽一些回答来看",
+        "score": {
+          "L": 2
+        }
+      },
+      {
+        "text": "多维度打分+人工抽检+小范围试跑再全量上",
+        "score": {
+          "L": 3
+        }
+      }
+    ],
+    "tag": [
+      "质量",
+      "评估"
+    ],
+    "id": "E_38",
+    "direction": [
+      "E",
+      "E5"
+    ]
+  },
+  {
+    "dimension": "K",
+    "type": "H",
+    "baseLevel": 1,
+    "text": "你写代码的时候哪些环节会让AI参与？",
+    "options": [
+      {
+        "text": "基本不用",
+        "score": {
+          "K": 0
+        }
+      },
+      {
+        "text": "问问语法和API用法",
+        "score": {
+          "K": 1
+        }
+      },
+      {
+        "text": "写代码和调bug的时候用",
+        "score": {
+          "K": 2
+        }
+      },
+      {
+        "text": "写代码、调试、写测试、写文档都会用到",
+        "score": {
+          "K": 3
+        }
+      }
+    ],
+    "tag": [
+      "习惯",
+      "工具",
+      "开发"
+    ],
+    "id": "E_39",
+    "direction": [
+      "E",
+      "E5"
+    ]
+  }
+]
